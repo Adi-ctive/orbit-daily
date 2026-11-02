@@ -1,0 +1,2841 @@
+[
+ {
+  "id": "riddle:000",
+  "q": "I leave the Sun and reach your eyes in about eight minutes, and I weigh nothing at all. What am I?",
+  "answer": "Sunlight",
+  "choices": [
+   "The solar wind",
+   "A meteor",
+   "Sound from the Sun"
+  ],
+  "explanation": "Light covers the 150 million km in about 8.3 minutes. Photons have no mass. The solar wind takes days, and sound cannot cross empty space.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:001",
+  "q": "I have a tail but no body. I come back again and again, and the closer I get to the Sun, the longer I grow.",
+  "answer": "A comet",
+  "choices": [
+   "A kite",
+   "A shooting star",
+   "A satellite"
+  ],
+  "explanation": "Sunlight boils ice off a comet, and the solar wind pushes that gas and dust into a tail pointing away from the Sun.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:002",
+  "q": "Every other planet borrowed the name of a god. I was named after the ground beneath your feet.",
+  "answer": "Earth",
+  "choices": [
+   "Mars",
+   "Uranus",
+   "Venus"
+  ],
+  "explanation": "\"Earth\" comes from old words for soil and ground. The other planets carry Roman or Greek god names.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:003",
+  "q": "Half of me is always lit, but how much of that half you see changes all month long.",
+  "answer": "The Moon",
+  "choices": [
+   "The Sun",
+   "Mars",
+   "A lighthouse"
+  ],
+  "explanation": "The Sun always lights one half of the Moon. Its phases are just how much of that lit half faces Earth.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:004",
+  "q": "I spin backwards compared with my neighbours, and one turn takes me longer than a whole trip round the Sun.",
+  "answer": "Venus",
+  "choices": [
+   "Mercury",
+   "Uranus",
+   "Neptune"
+  ],
+  "explanation": "Venus rotates once every 243 Earth days, retrograde, but orbits the Sun in 225 days.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:005",
+  "q": "I am the biggest planet, and a storm wider than Earth has been raging on me since before your great-great-grandparents were born.",
+  "answer": "Jupiter",
+  "choices": [
+   "Saturn",
+   "Neptune",
+   "The Sun"
+  ],
+  "explanation": "Jupiter's Great Red Spot has been watched continuously since at least the 1830s.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:006",
+  "q": "My gravity wins so completely that not even light can climb back out.",
+  "answer": "A black hole",
+  "choices": [
+   "A neutron star",
+   "A white dwarf",
+   "A wormhole"
+  ],
+  "explanation": "Inside the event horizon, escape speed is greater than the speed of light.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:007",
+  "q": "People call me a falling star, but I am only a pebble burning up as I rush through the air.",
+  "answer": "A meteor",
+  "choices": [
+   "A comet",
+   "A satellite",
+   "A supernova"
+  ],
+  "explanation": "Most meteors are grains of dust or small rocks heated to glowing by friction with the atmosphere.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:008",
+  "q": "Sailors trusted me because I barely move all night, hanging over the north.",
+  "answer": "Polaris, the North Star",
+  "choices": [
+   "Sirius",
+   "Venus",
+   "The Moon"
+  ],
+  "explanation": "Polaris sits almost exactly above Earth's north rotation axis, so the sky seems to turn around it.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:009",
+  "q": "I am rusty red, and I hold the tallest volcano in the whole solar system.",
+  "answer": "Mars",
+  "choices": [
+   "Venus",
+   "Mercury",
+   "Io"
+  ],
+  "explanation": "Iron oxide dust colours Mars. Olympus Mons rises about 22 km, nearly three times Everest's height.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:010",
+  "q": "Twelve people have walked on me, and their footprints are still there because no wind blows them away.",
+  "answer": "The Moon",
+  "choices": [
+   "Mars",
+   "Earth",
+   "The ISS"
+  ],
+  "explanation": "The Apollo astronauts walked on the Moon from 1969 to 1972. With no air, nothing erodes their prints quickly.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:011",
+  "q": "I circle Earth about sixteen times a day, and on a clear evening you can watch me cross the sky in a few minutes.",
+  "answer": "The International Space Station",
+  "choices": [
+   "The Moon",
+   "A comet",
+   "Venus"
+  ],
+  "explanation": "The ISS orbits at about 400 km and laps the planet roughly every 92 minutes.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:012",
+  "q": "I was found in 1930, and I still have not finished a single lap of the Sun since.",
+  "answer": "Pluto",
+  "choices": [
+   "Neptune",
+   "Ceres",
+   "Mars"
+  ],
+  "explanation": "Pluto takes about 248 years to orbit the Sun. Neptune, found in 1846, completed its first observed orbit in 2011.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:013",
+  "q": "I look like a solid hoop, but I am billions of icy pieces, each on its own orbit.",
+  "answer": "Saturn's rings",
+  "choices": [
+   "The asteroid belt",
+   "A halo",
+   "The Milky Way"
+  ],
+  "explanation": "Saturn's rings are mostly water ice, from dust grains to house-sized chunks.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:014",
+  "q": "You live inside me, so you can only see me edge-on, as a faint band across the night.",
+  "answer": "The Milky Way",
+  "choices": [
+   "Andromeda",
+   "The Oort cloud",
+   "A nebula"
+  ],
+  "explanation": "Our galaxy is a flat disc. From inside it, the disc looks like a glowing strip of stars.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:015",
+  "q": "When a huge star dies I can outshine its whole galaxy for weeks.",
+  "answer": "A supernova",
+  "choices": [
+   "A pulsar",
+   "A nebula",
+   "A comet"
+  ],
+  "explanation": "A supernova releases as much light in weeks as the Sun will in its whole life.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:016",
+  "q": "I spin like a lighthouse, sweeping radio beams past Earth hundreds of times a second.",
+  "answer": "A pulsar",
+  "choices": [
+   "A quasar",
+   "A black hole",
+   "A red giant"
+  ],
+  "explanation": "Pulsars are spinning neutron stars. Their beams sweep past us like a lighthouse.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:017",
+  "q": "I arrive when your half of Earth tilts toward the Sun, not when Earth is nearest to it.",
+  "answer": "Summer",
+  "choices": [
+   "Winter",
+   "Spring",
+   "Autumn"
+  ],
+  "explanation": "Earth is actually closest to the Sun in early January. Tilt sets the seasons.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:018",
+  "q": "I happen when the Moon slides exactly between you and the Sun.",
+  "answer": "A solar eclipse",
+  "choices": [
+   "A lunar eclipse",
+   "A blue moon",
+   "A sunset"
+  ],
+  "explanation": "The Moon's shadow falls on Earth. It is about 400 times smaller than the Sun but also about 400 times closer.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:019",
+  "q": "I happen when Earth's shadow turns a full Moon copper red.",
+  "answer": "A lunar eclipse",
+  "choices": [
+   "A solar eclipse",
+   "A harvest moon",
+   "A new moon"
+  ],
+  "explanation": "Sunlight bending through Earth's atmosphere reaches the Moon, filtered red, like every sunset at once.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:020",
+  "q": "I am ice that skips being liquid and turns straight into gas, so I make spooky stage fog.",
+  "answer": "Dry ice",
+  "choices": [
+   "Snow",
+   "Frost",
+   "Glass"
+  ],
+  "explanation": "Dry ice is frozen carbon dioxide. At normal air pressure it sublimes at about −78 °C.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:021",
+  "q": "I am the lightest element and the most common one in the universe.",
+  "answer": "Hydrogen",
+  "choices": [
+   "Helium",
+   "Oxygen",
+   "Carbon"
+  ],
+  "explanation": "About three quarters of the ordinary matter in the universe is hydrogen.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:022",
+  "q": "I put out most fires, yet poured on a burning pan of oil I make a fireball.",
+  "answer": "Water",
+  "choices": [
+   "A metal lid",
+   "Baking soda",
+   "A fire blanket"
+  ],
+  "explanation": "Water sinks under hot oil, boils instantly and throws burning oil into the air. Smother oil fires instead.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:023",
+  "q": "I am a metal, yet I am liquid on a cool day in your room.",
+  "answer": "Mercury",
+  "choices": [
+   "Lead",
+   "Tin",
+   "Iron"
+  ],
+  "explanation": "Mercury melts at −39 °C. (Gallium melts in your hand at about 30 °C.)",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:024",
+  "q": "I have no smell of my own, but companies add one to me so you notice when I leak.",
+  "answer": "Cooking gas",
+  "choices": [
+   "Oxygen",
+   "Steam",
+   "Carbon dioxide"
+  ],
+  "explanation": "LPG and natural gas are odourless. A sulfur compound is added to give the warning smell.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:025",
+  "q": "I pull the apple down and stop the Moon from drifting off.",
+  "answer": "Gravity",
+  "choices": [
+   "Magnetism",
+   "Friction",
+   "Wind"
+  ],
+  "explanation": "Newton realised the same force works on a falling apple and the orbiting Moon.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:026",
+  "q": "Rub a balloon on your hair and I make it cling to the wall.",
+  "answer": "Static electricity",
+  "choices": [
+   "Magnetism",
+   "Gravity",
+   "Glue"
+  ],
+  "explanation": "Rubbing moves electrons, leaving the balloon charged. The charge attracts the wall.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:027",
+  "q": "Air scatters me more than red, so I fill the daytime sky.",
+  "answer": "Blue light",
+  "choices": [
+   "Red light",
+   "Yellow light",
+   "Infrared"
+  ],
+  "explanation": "Shorter wavelengths scatter more. Violet scatters even more, but sunlight has less of it and our eyes are less sensitive to it.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:028",
+  "q": "On Earth I am found naturally as a solid, a liquid and a gas, all at once.",
+  "answer": "Water",
+  "choices": [
+   "Iron",
+   "Salt",
+   "Sand"
+  ],
+  "explanation": "Glaciers, oceans and water vapour exist side by side across the planet.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:029",
+  "q": "Ice has less of me than liquid water, and that is why it floats.",
+  "answer": "Density",
+  "choices": [
+   "Mass",
+   "Volume",
+   "Temperature"
+  ],
+  "explanation": "Water expands by about 9% when it freezes, so ice is less dense and floats.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:030",
+  "q": "I travel faster through steel than through air, and not at all through empty space.",
+  "answer": "Sound",
+  "choices": [
+   "Light",
+   "Radio",
+   "Heat"
+  ],
+  "explanation": "Sound is a vibration of matter. In steel it moves about 15 times faster than in air.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:031",
+  "q": "I am the hardest natural material, made of the same element as pencil lead.",
+  "answer": "Diamond",
+  "choices": [
+   "Quartz",
+   "Steel",
+   "Glass"
+  ],
+  "explanation": "Both diamond and graphite are pure carbon. Only the arrangement of the atoms differs.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:032",
+  "q": "I am the tiny engine in your cells that turns food into usable energy.",
+  "answer": "A mitochondrion",
+  "choices": [
+   "The nucleus",
+   "A ribosome",
+   "The cell wall"
+  ],
+  "explanation": "Mitochondria make ATP, the molecule cells spend as energy.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:033",
+  "q": "I am the green pigment that lets leaves catch sunlight.",
+  "answer": "Chlorophyll",
+  "choices": [
+   "Melanin",
+   "Haemoglobin",
+   "Keratin"
+  ],
+  "explanation": "Chlorophyll absorbs red and blue light and reflects green.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:034",
+  "q": "I am the red protein that carries oxygen around your body.",
+  "answer": "Haemoglobin",
+  "choices": [
+   "Insulin",
+   "Keratin",
+   "Chlorophyll"
+  ],
+  "explanation": "Each haemoglobin molecule can carry four oxygen molecules.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:035",
+  "q": "I make up most of every breath you take, yet your body barely uses me.",
+  "answer": "Nitrogen",
+  "choices": [
+   "Oxygen",
+   "Carbon dioxide",
+   "Argon"
+  ],
+  "explanation": "Air is about 78% nitrogen. We breathe it in and out unchanged.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:036",
+  "q": "However big or small the circle, I stay exactly the same.",
+  "answer": "Pi",
+  "choices": [
+   "The radius",
+   "The area",
+   "Zero"
+  ],
+  "explanation": "Any circle’s circumference divided by its diameter is π, about 3.14159.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:037",
+  "q": "Mix me with vinegar and I bubble up a science-fair volcano.",
+  "answer": "Baking soda",
+  "choices": [
+   "Salt",
+   "Sugar",
+   "Flour"
+  ],
+  "explanation": "Sodium bicarbonate reacts with acetic acid to release carbon dioxide gas.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:038",
+  "q": "I sit at the centre of an atom and hold almost all of its mass.",
+  "answer": "The nucleus",
+  "choices": [
+   "An electron",
+   "An orbital",
+   "A photon"
+  ],
+  "explanation": "Protons and neutrons are each about 1,800 times heavier than an electron.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:039",
+  "q": "Lightning heats the air so fast that it bursts outward, and you hear me.",
+  "answer": "Thunder",
+  "choices": [
+   "Rain",
+   "Hail",
+   "An echo"
+  ],
+  "explanation": "A lightning channel reaches about 30,000 K in a split second. The shock wave is thunder.",
+  "difficulty": 1,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:040",
+  "q": "I am frozen rain that bounced up and down inside a storm, gaining layers like an onion.",
+  "answer": "Hail",
+  "choices": [
+   "Snow",
+   "Frost",
+   "Dew"
+  ],
+  "explanation": "Updrafts carry hailstones back up through supercooled water many times. Cut one open to see the rings.",
+  "difficulty": 2,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:041",
+  "q": "I am white and six-sided, and people say no two of me look alike.",
+  "answer": "A snowflake",
+  "choices": [
+   "A hailstone",
+   "An ice cube",
+   "A cloud"
+  ],
+  "explanation": "Water molecules lock together in hexagons, so snow crystals grow with six-fold symmetry.",
+  "difficulty": 1,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:042",
+  "q": "You see me with the Sun at your back and rain falling in front of you.",
+  "answer": "A rainbow",
+  "choices": [
+   "A mirage",
+   "An aurora",
+   "A halo"
+  ],
+  "explanation": "Each raindrop bends and reflects sunlight back toward you at about 42°.",
+  "difficulty": 1,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:043",
+  "q": "I am a shimmering curtain in polar skies, painted when the solar wind hits the air.",
+  "answer": "An aurora",
+  "choices": [
+   "A rainbow",
+   "Lightning",
+   "A comet"
+  ],
+  "explanation": "Charged particles follow Earth's magnetic field toward the poles and make oxygen and nitrogen glow.",
+  "difficulty": 1,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:044",
+  "q": "I look like water lying on a hot road ahead, but I vanish when you get close.",
+  "answer": "A mirage",
+  "choices": [
+   "A puddle",
+   "Fog",
+   "Dew"
+  ],
+  "explanation": "Hot air near the road bends light from the sky upward, so you see the sky reflected on the ground.",
+  "difficulty": 1,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:045",
+  "q": "I appear on grass on clear, still nights, when the ground cools below the dew point.",
+  "answer": "Dew",
+  "choices": [
+   "Rain",
+   "Fog",
+   "Hail"
+  ],
+  "explanation": "The ground loses heat to the clear sky and water vapour condenses on it.",
+  "difficulty": 2,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:046",
+  "q": "I am a spinning column of air that reaches down from a storm cloud to the ground.",
+  "answer": "A tornado",
+  "choices": [
+   "A monsoon",
+   "A sea breeze",
+   "A hailstorm"
+  ],
+  "explanation": "Tornadoes grow from rotating thunderstorms and are usually only tens to hundreds of metres wide.",
+  "difficulty": 1,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:047",
+  "q": "Over the Indian Ocean I am a cyclone, over the Atlantic a hurricane, and near Japan a typhoon.",
+  "answer": "A tropical cyclone",
+  "choices": [
+   "A tornado",
+   "A monsoon",
+   "A tsunami"
+  ],
+  "explanation": "All three names describe the same kind of storm: a warm-ocean low with spiralling winds.",
+  "difficulty": 2,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:048",
+  "q": "I am a giant wave made by an earthquake or landslide, not by the wind.",
+  "answer": "A tsunami",
+  "choices": [
+   "A tide",
+   "A swell",
+   "A ripple"
+  ],
+  "explanation": "A tsunami moves the whole depth of the ocean and can cross a sea at jet-plane speed.",
+  "difficulty": 1,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:049",
+  "q": "I am the seasonal wind shift that brings most of India its rain.",
+  "answer": "The monsoon",
+  "choices": [
+   "The jet stream",
+   "A sea breeze",
+   "A tornado"
+  ],
+  "explanation": "In summer the land heats faster than the sea, drawing moist ocean air inland.",
+  "difficulty": 1,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:050",
+  "q": "I tell forecasters the pressure of the air.",
+  "answer": "A barometer",
+  "choices": [
+   "A thermometer",
+   "A hygrometer",
+   "An anemometer"
+  ],
+  "explanation": "Falling pressure often means bad weather is coming.",
+  "difficulty": 2,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:051",
+  "q": "I spin my little cups to tell you how fast the wind blows.",
+  "answer": "An anemometer",
+  "choices": [
+   "A barometer",
+   "A weather vane",
+   "A rain gauge"
+  ],
+  "explanation": "The faster the wind, the faster the cups turn.",
+  "difficulty": 2,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:052",
+  "q": "I was once lava or magma, and I hardened as I cooled.",
+  "answer": "Igneous rock",
+  "choices": [
+   "Sedimentary rock",
+   "Metamorphic rock",
+   "Coral"
+  ],
+  "explanation": "Granite cooled slowly underground; basalt cooled quickly at the surface.",
+  "difficulty": 2,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:053",
+  "q": "I am sand and mud pressed into layers over ages, and I often hide fossils.",
+  "answer": "Sedimentary rock",
+  "choices": [
+   "Igneous rock",
+   "Metamorphic rock",
+   "Magma"
+  ],
+  "explanation": "Sandstone, shale and limestone form this way, trapping remains of living things.",
+  "difficulty": 2,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:054",
+  "q": "Heat and pressure changed me without melting me, the way limestone becomes marble.",
+  "answer": "Metamorphic rock",
+  "choices": [
+   "Igneous rock",
+   "Sedimentary rock",
+   "Lava"
+  ],
+  "explanation": "Metamorphic rocks recrystallise deep underground.",
+  "difficulty": 2,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:055",
+  "q": "I am melted rock, but I only keep my name while I stay underground.",
+  "answer": "Magma",
+  "choices": [
+   "Lava",
+   "Basalt",
+   "Granite"
+  ],
+  "explanation": "Once it erupts onto the surface, magma is called lava.",
+  "difficulty": 1,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:056",
+  "q": "I am the layer you stand on, thinner compared with Earth than an apple's skin is to the apple.",
+  "answer": "The crust",
+  "choices": [
+   "The mantle",
+   "The core",
+   "The atmosphere"
+  ],
+  "explanation": "The crust is 5 to 70 km thick. Earth’s radius is about 6,371 km.",
+  "difficulty": 2,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:057",
+  "q": "My slow drifting builds the Himalayas and shakes the ground in earthquakes.",
+  "answer": "Plate tectonics",
+  "choices": [
+   "Erosion",
+   "The tides",
+   "Weathering"
+  ],
+  "explanation": "The Indian plate is still pushing north into Asia, a few centimetres each year.",
+  "difficulty": 2,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:058",
+  "q": "I am the highest mountain above sea level.",
+  "answer": "Mount Everest",
+  "choices": [
+   "K2",
+   "Kangchenjunga",
+   "Mauna Kea"
+  ],
+  "explanation": "Everest stands about 8,849 m above sea level.",
+  "difficulty": 1,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:059",
+  "q": "Measured from my base on the sea floor, I am taller than Everest.",
+  "answer": "Mauna Kea",
+  "choices": [
+   "K2",
+   "Kilimanjaro",
+   "Mount Fuji"
+  ],
+  "explanation": "Mauna Kea in Hawaii rises over 10,000 m from its base, though only about 4,200 m is above sea level.",
+  "difficulty": 3,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:060",
+  "q": "I am the largest ocean, covering about a third of the whole planet.",
+  "answer": "The Pacific Ocean",
+  "choices": [
+   "The Atlantic Ocean",
+   "The Indian Ocean",
+   "The Arctic Ocean"
+  ],
+  "explanation": "The Pacific is larger than all the land on Earth put together.",
+  "difficulty": 1,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:061",
+  "q": "I am the largest hot desert on Earth.",
+  "answer": "The Sahara",
+  "choices": [
+   "The Gobi",
+   "The Thar",
+   "The Kalahari"
+  ],
+  "explanation": "The Sahara covers about 9 million km². The largest desert of all is cold: Antarctica.",
+  "difficulty": 1,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:062",
+  "q": "I am a whole continent, and I count as a desert because so little snow falls on me.",
+  "answer": "Antarctica",
+  "choices": [
+   "Australia",
+   "Africa",
+   "Greenland"
+  ],
+  "explanation": "Deserts are defined by low precipitation, not heat. The South Pole gets very little snow each year.",
+  "difficulty": 2,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:063",
+  "q": "I am the river that gave the subcontinent its name.",
+  "answer": "The Indus",
+  "choices": [
+   "The Ganga",
+   "The Brahmaputra",
+   "The Godavari"
+  ],
+  "explanation": "\"India\" comes from Sindhu, the old name of the Indus, through Persian and Greek.",
+  "difficulty": 2,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:064",
+  "q": "I am the line at 0° latitude.",
+  "answer": "The equator",
+  "choices": [
+   "The prime meridian",
+   "The Tropic of Cancer",
+   "The date line"
+  ],
+  "explanation": "The equator splits Earth into northern and southern hemispheres.",
+  "difficulty": 1,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:065",
+  "q": "I am the line at 0° longitude, running through Greenwich.",
+  "answer": "The prime meridian",
+  "choices": [
+   "The equator",
+   "The Tropic of Capricorn",
+   "The Arctic Circle"
+  ],
+  "explanation": "It was agreed at a conference in 1884 as the zero point for longitude.",
+  "difficulty": 1,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:066",
+  "q": "I cross India, and in June the noon Sun stands straight overhead along me.",
+  "answer": "The Tropic of Cancer",
+  "choices": [
+   "The equator",
+   "The Tropic of Capricorn",
+   "The Arctic Circle"
+  ],
+  "explanation": "At the June solstice the Sun is overhead at about 23.4° N, matching Earth's tilt.",
+  "difficulty": 2,
+  "tags": [
+   "earth"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:067",
+  "q": "I am the smallest number that 1, 2, 3, 4, 5 and 6 all divide exactly.",
+  "answer": "60",
+  "choices": [
+   "30",
+   "120",
+   "720"
+  ],
+  "explanation": "You need 4 (2×2), 3 and 5: 4 × 3 × 5 = 60.",
+  "difficulty": 2,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:068",
+  "q": "A rocket and its fuel cost 1,100 credits together. The rocket costs 1,000 credits more than the fuel. What does the fuel cost?",
+  "answer": "50 credits",
+  "choices": [
+   "100 credits",
+   "10 credits",
+   "0 credits"
+  ],
+  "explanation": "Fuel = x, rocket = x + 1,000. So 2x + 1,000 = 1,100 and x = 50.",
+  "difficulty": 2,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:069",
+  "q": "Three drones plant three trees in three minutes. How long do thirty drones take to plant thirty trees?",
+  "answer": "3 minutes",
+  "choices": [
+   "30 minutes",
+   "10 minutes",
+   "1 minute"
+  ],
+  "explanation": "Each drone plants one tree in three minutes, however many drones work at once.",
+  "difficulty": 2,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:070",
+  "q": "Moss on a station window doubles every day and covers the whole window on day 20. On which day was it half covered?",
+  "answer": "Day 19",
+  "choices": [
+   "Day 10",
+   "Day 18",
+   "Day 15"
+  ],
+  "explanation": "It doubles from half to full in one day.",
+  "difficulty": 2,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:071",
+  "q": "Multiply me by any number you like and the answer is still me.",
+  "answer": "0",
+  "choices": [
+   "1",
+   "Infinity",
+   "−1"
+  ],
+  "explanation": "Zero times anything is zero.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:072",
+  "q": "What comes next: 1, 1, 2, 3, 5, 8, …",
+  "answer": "13",
+  "choices": [
+   "11",
+   "12",
+   "16"
+  ],
+  "explanation": "Each number is the sum of the two before it (the Fibonacci sequence): 5 + 8 = 13.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:073",
+  "q": "A cube has how many edges?",
+  "answer": "12",
+  "choices": [
+   "8",
+   "6",
+   "24"
+  ],
+  "explanation": "4 on top, 4 on the bottom, and 4 upright ones.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:074",
+  "q": "On the Moon, which weighs more: 1 kg of moon dust or 1 kg of steel?",
+  "answer": "They weigh the same",
+  "choices": [
+   "The steel",
+   "The moon dust",
+   "Neither weighs anything"
+  ],
+  "explanation": "Equal masses in the same gravity weigh the same. On the Moon each weighs about a sixth of its Earth weight.",
+  "difficulty": 1,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:075",
+  "q": "It is 9 o'clock now. What will the clock show in 100 hours?",
+  "answer": "1 o'clock",
+  "choices": [
+   "7 o'clock",
+   "5 o'clock",
+   "9 o'clock"
+  ],
+  "explanation": "100 hours is 4 days and 4 hours. Four hours after 9 is 1.",
+  "difficulty": 2,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:076",
+  "q": "I am a three-digit number whose digits add up to 1.",
+  "answer": "100",
+  "choices": [
+   "111",
+   "101",
+   "010"
+  ],
+  "explanation": "The only way three digits sum to 1 with a non-zero first digit is 1, 0, 0.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:077",
+  "q": "In 12 hours, how many times do the hour and minute hands of a clock overlap?",
+  "answer": "11",
+  "choices": [
+   "12",
+   "24",
+   "10"
+  ],
+  "explanation": "The minute hand laps the hour hand every 12/11 hours, so 11 times, not 12.",
+  "difficulty": 3,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:078",
+  "q": "Add up every whole number from 1 to 100.",
+  "answer": "5,050",
+  "choices": [
+   "5,000",
+   "10,100",
+   "4,950"
+  ],
+  "explanation": "Pair 1 with 100, 2 with 99, and so on: 50 pairs of 101 = 5,050.",
+  "difficulty": 2,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:079",
+  "q": "How many squares of every size are there on a chessboard?",
+  "answer": "204",
+  "choices": [
+   "64",
+   "196",
+   "256"
+  ],
+  "explanation": "8² + 7² + 6² + … + 1² = 64 + 49 + 36 + 25 + 16 + 9 + 4 + 1 = 204.",
+  "difficulty": 3,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:080",
+  "q": "In a rover race, you overtake the rover in second place. What place are you in now?",
+  "answer": "Second",
+  "choices": [
+   "First",
+   "Third",
+   "Last"
+  ],
+  "explanation": "You took second place. The leader is still ahead of you.",
+  "difficulty": 1,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:081",
+  "q": "With only a 3-litre tank and a 5-litre tank, can you measure exactly 4 litres?",
+  "answer": "Yes",
+  "choices": [
+   "No",
+   "Only with a 1-litre cup",
+   "Only by guessing"
+  ],
+  "explanation": "Fill 5, pour into 3 (2 left). Empty 3, pour the 2 in. Fill 5 again and top up the 3: 4 litres remain.",
+  "difficulty": 2,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:082",
+  "q": "How many months of the year contain a 28th day?",
+  "answer": "All 12",
+  "choices": [
+   "1",
+   "2",
+   "11"
+  ],
+  "explanation": "Every month has at least 28 days. February simply stops soon after.",
+  "difficulty": 1,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:083",
+  "q": "A floating dock has a ladder with rungs 30 cm apart. The tide rises 90 cm. How many more rungs are underwater?",
+  "answer": "None",
+  "choices": [
+   "3",
+   "2",
+   "1"
+  ],
+  "explanation": "The dock floats, so it rises with the water.",
+  "difficulty": 2,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:084",
+  "q": "Which of these is prime?",
+  "answer": "97",
+  "choices": [
+   "91",
+   "93",
+   "99"
+  ],
+  "explanation": "91 = 7 × 13, 93 = 3 × 31 and 99 = 9 × 11. 97 has no factors but 1 and itself.",
+  "difficulty": 2,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:085",
+  "q": "What is half of two plus two?",
+  "answer": "3",
+  "choices": [
+   "2",
+   "1",
+   "4"
+  ],
+  "explanation": "Half of two is 1, then add 2. Division comes before addition.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:086",
+  "q": "Divide 30 by a half, then add 10.",
+  "answer": "70",
+  "choices": [
+   "25",
+   "40",
+   "20"
+  ],
+  "explanation": "Dividing by ½ doubles: 30 ÷ ½ = 60, plus 10 = 70.",
+  "difficulty": 2,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:087",
+  "q": "How many small cubes build one 3 × 3 × 3 cube?",
+  "answer": "27",
+  "choices": [
+   "9",
+   "18",
+   "26"
+  ],
+  "explanation": "3 × 3 × 3 = 27. (26 can be seen from outside; one hides in the middle.)",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:088",
+  "q": "You have a 4-minute and a 7-minute sand timer. Can you time exactly 9 minutes?",
+  "answer": "Yes",
+  "choices": [
+   "No",
+   "Only 11 minutes",
+   "Only 3 minutes"
+  ],
+  "explanation": "Start both. Flip the 4 when it ends (4 min). When the 7 ends (7 min), flip it. When the 4 ends again (8 min), flip the 7: it runs 1 more minute, to 9.",
+  "difficulty": 3,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:089",
+  "q": "Which is the odd one out: 2, 3, 5, 9, 11?",
+  "answer": "9",
+  "choices": [
+   "2",
+   "5",
+   "11"
+  ],
+  "explanation": "All the others are prime. 9 = 3 × 3.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:090",
+  "q": "Which is the odd one out: Mercury, Venus, Jupiter, Mars?",
+  "answer": "Jupiter",
+  "choices": [
+   "Mercury",
+   "Venus",
+   "Mars"
+  ],
+  "explanation": "Jupiter is a gas giant. The others are rocky planets.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:091",
+  "q": "Which is the odd one out: iron, copper, oxygen, gold?",
+  "answer": "Oxygen",
+  "choices": [
+   "Iron",
+   "Copper",
+   "Gold"
+  ],
+  "explanation": "Oxygen is a non-metal gas. The rest are metals.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:092",
+  "q": "Which is the odd one out: whale, shark, dolphin, seal?",
+  "answer": "Shark",
+  "choices": [
+   "Whale",
+   "Dolphin",
+   "Seal"
+  ],
+  "explanation": "Sharks are fish. The others are mammals that breathe air.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:093",
+  "q": "Which is the odd one out: triangle, square, circle, pentagon?",
+  "answer": "Circle",
+  "choices": [
+   "Triangle",
+   "Square",
+   "Pentagon"
+  ],
+  "explanation": "A circle has no straight sides or corners.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:094",
+  "q": "An astronaut on the Moon drops a hammer and a feather at the same moment. Which lands first?",
+  "answer": "They land together",
+  "choices": [
+   "The hammer",
+   "The feather",
+   "Neither; they float"
+  ],
+  "explanation": "With no air resistance, everything falls at the same rate. Apollo 15 showed this on camera in 1971.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:095",
+  "q": "Why do tears not run down your cheeks in orbit?",
+  "answer": "They cling to your eyes in a ball",
+  "choices": [
+   "They freeze at once",
+   "There is no oxygen",
+   "They boil away"
+  ],
+  "explanation": "In free fall nothing pulls tears down, so surface tension holds them in a growing blob.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:096",
+  "q": "A pilot flies 1 km south, 1 km east, then 1 km north, and lands where she started. Where did she start?",
+  "answer": "The North Pole",
+  "choices": [
+   "The equator",
+   "The South Pole",
+   "Anywhere"
+  ],
+  "explanation": "At the North Pole every direction is south, and going north again brings you back to the point.",
+  "difficulty": 2,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:097",
+  "q": "A photo is sent from Mars while Mars is 225 million km away. About how long until it reaches Earth?",
+  "answer": "About 12 minutes",
+  "choices": [
+   "Instantly",
+   "About 1 second",
+   "About 2 hours"
+  ],
+  "explanation": "Radio travels at light speed: 225,000,000 ÷ 300,000 ≈ 750 s, about 12.5 minutes.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:098",
+  "q": "Why do astronauts on the ISS see about sixteen sunrises every day?",
+  "answer": "They orbit Earth every 90 minutes or so",
+  "choices": [
+   "The Sun moves faster in space",
+   "Earth spins faster up there",
+   "The station has mirrors"
+  ],
+  "explanation": "Every lap passes from night side to day side once.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:099",
+  "q": "Why do you weigh a tiny bit less at the equator than at the poles?",
+  "answer": "Earth's spin and bulge",
+  "choices": [
+   "The air is thinner",
+   "It is hotter",
+   "You are closer to the Sun"
+  ],
+  "explanation": "Spin flings you outward slightly, and the equatorial bulge puts you farther from the centre.",
+  "difficulty": 3,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:100",
+  "q": "A metal spoon and a wooden spoon sit in the same room. Why does the metal one feel colder?",
+  "answer": "Metal carries heat away from your hand faster",
+  "choices": [
+   "Metal is colder",
+   "Wood makes its own heat",
+   "Metal reflects body heat"
+  ],
+  "explanation": "Both are at room temperature. Your skin senses heat flow, not temperature.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:101",
+  "q": "Why does the Moon look bigger near the horizon?",
+  "answer": "It is an illusion",
+  "choices": [
+   "The air magnifies it",
+   "It is closer then",
+   "It swells with the tide"
+  ],
+  "explanation": "Measure it with a coin at arm’s length: the size is the same. Your brain judges it against the landscape.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:102",
+  "q": "If you could fold a 0.1 mm sheet of paper in half 42 times, how thick would it be?",
+  "answer": "Thicker than the distance to the Moon",
+  "choices": [
+   "About a metre",
+   "As tall as Everest",
+   "The width of India"
+  ],
+  "explanation": "0.1 mm × 2⁴² ≈ 440,000 km. Doubling grows fast.",
+  "difficulty": 3,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:103",
+  "q": "Two rovers 10 km apart drive toward each other at 5 km/h each. A drone flies back and forth between them at 20 km/h until they meet. How far does it fly?",
+  "answer": "20 km",
+  "choices": [
+   "10 km",
+   "40 km",
+   "5 km"
+  ],
+  "explanation": "They meet after one hour, and the drone flies at 20 km/h for that hour.",
+  "difficulty": 3,
+  "tags": [
+   "logic"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:104",
+  "q": "A station clock gains 5 seconds a day. After how many days is it a full minute fast?",
+  "answer": "12 days",
+  "choices": [
+   "5 days",
+   "60 days",
+   "20 days"
+  ],
+  "explanation": "60 ÷ 5 = 12.",
+  "difficulty": 1,
+  "tags": [
+   "math"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:105",
+  "q": "Two spheres look and weigh the same, but one is hollow. How can you tell which, without breaking them?",
+  "answer": "Roll them down a slope",
+  "choices": [
+   "Weigh them",
+   "Drop them in water",
+   "Look closely"
+  ],
+  "explanation": "The hollow one has its mass farther out, so it resists spinning and rolls down more slowly.",
+  "difficulty": 3,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:106",
+  "q": "Why does a steel ship float when a steel ball sinks?",
+  "answer": "Its shape pushes aside a lot of water",
+  "choices": [
+   "Ships are painted",
+   "Sea water is thicker",
+   "Steel ships are lighter steel"
+  ],
+  "explanation": "A floating object pushes aside its own weight of water. A hollow hull can push aside much more than a solid ball.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:107",
+  "q": "An ice cube floats in a glass filled to the brim. When it melts, what happens?",
+  "answer": "The level stays the same",
+  "choices": [
+   "The glass overflows",
+   "The level drops",
+   "It drops, then rises"
+  ],
+  "explanation": "Floating ice already pushes aside exactly its own weight of water.",
+  "difficulty": 3,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:108",
+  "q": "Which roof keeps a house cooler in summer sun?",
+  "answer": "A white roof",
+  "choices": [
+   "A black roof",
+   "They are the same",
+   "A glass roof"
+  ],
+  "explanation": "White reflects most sunlight; black absorbs it as heat.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:109",
+  "q": "You see lightning and count 6 seconds before the thunder. About how far away was it?",
+  "answer": "About 2 km",
+  "choices": [
+   "About 6 km",
+   "About 600 m",
+   "About 20 km"
+  ],
+  "explanation": "Sound covers about 343 m each second: 6 × 343 ≈ 2 km.",
+  "difficulty": 2,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:110",
+  "q": "Why do your ears pop when a plane climbs?",
+  "answer": "The air pressure changes",
+  "choices": [
+   "The engines are loud",
+   "It is colder",
+   "You are moving fast"
+  ],
+  "explanation": "Air trapped behind your eardrum has to even out with the cabin air as its pressure falls.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:111",
+  "q": "If there are so many stars, why is the night sky dark?",
+  "answer": "The universe has a finite age",
+  "choices": [
+   "Clouds block the light",
+   "Stars switch off at night",
+   "Space absorbs all light"
+  ],
+  "explanation": "Light from very distant stars hasn't had time to reach us, and expansion stretches it out of view. This is Olbers' paradox.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:112",
+  "q": "What shape is a candle flame aboard the space station?",
+  "answer": "A round ball",
+  "choices": [
+   "A teardrop",
+   "A tall cone",
+   "It cannot burn"
+  ],
+  "explanation": "On Earth hot air rises and stretches the flame. In free fall it spreads evenly in all directions.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:113",
+  "q": "I am the crushed-rock dust that holds the astronauts' bootprints on the Moon.",
+  "answer": "Regolith",
+  "choices": [
+   "Lava",
+   "Ice",
+   "Sand dunes"
+  ],
+  "explanation": "Billions of years of tiny impacts ground the Moon’s surface into a fine powder.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:114",
+  "q": "I was a rock from space, and unlike a meteor, I made it all the way to the ground.",
+  "answer": "A meteorite",
+  "choices": [
+   "A meteor",
+   "A comet",
+   "A satellite"
+  ],
+  "explanation": "Meteors burn up in the air. The pieces that survive and land are meteorites.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:115",
+  "q": "I am the band between Mars and Jupiter where leftover rocks circle the Sun.",
+  "answer": "The asteroid belt",
+  "choices": [
+   "The Kuiper belt",
+   "The Oort cloud",
+   "Saturn's rings"
+  ],
+  "explanation": "Its total mass is only a few percent of our Moon’s.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:116",
+  "q": "I am a dwarf planet, and I live in the asteroid belt.",
+  "answer": "Ceres",
+  "choices": [
+   "Pluto",
+   "Eris",
+   "Phobos"
+  ],
+  "explanation": "Ceres is the largest object in the asteroid belt, about 940 km across.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:117",
+  "q": "I am a moon with volcanoes erupting right now, squeezed and warmed by Jupiter's pull.",
+  "answer": "Io",
+  "choices": [
+   "Europa",
+   "Titan",
+   "Ganymede"
+  ],
+  "explanation": "Tides from Jupiter flex Io's interior, keeping it the most volcanic body known.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:118",
+  "q": "I am the only moon with a thick atmosphere, and I have lakes of liquid methane.",
+  "answer": "Titan",
+  "choices": [
+   "Europa",
+   "Io",
+   "Triton"
+  ],
+  "explanation": "Saturn's moon Titan has rain, rivers and seas, but made of methane and ethane.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:119",
+  "q": "I am an icy moon of Jupiter hiding a salty ocean under my crust.",
+  "answer": "Europa",
+  "choices": [
+   "Io",
+   "Phobos",
+   "The Moon"
+  ],
+  "explanation": "Europa’s ocean may hold twice the water of all Earth’s oceans.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:120",
+  "q": "I am the planet that rolls around the Sun on my side.",
+  "answer": "Uranus",
+  "choices": [
+   "Neptune",
+   "Saturn",
+   "Venus"
+  ],
+  "explanation": "Uranus is tilted about 98°, perhaps from an ancient collision.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:121",
+  "q": "I am the windiest planet, with gusts faster than 2,000 km/h.",
+  "answer": "Neptune",
+  "choices": [
+   "Jupiter",
+   "Uranus",
+   "Mars"
+  ],
+  "explanation": "Neptune's winds are the fastest measured in the solar system.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:122",
+  "q": "I am the hottest planet, even though I am not the closest to the Sun.",
+  "answer": "Venus",
+  "choices": [
+   "Mercury",
+   "Mars",
+   "Jupiter"
+  ],
+  "explanation": "A thick carbon dioxide atmosphere traps heat, keeping the surface near 465 °C.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:123",
+  "q": "I am the closest planet to the Sun, yet my nights drop far below freezing.",
+  "answer": "Mercury",
+  "choices": [
+   "Venus",
+   "Mars",
+   "Earth"
+  ],
+  "explanation": "With almost no air to hold heat, Mercury swings from about 430 °C to −180 °C.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:124",
+  "q": "I am a small star, cooler and redder than the Sun, and the most common kind in our galaxy.",
+  "answer": "A red dwarf",
+  "choices": [
+   "A red giant",
+   "A blue giant",
+   "A white dwarf"
+  ],
+  "explanation": "About three in four stars near the Sun are red dwarfs, too faint to see without a telescope.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:125",
+  "q": "In about five billion years the Sun will swell into me.",
+  "answer": "A red giant",
+  "choices": [
+   "A black hole",
+   "A supernova",
+   "A neutron star"
+  ],
+  "explanation": "The Sun is too light to explode. It will swell, shed its outer layers and leave a white dwarf.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:126",
+  "q": "I sound like a measure of time, but a light-year is a unit of what?",
+  "answer": "Distance",
+  "choices": [
+   "Time",
+   "Brightness",
+   "Speed"
+  ],
+  "explanation": "A light-year is how far light travels in a year: about 9.46 trillion km.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:127",
+  "q": "I hold an atomic nucleus together even though its protons push each other away.",
+  "answer": "The strong nuclear force",
+  "choices": [
+   "Gravity",
+   "Magnetism",
+   "Friction"
+  ],
+  "explanation": "Over tiny distances it is about 100 times stronger than the electric push.",
+  "difficulty": 3,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:128",
+  "q": "I power the Sun by joining light atoms into heavier ones.",
+  "answer": "Nuclear fusion",
+  "choices": [
+   "Nuclear fission",
+   "Burning",
+   "Radioactive decay"
+  ],
+  "explanation": "In the core, hydrogen nuclei fuse into helium, turning a little mass into a lot of energy.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:129",
+  "q": "Nuclear power stations use me, splitting heavy atoms apart.",
+  "answer": "Nuclear fission",
+  "choices": [
+   "Nuclear fusion",
+   "Combustion",
+   "Electrolysis"
+  ],
+  "explanation": "Uranium nuclei split, releasing heat and more neutrons that split more nuclei.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:130",
+  "q": "I make party balloons float, and I am element number two.",
+  "answer": "Helium",
+  "choices": [
+   "Hydrogen",
+   "Neon",
+   "Argon"
+  ],
+  "explanation": "Helium is lighter than air and does not burn, unlike hydrogen.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:131",
+  "q": "My chemical symbol is Fe.",
+  "answer": "Iron",
+  "choices": [
+   "Fluorine",
+   "Lead",
+   "Francium"
+  ],
+  "explanation": "Fe comes from the Latin \"ferrum\".",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:132",
+  "q": "My chemical symbol is Au, from the Latin word for shining dawn.",
+  "answer": "Gold",
+  "choices": [
+   "Silver",
+   "Aluminium",
+   "Argon"
+  ],
+  "explanation": "\"Aurum\" gives gold its symbol Au.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:133",
+  "q": "My chemical symbol is Na.",
+  "answer": "Sodium",
+  "choices": [
+   "Nitrogen",
+   "Neon",
+   "Nickel"
+  ],
+  "explanation": "Na comes from the Latin \"natrium\".",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:134",
+  "q": "I am the pH of pure water at 25 °C.",
+  "answer": "7",
+  "choices": [
+   "0",
+   "14",
+   "1"
+  ],
+  "explanation": "pH 7 is neutral. Lower is acidic, higher is basic.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:135",
+  "q": "I am the unit of force, named after the man who described gravity.",
+  "answer": "The newton",
+  "choices": [
+   "The joule",
+   "The watt",
+   "The pascal"
+  ],
+  "explanation": "One newton accelerates 1 kg by 1 m/s every second.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:136",
+  "q": "I am the unit of electrical resistance.",
+  "answer": "The ohm",
+  "choices": [
+   "The volt",
+   "The ampere",
+   "The watt"
+  ],
+  "explanation": "Named after Georg Ohm. Voltage = current × resistance.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:137",
+  "q": "I am the dark opening in your eye that widens in the dark and shrinks in bright light.",
+  "answer": "The pupil",
+  "choices": [
+   "The lens",
+   "The retina",
+   "The cornea"
+  ],
+  "explanation": "The iris muscles change the pupil’s size to control how much light gets in.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:138",
+  "q": "I am the largest organ of the human body.",
+  "answer": "The skin",
+  "choices": [
+   "The liver",
+   "The brain",
+   "The lungs"
+  ],
+  "explanation": "Skin covers about 2 m² in an adult.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:139",
+  "q": "I am the bony helmet that protects your brain.",
+  "answer": "The skull",
+  "choices": [
+   "The spine",
+   "The ribs",
+   "The pelvis"
+  ],
+  "explanation": "The skull is made of plates that fuse during childhood.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:140",
+  "q": "How many chambers does a human heart have?",
+  "answer": "4",
+  "choices": [
+   "2",
+   "3",
+   "6"
+  ],
+  "explanation": "Two atria receive blood and two ventricles pump it out.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:141",
+  "q": "I start my life breathing water and end it breathing air.",
+  "answer": "A frog",
+  "choices": [
+   "A fish",
+   "A whale",
+   "A crab"
+  ],
+  "explanation": "Tadpoles breathe with gills, then grow lungs as they become frogs.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:142",
+  "q": "I am the change that turns a caterpillar into a butterfly.",
+  "answer": "Metamorphosis",
+  "choices": [
+   "Evolution",
+   "Photosynthesis",
+   "Migration"
+  ],
+  "explanation": "Inside the chrysalis, much of the caterpillar breaks down and rebuilds as a butterfly.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:143",
+  "q": "I turn sunlight, water and carbon dioxide into sugar, and breathe out oxygen.",
+  "answer": "Photosynthesis",
+  "choices": [
+   "Respiration",
+   "Fermentation",
+   "Digestion"
+  ],
+  "explanation": "Almost all the oxygen in our air was made this way.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:144",
+  "q": "I am seen by day as a pale ghost, though I give off no light of my own.",
+  "answer": "The Moon",
+  "choices": [
+   "Venus",
+   "A cloud",
+   "The Sun"
+  ],
+  "explanation": "The Moon only reflects sunlight, and it is often in the sky during the day.",
+  "difficulty": 1,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:145",
+  "q": "I am a cloud that touches the ground.",
+  "answer": "Fog",
+  "choices": [
+   "Smog",
+   "Dew",
+   "Rain"
+  ],
+  "explanation": "Fog is made of the same tiny water droplets as a cloud, just at ground level.",
+  "difficulty": 1,
+  "tags": [
+   "weather"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:146",
+  "q": "I am the brightest point of light in the night sky after the Moon, and I am not a star.",
+  "answer": "Venus",
+  "choices": [
+   "Sirius",
+   "Jupiter",
+   "Polaris"
+  ],
+  "explanation": "Venus is bright because it is close and covered in reflective clouds.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:147",
+  "q": "I am the brightest true star in the night sky.",
+  "answer": "Sirius",
+  "choices": [
+   "Polaris",
+   "Betelgeuse",
+   "Vega"
+  ],
+  "explanation": "Sirius is about 8.6 light-years away and about 25 times as bright as the Sun.",
+  "difficulty": 2,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:148",
+  "q": "I go up when the rain comes down.",
+  "answer": "An umbrella",
+  "choices": [
+   "A kite",
+   "The tide",
+   "A balloon"
+  ],
+  "explanation": "A plain everyday riddle: you open an umbrella when it rains.",
+  "difficulty": 1,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:149",
+  "q": "The more of me you take, the more you leave behind on the beach.",
+  "answer": "Footsteps",
+  "choices": [
+   "Shells",
+   "Photos",
+   "Sand"
+  ],
+  "explanation": "Each step you take leaves a footprint behind.",
+  "difficulty": 1,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:150",
+  "q": "I have lanes but no swimmers, and I take you everywhere without moving an inch.",
+  "answer": "A road",
+  "choices": [
+   "A river",
+   "A pool",
+   "A train"
+  ],
+  "explanation": "A road has lanes and leads to places, but stays put.",
+  "difficulty": 2,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:151",
+  "q": "I get wetter the more I dry.",
+  "answer": "A towel",
+  "choices": [
+   "A sponge",
+   "The Sun",
+   "A hair dryer"
+  ],
+  "explanation": "A towel absorbs water as it dries you.",
+  "difficulty": 1,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:152",
+  "q": "I can be cracked, made, told and played.",
+  "answer": "A joke",
+  "choices": [
+   "An egg",
+   "A code",
+   "A game"
+  ],
+  "explanation": "You crack, make, tell and play a joke. An egg can be cracked but not told.",
+  "difficulty": 2,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:153",
+  "q": "I am taken before you get me, and I always show you as you were a moment ago.",
+  "answer": "A photograph",
+  "choices": [
+   "A mirror",
+   "A shadow",
+   "A memory"
+  ],
+  "explanation": "You take a photo, then you get it. It shows the past, even if only by a second.",
+  "difficulty": 2,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:154",
+  "q": "I have a spine but no bones, and pages but no website.",
+  "answer": "A book",
+  "choices": [
+   "A fish",
+   "A cactus",
+   "A ladder"
+  ],
+  "explanation": "A book has a spine and pages.",
+  "difficulty": 1,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:155",
+  "q": "I have one eye but never see, and a thread runs through me.",
+  "answer": "A needle",
+  "choices": [
+   "A storm",
+   "A potato",
+   "A camera"
+  ],
+  "explanation": "The hole in a needle is called its eye.",
+  "difficulty": 1,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:156",
+  "q": "I run around a field all day but never move.",
+  "answer": "A fence",
+  "choices": [
+   "A river",
+   "A road",
+   "A shadow"
+  ],
+  "explanation": "A fence \"runs\" around the edge of a field.",
+  "difficulty": 2,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:157",
+  "q": "I am full of stars, but I am not the sky. Turn my pages and you travel the heavens.",
+  "answer": "A star atlas",
+  "choices": [
+   "A telescope",
+   "A planetarium",
+   "A galaxy"
+  ],
+  "explanation": "A star atlas, or star chart, maps the sky on paper.",
+  "difficulty": 2,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:158",
+  "q": "Feed me and I live, give me water and I die.",
+  "answer": "Fire",
+  "choices": [
+   "A plant",
+   "A cat",
+   "Salt"
+  ],
+  "explanation": "Fire needs fuel. Water cools it below burning and cuts off air.",
+  "difficulty": 2,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:159",
+  "q": "I can travel round the world while staying in a corner.",
+  "answer": "A stamp",
+  "choices": [
+   "A spider",
+   "A clock",
+   "A map"
+  ],
+  "explanation": "A stamp sits in the corner of an envelope and goes wherever the letter goes.",
+  "difficulty": 2,
+  "tags": [
+   "wordplay"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:160",
+  "q": "True or false: a fully pumped tyre weighs a little more than the same tyre when flat.",
+  "answer": "True",
+  "choices": [
+   "False",
+   "Only on the Moon",
+   "Only underwater"
+  ],
+  "explanation": "Pumped air has mass. A fully inflated tyre is a little heavier than a flat one.",
+  "difficulty": 3,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:161",
+  "q": "To catch a spacecraft ahead of you on the same orbit, you first slow down. Why does that work?",
+  "answer": "A lower orbit is faster",
+  "choices": [
+   "Slowing saves fuel only",
+   "The Sun pushes you",
+   "You cannot catch it"
+  ],
+  "explanation": "Slowing drops you to a smaller orbit, where you lap faster, then you speed up to rise and meet it.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:162",
+  "q": "I am a shadow that falls on the Moon each month at full Moon, but only sometimes. Why only sometimes?",
+  "answer": "The Moon's orbit is tilted",
+  "choices": [
+   "The Sun is too bright",
+   "Earth is too small",
+   "Clouds block it"
+  ],
+  "explanation": "The Moon’s orbit tilts about 5°, so usually it passes above or below Earth’s shadow.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:163",
+  "q": "Why does a cup of water left out slowly disappear even without boiling?",
+  "answer": "Evaporation",
+  "choices": [
+   "Condensation",
+   "Melting",
+   "Freezing"
+  ],
+  "explanation": "The fastest molecules at the surface escape as vapour at any temperature.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:164",
+  "q": "Why do you see lightning before you hear thunder?",
+  "answer": "Light travels faster than sound",
+  "choices": [
+   "Thunder comes later",
+   "Your eyes are faster than ears",
+   "Sound goes round clouds"
+  ],
+  "explanation": "Light reaches you almost instantly; sound needs about 3 seconds per kilometre.",
+  "difficulty": 1,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:165",
+  "q": "A balloon is filled indoors, then taken outside on a freezing day. What happens to it?",
+  "answer": "It shrinks",
+  "choices": [
+   "It grows",
+   "It bursts",
+   "Nothing"
+  ],
+  "explanation": "Cold gas takes up less space at the same pressure.",
+  "difficulty": 2,
+  "tags": [
+   "science"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ },
+ {
+  "id": "riddle:166",
+  "q": "If Earth stopped spinning but kept orbiting, how long would a day last?",
+  "answer": "About a year",
+  "choices": [
+   "24 hours",
+   "Forever night",
+   "A month"
+  ],
+  "explanation": "One side would face the Sun for half a year, then the other side for the next half.",
+  "difficulty": 3,
+  "tags": [
+   "space"
+  ],
+  "license": "Original (ORBIT)",
+  "reviewed": true
+ }
+]
