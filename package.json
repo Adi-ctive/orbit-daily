@@ -16,10 +16,14 @@
     "test:e2e": "playwright test",
     "icons": "node scripts/make-icons.mjs",
     "content:build": "node pipeline/build.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lighthouse": "lhci autorun",
+    "screens": "node scripts/screens.mjs",
+    "content:enrich": "node pipeline/enrich.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.64.1",
     "@sveltejs/vite-plugin-svelte": "^7.3.1",
     "@tsconfig/svelte": "^5.0.8",

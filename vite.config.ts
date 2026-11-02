@@ -8,7 +8,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     svelte(),
     VitePWA({
-      registerType: 'autoUpdate',
+      // 'prompt': a new version waits until src/lib/sw.ts sees no session running, then reloads.
+      registerType: 'prompt',
       injectRegister: false,
       includeAssets: ['favicon.svg', 'icons/*.png'],
       manifest: {
@@ -30,6 +31,10 @@ export default defineConfig(({ mode }) => ({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}', 'data/manifest.json', 'data/*-0.json'],
         navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/data\//],
+        // The first install controls the open page at once, so it works offline without a reload.
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/data/'),

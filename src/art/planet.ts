@@ -63,18 +63,20 @@ export interface PlanetSprite {
   spec: PlanetSpec
 }
 
-/** Renders `frames` rotation frames side by side. Size includes halo and rings. */
-export function renderPlanet(spec: PlanetSpec, frames = 32): PlanetSprite {
+export function planetSheetSize(spec: PlanetSpec): number {
+  const pad = spec.ring ? Math.ceil(spec.radius * 0.9) : 4
+  return Math.ceil(spec.radius * 2 + pad * 2)
+}
+
+/** RGBA pixels for `frames` rotation frames side by side. Pure, so it can run in a worker. */
+export function planetPixels(spec: PlanetSpec, frames = 32): Uint8ClampedArray {
   const R = spec.radius
-  const pad = spec.ring ? Math.ceil(R * 0.9) : 4
-  const size = Math.ceil(R * 2 + pad * 2)
-  const { canvas, ctx } = makeOffscreen(size * frames, size)
+  const size = planetSheetSize(spec)
   const noise = new Noise3(new RNG(spec.seed + '/terrain'))
   const { ramps, atmo, rim } = rampsFor(spec.kind)
   const [lx, ly, lz] = spec.light
   const c = size / 2
-  const img = ctx.createImageData(size * frames, size)
-  const d = img.data
+  const d = new Uint8ClampedArray(size * frames * size * 4)
   const cosT = Math.cos(spec.axialTilt)
   const sinT = Math.sin(spec.axialTilt)
 
@@ -154,8 +156,19 @@ export function renderPlanet(spec: PlanetSpec, frames = 32): PlanetSprite {
 
     if (spec.ring) drawRing(put, ox, c, R, spec.ringTilt, false, ramps, lx)
   }
-  ctx.putImageData(img, 0, 0)
+  return d
+}
+
+export function spriteFromPixels(spec: PlanetSpec, frames: number, d: Uint8ClampedArray): PlanetSprite {
+  const size = planetSheetSize(spec)
+  const { canvas, ctx } = makeOffscreen(size * frames, size)
+  ctx.putImageData(new ImageData(d as Uint8ClampedArray<ArrayBuffer>, size * frames, size), 0, 0)
   return { sheet: canvas, frames, size, spec }
+}
+
+/** Synchronous render (dev pages, small sprites). Home and lock use the worker. */
+export function renderPlanet(spec: PlanetSpec, frames = 32): PlanetSprite {
+  return spriteFromPixels(spec, frames, planetPixels(spec, frames))
 }
 
 function drawRing(

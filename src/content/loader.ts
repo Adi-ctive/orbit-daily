@@ -4,10 +4,19 @@ import { RNG } from '../lib/rng'
 import type { ChunkInfo, ContentItem, ContentManifest } from './types'
 
 let manifest: ContentManifest | null = null
+
+/** Fetch with a time limit, so a crawling network never blocks launching a mission. */
+export function timedFetch(ms = 4000): typeof fetch {
+  return (input, init) => {
+    const ac = new AbortController()
+    const t = setTimeout(() => ac.abort(), ms)
+    return fetch(input, { ...init, signal: ac.signal }).finally(() => clearTimeout(t))
+  }
+}
 const chunks = new Map<string, ContentItem[]>()
 const byId = new Map<string, ContentItem>()
 
-export async function loadManifest(fetcher: typeof fetch = fetch): Promise<ContentManifest | null> {
+export async function loadManifest(fetcher: typeof fetch = timedFetch()): Promise<ContentManifest | null> {
   if (manifest) return manifest
   try {
     const r = await fetcher('/data/manifest.json')
@@ -19,7 +28,7 @@ export async function loadManifest(fetcher: typeof fetch = fetch): Promise<Conte
   }
 }
 
-export async function loadChunk(info: ChunkInfo, fetcher: typeof fetch = fetch): Promise<ContentItem[] | null> {
+export async function loadChunk(info: ChunkInfo, fetcher: typeof fetch = timedFetch()): Promise<ContentItem[] | null> {
   const hit = chunks.get(info.file)
   if (hit) return hit
   try {

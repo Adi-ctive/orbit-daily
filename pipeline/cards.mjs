@@ -35,7 +35,7 @@ export function clozeFor(title, extract) {
 export async function fetchCards(topics) {
   const raw = await pool(
     topics,
-    6,
+    16,
     async (t) => {
       try {
         const j = await getJson(REST + encodeURIComponent(t.title.replace(/ /g, '_')))

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { PixelCanvas } from '../art/pixelCanvas'
+  import { nebulaAsync } from '../art/artClient'
   import { Sky } from '../art/sky'
   import { Loop } from '../games/kit'
   import { app } from '../state/app.svelte'
@@ -16,17 +17,21 @@
 
   onMount(() => {
     const pc = new PixelCanvas(host, {
-      minW: 320,
-      minH: 480,
+      minW: 160,
+      minH: 240,
+      maxW: 400,
+      maxH: 420,
       onResize: (w, h) => sky?.resize(w, h),
     })
-    sky = new Sky(seed, pc.w, pc.h)
+    sky = new Sky(seed, pc.w, pc.h, nebulaAsync)
     let drawnStatic = false
+    let nebulaShown = false
     const loop = new Loop((dt, t) => {
       if (!sky) return
       if (document.visibilityState !== 'visible') return
       if (app.reducedMotion) {
-        if (!drawnStatic) {
+        if (!drawnStatic || !nebulaShown) {
+          nebulaShown = sky.hasNebula
           sky.warp = 0
           sky.draw(pc.ctx, 0, true)
           drawnStatic = true

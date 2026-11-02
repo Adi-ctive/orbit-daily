@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { drawPlanetFrame, planetSpecFromSeed, renderMoon, renderPlanet } from '../art/planet'
+  import { planetAsync } from '../art/artClient'
+  import { drawPlanetFrame, planetSheetSize, planetSpecFromSeed, renderMoon, type PlanetSprite } from '../art/planet'
   import { PixelCanvas } from '../art/pixelCanvas'
   import { Loop } from '../games/kit'
   import { RNG } from '../lib/rng'
@@ -18,8 +19,9 @@
 
   onMount(() => {
     const spec = planetSpecFromSeed(seed, radius)
-    const sprite = renderPlanet(spec, 48)
-    const size = sprite.size + 40
+    let sprite: PlanetSprite | null = null
+    void planetAsync(spec, 48).then((s) => (sprite = s))
+    const size = planetSheetSize(spec) + 40
     const pc = new PixelCanvas(host, { minW: size, minH: size, fixed: true })
     const moons = Array.from({ length: spec.moons }, (_, i) => {
       const r = new RNG(seed + '/moon' + i)
@@ -44,7 +46,7 @@
         if (Math.sin(a) < 0) ctx.drawImage(m.img, Math.round(c + Math.cos(a) * m.dist - m.img.width / 2), Math.round(c + Math.sin(a) * m.dist * m.tilt - m.img.height / 2))
       }
       ctx.globalAlpha = sleeping ? 0.7 : 1
-      drawPlanetFrame(ctx, sprite, frame, c, c)
+      if (sprite) drawPlanetFrame(ctx, sprite, frame, c, c)
       ctx.globalAlpha = 1
       for (const m of moons) {
         const a = m.phase + tt * m.speed

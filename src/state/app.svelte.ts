@@ -2,7 +2,7 @@
 // every change before the UI shows it.
 import { ACTIVE_TIME_FLUSH_MS, REVIEW_ITEMS_MAX } from '../config'
 import { audio } from '../audio/bus'
-import { ensureItem, pickCard, pickFillers, prefetchAhead } from '../content/loader'
+import { ensureItem, loadManifest, pickCard, pickFillers, prefetchAhead } from '../content/loader'
 import { compose, coreIdsOf, daySeed } from '../engine/composer'
 import {
   addActive,
@@ -108,6 +108,16 @@ class App {
       else void this.checkDay()
     })
     void prefetchAhead()
+    void this.checkContentVersion()
+  }
+
+  /** Non-blocking note when a redeploy shipped new content. */
+  private async checkContentVersion(): Promise<void> {
+    const m = await loadManifest()
+    if (!m) return
+    const prev = await load<string | null>('contentVersion', null)
+    if (prev && prev !== m.version && this.screen !== 'session') this.showToast('New star charts arrived')
+    if (prev !== m.version) await save('contentVersion', m.version)
   }
 
   /** Load today's record and route to the right screen. */

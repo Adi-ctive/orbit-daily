@@ -103,3 +103,14 @@ describe('content banks', () => {
     }
   })
 })
+
+describe('24 fast counter', () => {
+  it('matches the reference solver on 300 random sets', async () => {
+    const { count24, solve24 } = await import('./fuelMix')
+    const r = new RNG('count24')
+    for (let i = 0; i < 300; i++) {
+      const s = [r.int(1, 13), r.int(1, 13), r.int(1, 13), r.int(1, 13)]
+      expect(count24(s) > 0, s.join()).toBe(solve24(s).expr !== null)
+    }
+  })
+})

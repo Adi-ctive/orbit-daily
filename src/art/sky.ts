@@ -5,15 +5,15 @@ import { Noise3 } from './noise'
 import { RAMP_RGB, bayer, rgbCss, type RGB } from './palette'
 import { makeOffscreen } from './pixelCanvas'
 
-export function renderNebula(seed: string, w: number, h: number): HTMLCanvasElement {
-  const { canvas, ctx } = makeOffscreen(w, h)
+/** RGBA pixels for the nebula. Pure, so it can run in a worker. */
+export function nebulaPixels(seed: string, w: number, h: number): Uint8ClampedArray {
   const rng = new RNG(seed + '/nebula')
   const n = new Noise3(rng)
   const hue = new Noise3(rng.fork('hue'))
   const z = rng.range(0, 100)
-  const s = 1 / rng.range(70, 110)
-  const img = ctx.createImageData(w, h)
-  const d = img.data
+  // Feature size tracks the canvas, so every screen shows the same amount of nebula.
+  const s = 1 / (rng.range(0.09, 0.13) * Math.max(w, h))
+  const d = new Uint8ClampedArray(w * h * 4)
   const warm: RGB[] = [RAMP_RGB.void[1], RAMP_RGB.void[2], RAMP_RGB.violet[0], RAMP_RGB.violet[1], RAMP_RGB.magenta[1], RAMP_RGB.magenta[2]]
   const cool: RGB[] = [RAMP_RGB.void[1], RAMP_RGB.void[2], RAMP_RGB.indigo[0], RAMP_RGB.teal[1], RAMP_RGB.teal[2], RAMP_RGB.teal[3]]
   for (let y = 0; y < h; y++) {
@@ -22,8 +22,8 @@ export function renderNebula(seed: string, w: number, h: number): HTMLCanvasElem
       const wx = n.fbm(x * s, y * s, z, 3) * 2.2
       const wy = n.fbm(x * s + 5.2, y * s + 1.3, z, 3) * 2.2
       let v = n.fbm(x * s + wx, y * s + wy, z + 3, 5)
-      v = Math.max(0, (v - 0.42) / 0.5)
-      v = v * v
+      v = Math.max(0, (v - 0.41) / 0.46)
+      v = Math.pow(v, 1.6)
       const mix = hue.fbm(x * s * 0.6, y * s * 0.6, z, 2)
       const ramp = mix > 0.5 ? warm : cool
       const fv = Math.min(0.999, v) * (ramp.length - 1)
@@ -37,8 +37,17 @@ export function renderNebula(seed: string, w: number, h: number): HTMLCanvasElem
       d[o + 3] = 255
     }
   }
-  ctx.putImageData(img, 0, 0)
+  return d
+}
+
+export function pixelsToCanvas(d: Uint8ClampedArray, w: number, h: number): HTMLCanvasElement {
+  const { canvas, ctx } = makeOffscreen(w, h)
+  ctx.putImageData(new ImageData(d as Uint8ClampedArray<ArrayBuffer>, w, h), 0, 0)
   return canvas
+}
+
+export function renderNebula(seed: string, w: number, h: number): HTMLCanvasElement {
+  return pixelsToCanvas(nebulaPixels(seed, w, h), w, h)
 }
 
 interface Star {
@@ -72,10 +81,16 @@ export class Sky {
   private nextComet = 6
   warp = 0
 
+  get hasNebula(): boolean {
+    return !!this.nebula
+  }
+
   constructor(
     private seed: string,
     public w: number,
     public h: number,
+    /** Async nebula source (the art worker). Without it the nebula is drawn in place. */
+    private nebulaSource?: (seed: string, w: number, h: number) => Promise<HTMLCanvasElement>,
   ) {
     this.rng = new RNG(seed + '/sky')
     this.build()
@@ -89,7 +104,13 @@ export class Sky {
 
   private build(): void {
     const r = new RNG(this.seed + '/stars')
-    this.nebula = renderNebula(this.seed, this.w, this.h)
+    if (this.nebulaSource) {
+      this.nebula = null
+      const { w, h } = this
+      void this.nebulaSource(this.seed, w, h).then((c) => {
+        if (this.w === w && this.h === h) this.nebula = c
+      })
+    } else this.nebula = renderNebula(this.seed, this.w, this.h)
     const count = Math.floor((this.w * this.h) / 260)
     this.stars = []
     for (let i = 0; i < count; i++) {

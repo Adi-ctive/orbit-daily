@@ -12,6 +12,7 @@
   import { app } from '../state/app.svelte'
   import Icon from '../ui/Icon.svelte'
   import Mascot from '../ui/Mascot.svelte'
+  import Burst from '../ui/Burst.svelte'
   import OrbitProgress from '../ui/OrbitProgress.svelte'
   import { SESSION_TARGET_MIN } from '../config'
 
@@ -48,8 +49,22 @@
     audio.scene('focus')
   })
 
+  // Combo: three or more correct answers in a row upgrade the chime and buzz.
+  let combo = $state(0)
+  let burst = $state(0)
   const fx: GameFx = {
-    sfx: (n, c) => audio.sfx(n, c),
+    sfx: (n, c) => {
+      if (n === 'correct') {
+        combo++
+        if (combo >= 3) {
+          audio.sfx('combo', combo)
+          haptic('combo')
+          if (combo % 3 === 0) burst++
+          return
+        }
+      } else if (n === 'wrong') combo = 0
+      audio.sfx(n, c)
+    },
     haptic: (n) => haptic(n),
     shake: (px) => {
       if (app.reducedMotion) return
@@ -118,6 +133,7 @@
         res.learned,
       )
       stage = 'feedback'
+      if (good) burst++
     } finally {
       finishing = false
     }
@@ -166,6 +182,7 @@
     </button>
     {#if day}
       <OrbitProgress total={day.plan.length} index={day.index} />
+      {#if combo >= 3}<span class="label combo" aria-live="polite">×{combo}</span>{/if}
       <span class="label timer" aria-label="Active mission time">{formatCountdown(day.activeMs).slice(3)} / {SESSION_TARGET_MIN}m</span>
     {/if}
   </header>
@@ -206,9 +223,15 @@
   {/if}
 </section>
 
+<Burst trigger={burst} />
+
 <style>
   .session {
     gap: 8px;
+  }
+  .combo {
+    color: var(--magenta);
+    font-size: 0.9rem;
   }
   .timer {
     color: var(--accent-hi);

@@ -319,9 +319,25 @@ h3 {
 @media (orientation: landscape) and (max-height: 520px) {
   .screen {
     max-width: 900px;
+    padding-top: calc(4px + env(safe-area-inset-top));
+  }
+  /* Phones on their side: controls sit beside the play area. */
+  .g-stage {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    gap: 8px;
+  }
+  .g-hud {
+    grid-column: 1 / -1;
   }
   .g-canvas {
-    min-height: 180px;
+    min-height: 0;
+  }
+  .g-controls {
+    flex-direction: column;
+    justify-content: center;
+    max-width: 46vw;
   }
 }
 

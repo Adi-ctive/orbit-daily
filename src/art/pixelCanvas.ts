@@ -7,6 +7,9 @@ export interface PixelCanvasOptions {
   minH: number
   /** Keep the native size exactly minW × minH and letterbox the rest. */
   fixed?: boolean
+  /** Largest native size allowed; raises the scale on big screens so pixels stay chunky. */
+  maxW?: number
+  maxH?: number
   onResize?: (w: number, h: number) => void
 }
 
@@ -40,7 +43,9 @@ export class PixelCanvas {
     const rect = this.host.getBoundingClientRect()
     const devW = Math.max(1, Math.floor(rect.width * dpr))
     const devH = Math.max(1, Math.floor(rect.height * dpr))
-    const scale = Math.max(1, Math.floor(Math.min(devW / this.opts.minW, devH / this.opts.minH)))
+    let scale = Math.max(1, Math.floor(Math.min(devW / this.opts.minW, devH / this.opts.minH)))
+    if (this.opts.maxW) scale = Math.max(scale, Math.ceil(devW / this.opts.maxW))
+    if (this.opts.maxH) scale = Math.max(scale, Math.ceil(devH / this.opts.maxH))
     const w = this.opts.fixed ? this.opts.minW : Math.floor(devW / scale)
     const h = this.opts.fixed ? this.opts.minH : Math.floor(devH / scale)
     if (w === this.w && h === this.h && scale === this.scale) return
