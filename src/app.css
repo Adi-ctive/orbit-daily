@@ -1,0 +1,33 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0820;
+  --ink: #f4ecdc;
+  --muted: #9a8fc4;
+  --accent: #f5b44a;
+  --cyan: #5fd8e8;
+  --magenta: #e05ac8;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  background: var(--bg);
+}
+
+button {
+  touch-action: manipulation;
+}
