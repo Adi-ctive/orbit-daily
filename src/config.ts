@@ -23,5 +23,5 @@ export const TARGET_SUCCESS = 0.775
 export const ELO_K = 24
 export const DEFAULT_RATING = 1000
 
-export const SITE_URL = 'https://orbit-daily.pages.dev'
+export const SITE_URL = 'https://orbit-daily-12s.pages.dev'
 export const TAGLINE = 'Fifteen minutes. One mission. Every day.'

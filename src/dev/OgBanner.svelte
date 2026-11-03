@@ -8,7 +8,7 @@
 
 <SkyBackdrop seed="orbit-v1|og-banner" />
 <div class="og">
-  <div class="planet"><PlanetView seed="orbit-v1|og-ring-7" radius={46} /></div>
+  <div class="planet"><PlanetView seed="orbit-v1|og-0" radius={46} /></div>
   <div class="text">
     <h1>ORBIT</h1>
     <p class="tag">{TAGLINE}</p>
@@ -39,7 +39,7 @@
   }
   .tag {
     font-family: var(--label-font);
-    font-size: 40px;
+    font-size: 32px;
     margin: 24px 0 8px;
     color: var(--ink-bright);
   }

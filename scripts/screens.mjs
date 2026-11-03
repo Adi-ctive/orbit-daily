@@ -19,7 +19,7 @@ const GAMES = ['thruster-abort', 'catch-comet', 'orbit-tracker', 'constellation'
 
 const browser = await chromium.launch()
 try {
-  for (const [name, opts] of VIEWPORTS) {
+  for (const [name, opts] of process.env.OG_ONLY ? [] : VIEWPORTS) {
     const ctx = await browser.newContext(opts)
     const page = await ctx.newPage()
     const shot = async (label) => {

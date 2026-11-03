@@ -19,6 +19,8 @@ export function setHapticsEnabled(on: boolean): void {
 
 export function haptic(name: HapticName): void {
   if (!enabled) return
+  // Chrome refuses (and logs an error) before the first real tap on the page.
+  if (typeof navigator !== 'undefined' && navigator.userActivation && !navigator.userActivation.hasBeenActive) return
   try {
     if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') navigator.vibrate(PATTERNS[name])
   } catch {
