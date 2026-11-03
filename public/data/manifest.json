@@ -1,0 +1,917 @@
+{
+ "version": "e2f1276e5e259135",
+ "generated": "2026-11-03T13:17:57.317Z",
+ "chunkSize": 400,
+ "chunks": [
+  {
+   "file": "card-astronomy-0.json",
+   "type": "card",
+   "category": "astronomy",
+   "n": 0,
+   "count": 400,
+   "hash": "9bc9bfbbdcb0a619"
+  },
+  {
+   "file": "card-astronomy-1.json",
+   "type": "card",
+   "category": "astronomy",
+   "n": 1,
+   "count": 400,
+   "hash": "7934c561fee5b794"
+  },
+  {
+   "file": "card-astronomy-2.json",
+   "type": "card",
+   "category": "astronomy",
+   "n": 2,
+   "count": 76,
+   "hash": "6c95eb080d112d64"
+  },
+  {
+   "file": "card-physics-0.json",
+   "type": "card",
+   "category": "physics",
+   "n": 0,
+   "count": 400,
+   "hash": "7a7f8b2cde0ea810"
+  },
+  {
+   "file": "card-physics-1.json",
+   "type": "card",
+   "category": "physics",
+   "n": 1,
+   "count": 400,
+   "hash": "2e89907525aeb651"
+  },
+  {
+   "file": "card-physics-2.json",
+   "type": "card",
+   "category": "physics",
+   "n": 2,
+   "count": 400,
+   "hash": "9736d80288dccc16"
+  },
+  {
+   "file": "card-physics-3.json",
+   "type": "card",
+   "category": "physics",
+   "n": 3,
+   "count": 207,
+   "hash": "e208302ed11fa0b3"
+  },
+  {
+   "file": "card-chemistry-0.json",
+   "type": "card",
+   "category": "chemistry",
+   "n": 0,
+   "count": 400,
+   "hash": "896e823984a39f71"
+  },
+  {
+   "file": "card-chemistry-1.json",
+   "type": "card",
+   "category": "chemistry",
+   "n": 1,
+   "count": 400,
+   "hash": "17ef4d96194070dc"
+  },
+  {
+   "file": "card-chemistry-2.json",
+   "type": "card",
+   "category": "chemistry",
+   "n": 2,
+   "count": 345,
+   "hash": "0b24492fc22d87f9"
+  },
+  {
+   "file": "card-earth-0.json",
+   "type": "card",
+   "category": "earth",
+   "n": 0,
+   "count": 400,
+   "hash": "097894e7f7099a0c"
+  },
+  {
+   "file": "card-earth-1.json",
+   "type": "card",
+   "category": "earth",
+   "n": 1,
+   "count": 400,
+   "hash": "5d893f1213ac8662"
+  },
+  {
+   "file": "card-earth-2.json",
+   "type": "card",
+   "category": "earth",
+   "n": 2,
+   "count": 146,
+   "hash": "78a5f26ce3ea9f8b"
+  },
+  {
+   "file": "card-meteorology-0.json",
+   "type": "card",
+   "category": "meteorology",
+   "n": 0,
+   "count": 209,
+   "hash": "543ec5e68cc873c8"
+  },
+  {
+   "file": "card-geography-0.json",
+   "type": "card",
+   "category": "geography",
+   "n": 0,
+   "count": 400,
+   "hash": "54d211a7cdbfcf6a"
+  },
+  {
+   "file": "card-geography-1.json",
+   "type": "card",
+   "category": "geography",
+   "n": 1,
+   "count": 400,
+   "hash": "3eb9e3dfb9b13878"
+  },
+  {
+   "file": "card-geography-2.json",
+   "type": "card",
+   "category": "geography",
+   "n": 2,
+   "count": 400,
+   "hash": "75ff4c63146b65a2"
+  },
+  {
+   "file": "card-geography-3.json",
+   "type": "card",
+   "category": "geography",
+   "n": 3,
+   "count": 400,
+   "hash": "57d0a018f4670535"
+  },
+  {
+   "file": "card-geography-4.json",
+   "type": "card",
+   "category": "geography",
+   "n": 4,
+   "count": 400,
+   "hash": "e258aede7e057b85"
+  },
+  {
+   "file": "card-geography-5.json",
+   "type": "card",
+   "category": "geography",
+   "n": 5,
+   "count": 400,
+   "hash": "13cd32641528e82e"
+  },
+  {
+   "file": "card-geography-6.json",
+   "type": "card",
+   "category": "geography",
+   "n": 6,
+   "count": 400,
+   "hash": "b01975b9724f51bb"
+  },
+  {
+   "file": "card-geography-7.json",
+   "type": "card",
+   "category": "geography",
+   "n": 7,
+   "count": 71,
+   "hash": "cc52da1b4aef9f25"
+  },
+  {
+   "file": "card-biology-0.json",
+   "type": "card",
+   "category": "biology",
+   "n": 0,
+   "count": 400,
+   "hash": "e430487a7a1c7da1"
+  },
+  {
+   "file": "card-biology-1.json",
+   "type": "card",
+   "category": "biology",
+   "n": 1,
+   "count": 400,
+   "hash": "60d05d7b497a9268"
+  },
+  {
+   "file": "card-biology-2.json",
+   "type": "card",
+   "category": "biology",
+   "n": 2,
+   "count": 400,
+   "hash": "0d9f990aca456369"
+  },
+  {
+   "file": "card-biology-3.json",
+   "type": "card",
+   "category": "biology",
+   "n": 3,
+   "count": 400,
+   "hash": "df46baff23fd5b5d"
+  },
+  {
+   "file": "card-biology-4.json",
+   "type": "card",
+   "category": "biology",
+   "n": 4,
+   "count": 400,
+   "hash": "5de9abe657659e56"
+  },
+  {
+   "file": "card-biology-5.json",
+   "type": "card",
+   "category": "biology",
+   "n": 5,
+   "count": 400,
+   "hash": "56af94fb73430378"
+  },
+  {
+   "file": "card-biology-6.json",
+   "type": "card",
+   "category": "biology",
+   "n": 6,
+   "count": 400,
+   "hash": "7f436e8435b747ff"
+  },
+  {
+   "file": "card-biology-7.json",
+   "type": "card",
+   "category": "biology",
+   "n": 7,
+   "count": 400,
+   "hash": "f0d2365e2e6b479d"
+  },
+  {
+   "file": "card-biology-8.json",
+   "type": "card",
+   "category": "biology",
+   "n": 8,
+   "count": 400,
+   "hash": "c1ba8050e8d37f10"
+  },
+  {
+   "file": "card-biology-9.json",
+   "type": "card",
+   "category": "biology",
+   "n": 9,
+   "count": 400,
+   "hash": "363bb0a41e0abc49"
+  },
+  {
+   "file": "card-biology-10.json",
+   "type": "card",
+   "category": "biology",
+   "n": 10,
+   "count": 303,
+   "hash": "cc74b4e15e4cf177"
+  },
+  {
+   "file": "card-math-0.json",
+   "type": "card",
+   "category": "math",
+   "n": 0,
+   "count": 400,
+   "hash": "ea64ac8d890422c7"
+  },
+  {
+   "file": "card-math-1.json",
+   "type": "card",
+   "category": "math",
+   "n": 1,
+   "count": 400,
+   "hash": "6affd08ebded684a"
+  },
+  {
+   "file": "card-math-2.json",
+   "type": "card",
+   "category": "math",
+   "n": 2,
+   "count": 341,
+   "hash": "5a688963fb9e7559"
+  },
+  {
+   "file": "quiz-chemistry-0.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 0,
+   "count": 400,
+   "hash": "12fd5a3a9ce33192"
+  },
+  {
+   "file": "quiz-chemistry-1.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 1,
+   "count": 400,
+   "hash": "957557b613deb29e"
+  },
+  {
+   "file": "quiz-chemistry-2.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 2,
+   "count": 400,
+   "hash": "71818397095de286"
+  },
+  {
+   "file": "quiz-chemistry-3.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 3,
+   "count": 400,
+   "hash": "da503d362386d2b8"
+  },
+  {
+   "file": "quiz-chemistry-4.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 4,
+   "count": 400,
+   "hash": "f9ca89d8502b1ce7"
+  },
+  {
+   "file": "quiz-chemistry-5.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 5,
+   "count": 400,
+   "hash": "883a8c8c113fc478"
+  },
+  {
+   "file": "quiz-chemistry-6.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 6,
+   "count": 400,
+   "hash": "fe546b39df73e2f7"
+  },
+  {
+   "file": "quiz-chemistry-7.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 7,
+   "count": 400,
+   "hash": "84c57283eba7f514"
+  },
+  {
+   "file": "quiz-chemistry-8.json",
+   "type": "quiz",
+   "category": "chemistry",
+   "n": 8,
+   "count": 36,
+   "hash": "9902203d5d9fe16e"
+  },
+  {
+   "file": "quiz-geography-0.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 0,
+   "count": 400,
+   "hash": "376121e0f72a65ee"
+  },
+  {
+   "file": "quiz-geography-1.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 1,
+   "count": 400,
+   "hash": "9cb4ff6a8226ce45"
+  },
+  {
+   "file": "quiz-geography-2.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 2,
+   "count": 400,
+   "hash": "14aba909925176c1"
+  },
+  {
+   "file": "quiz-geography-3.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 3,
+   "count": 400,
+   "hash": "394439db435d7733"
+  },
+  {
+   "file": "quiz-geography-4.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 4,
+   "count": 400,
+   "hash": "d9fe1ca7eed42a7b"
+  },
+  {
+   "file": "quiz-geography-5.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 5,
+   "count": 400,
+   "hash": "ebee7f0abde54707"
+  },
+  {
+   "file": "quiz-geography-6.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 6,
+   "count": 400,
+   "hash": "d013c3991df749f0"
+  },
+  {
+   "file": "quiz-geography-7.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 7,
+   "count": 400,
+   "hash": "1340629272b23ff5"
+  },
+  {
+   "file": "quiz-geography-8.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 8,
+   "count": 400,
+   "hash": "826b353b7a747b67"
+  },
+  {
+   "file": "quiz-geography-9.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 9,
+   "count": 400,
+   "hash": "58aecbaa6d7997be"
+  },
+  {
+   "file": "quiz-geography-10.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 10,
+   "count": 400,
+   "hash": "4297b55ee866d78c"
+  },
+  {
+   "file": "quiz-geography-11.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 11,
+   "count": 400,
+   "hash": "f317318186179f8a"
+  },
+  {
+   "file": "quiz-geography-12.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 12,
+   "count": 400,
+   "hash": "09991d922cc30e12"
+  },
+  {
+   "file": "quiz-geography-13.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 13,
+   "count": 400,
+   "hash": "bedf145d2a0ccb91"
+  },
+  {
+   "file": "quiz-geography-14.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 14,
+   "count": 400,
+   "hash": "8270fe367986f900"
+  },
+  {
+   "file": "quiz-geography-15.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 15,
+   "count": 400,
+   "hash": "b329c356f02597c5"
+  },
+  {
+   "file": "quiz-geography-16.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 16,
+   "count": 400,
+   "hash": "921944a3afc4f94c"
+  },
+  {
+   "file": "quiz-geography-17.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 17,
+   "count": 400,
+   "hash": "fc63ad79df75469d"
+  },
+  {
+   "file": "quiz-geography-18.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 18,
+   "count": 400,
+   "hash": "a200721c7197b948"
+  },
+  {
+   "file": "quiz-geography-19.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 19,
+   "count": 400,
+   "hash": "9b799754e039f527"
+  },
+  {
+   "file": "quiz-geography-20.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 20,
+   "count": 400,
+   "hash": "094fa9f188754755"
+  },
+  {
+   "file": "quiz-geography-21.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 21,
+   "count": 400,
+   "hash": "d7aaa7bb8af2a42b"
+  },
+  {
+   "file": "quiz-geography-22.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 22,
+   "count": 400,
+   "hash": "3f57364e1ac13651"
+  },
+  {
+   "file": "quiz-geography-23.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 23,
+   "count": 400,
+   "hash": "2ebbe2016c551049"
+  },
+  {
+   "file": "quiz-geography-24.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 24,
+   "count": 400,
+   "hash": "75f98f26a7a27081"
+  },
+  {
+   "file": "quiz-geography-25.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 25,
+   "count": 400,
+   "hash": "cda12989f0a9adbe"
+  },
+  {
+   "file": "quiz-geography-26.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 26,
+   "count": 400,
+   "hash": "3df9b9686b56b10b"
+  },
+  {
+   "file": "quiz-geography-27.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 27,
+   "count": 400,
+   "hash": "a7dd245bd2772af3"
+  },
+  {
+   "file": "quiz-geography-28.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 28,
+   "count": 400,
+   "hash": "7e2653d33bec0e44"
+  },
+  {
+   "file": "quiz-geography-29.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 29,
+   "count": 400,
+   "hash": "631c4f6204e240e6"
+  },
+  {
+   "file": "quiz-geography-30.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 30,
+   "count": 400,
+   "hash": "f32cdf0466a90f0f"
+  },
+  {
+   "file": "quiz-geography-31.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 31,
+   "count": 400,
+   "hash": "9e3607670f29ebbf"
+  },
+  {
+   "file": "quiz-geography-32.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 32,
+   "count": 400,
+   "hash": "7369b6531af2df7a"
+  },
+  {
+   "file": "quiz-geography-33.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 33,
+   "count": 400,
+   "hash": "7299f12dc4af1fa5"
+  },
+  {
+   "file": "quiz-geography-34.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 34,
+   "count": 400,
+   "hash": "bab6813e97e81238"
+  },
+  {
+   "file": "quiz-geography-35.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 35,
+   "count": 400,
+   "hash": "ccdd988b6e2fbcbd"
+  },
+  {
+   "file": "quiz-geography-36.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 36,
+   "count": 400,
+   "hash": "f4169d9f87789392"
+  },
+  {
+   "file": "quiz-geography-37.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 37,
+   "count": 400,
+   "hash": "384cfbb12c83bbea"
+  },
+  {
+   "file": "quiz-geography-38.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 38,
+   "count": 400,
+   "hash": "e724cb1c4229a1f9"
+  },
+  {
+   "file": "quiz-geography-39.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 39,
+   "count": 400,
+   "hash": "89d3af05c8a76ea5"
+  },
+  {
+   "file": "quiz-geography-40.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 40,
+   "count": 400,
+   "hash": "8b2b18345b403184"
+  },
+  {
+   "file": "quiz-geography-41.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 41,
+   "count": 400,
+   "hash": "528a54a747256d48"
+  },
+  {
+   "file": "quiz-geography-42.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 42,
+   "count": 400,
+   "hash": "a9301df19ec1bbd8"
+  },
+  {
+   "file": "quiz-geography-43.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 43,
+   "count": 400,
+   "hash": "7d8440d397ba63a3"
+  },
+  {
+   "file": "quiz-geography-44.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 44,
+   "count": 400,
+   "hash": "2d484c76065f2ea1"
+  },
+  {
+   "file": "quiz-geography-45.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 45,
+   "count": 400,
+   "hash": "1136456184e59db6"
+  },
+  {
+   "file": "quiz-geography-46.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 46,
+   "count": 400,
+   "hash": "38e08fd19bf0a3ee"
+  },
+  {
+   "file": "quiz-geography-47.json",
+   "type": "quiz",
+   "category": "geography",
+   "n": 47,
+   "count": 80,
+   "hash": "bf73dd5b3b8065ac"
+  },
+  {
+   "file": "quiz-astronomy-0.json",
+   "type": "quiz",
+   "category": "astronomy",
+   "n": 0,
+   "count": 271,
+   "hash": "4e89bd4c3b10d1b5"
+  },
+  {
+   "file": "aptitude-math-0.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 0,
+   "count": 400,
+   "hash": "2492617a3af65c7c"
+  },
+  {
+   "file": "aptitude-math-1.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 1,
+   "count": 400,
+   "hash": "2542b7862c52cfc1"
+  },
+  {
+   "file": "aptitude-math-2.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 2,
+   "count": 400,
+   "hash": "c4cbcbda128b1f76"
+  },
+  {
+   "file": "aptitude-math-3.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 3,
+   "count": 400,
+   "hash": "0eed0f6b5c2c00c2"
+  },
+  {
+   "file": "aptitude-math-4.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 4,
+   "count": 400,
+   "hash": "c89074a3b1ec4d7b"
+  },
+  {
+   "file": "aptitude-math-5.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 5,
+   "count": 400,
+   "hash": "30a1b262bc89a3be"
+  },
+  {
+   "file": "aptitude-math-6.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 6,
+   "count": 400,
+   "hash": "b000f6aef3fb1aa4"
+  },
+  {
+   "file": "aptitude-math-7.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 7,
+   "count": 400,
+   "hash": "a9ca04b06e9707ef"
+  },
+  {
+   "file": "aptitude-math-8.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 8,
+   "count": 400,
+   "hash": "f04b2710839b8425"
+  },
+  {
+   "file": "aptitude-math-9.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 9,
+   "count": 400,
+   "hash": "992896febd73a9de"
+  },
+  {
+   "file": "aptitude-math-10.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 10,
+   "count": 400,
+   "hash": "b07b2adb4fe6aff1"
+  },
+  {
+   "file": "aptitude-math-11.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 11,
+   "count": 400,
+   "hash": "7b82ba6dd2b54d30"
+  },
+  {
+   "file": "aptitude-math-12.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 12,
+   "count": 400,
+   "hash": "0f17108e1be35cc5"
+  },
+  {
+   "file": "aptitude-math-13.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 13,
+   "count": 400,
+   "hash": "50d4e1d35ac7ebd2"
+  },
+  {
+   "file": "aptitude-math-14.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 14,
+   "count": 400,
+   "hash": "7df572ed389ea82f"
+  },
+  {
+   "file": "aptitude-math-15.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 15,
+   "count": 400,
+   "hash": "c16e1163eb549896"
+  },
+  {
+   "file": "aptitude-math-16.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 16,
+   "count": 400,
+   "hash": "97848203caedd632"
+  },
+  {
+   "file": "aptitude-math-17.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 17,
+   "count": 400,
+   "hash": "8dc1e9d79e2bb1f2"
+  },
+  {
+   "file": "aptitude-math-18.json",
+   "type": "aptitude",
+   "category": "math",
+   "n": 18,
+   "count": 334,
+   "hash": "aa75cdcd5e685986"
+  }
+ ],
+ "counts": {
+  "cards": 12898,
+  "quiz": 22387,
+  "aptitude": 7534,
+  "riddles": 167
+ }
+}

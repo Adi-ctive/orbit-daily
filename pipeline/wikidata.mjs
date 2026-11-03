@@ -131,7 +131,7 @@ export async function fetchWikidataQuizzes() {
     const win = a.len > b.len ? a : b
     push('geography', (id) => item(id, 'geography', { q: 'Which river is longer?', ...mcq(id, win.name, [win === a ? b.name : a.name]), explanation: `${a.name}: about ${fmt(a.len)} km. ${b.name}: about ${fmt(b.len)} km. River lengths vary with how they are measured.` }, win.id, ['river', 'higher-lower'], 3))
   }
-  const mountains = (await q(`SELECT ?m ?mLabel ?el WHERE { ?m wdt:P31 wd:Q8502; p:P2044/psn:P2044/wikibase:quantityAmount ?el. FILTER(?el > 5500) ${LABEL} }`))
+  const mountains = (await q(`SELECT ?m ?mLabel ?el WHERE { ?m wdt:P31 wd:Q8502; p:P2044/psn:P2044/wikibase:quantityAmount ?el. FILTER(?el > 7000) ${LABEL} }`))
     .map((x) => ({ id: qid(x.m), name: x.mLabel, el: Number(x.el) }))
     .filter((x) => !/^Q\d+$/.test(x.name))
   const uniqM = [...new Map(mountains.map((m) => [m.name, m])).values()]

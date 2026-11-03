@@ -25,11 +25,17 @@ export function clozeFor(title, extract) {
   let q = s
   const m = s.match(/^(.{0,120}?)\b(is|are|was|were|refers to|describes)\b/)
   if (m) q = '____ ' + s.slice(m[1].length)
-  for (const w of words) q = q.replace(new RegExp(esc(w), 'gi'), '____')
+  // Whole words only, so a short title like "Pi" never cuts into "physics".
+  for (const w of words) q = q.replace(wordRe(w), '____')
   // Reject if the subject still leaks through, or nothing was hidden.
   if (!q.includes('____')) return null
-  if (q.toLowerCase().includes(base.toLowerCase())) return null
+  if (wordRe(base).test(q)) return null
   return q
+}
+
+/** Case-insensitive whole-word match for a title or word. */
+export function wordRe(w) {
+  return new RegExp(`(?<![\\p{L}\\p{N}])${esc(w)}(?![\\p{L}\\p{N}])`, 'giu')
 }
 
 export async function fetchCards(topics) {

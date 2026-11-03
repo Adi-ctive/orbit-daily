@@ -7,7 +7,7 @@ import type { ContentItem } from '../src/content/types'
 const DIR = 'public/data'
 const has = existsSync(`${DIR}/manifest.json`)
 
-describe.skipIf(!has)('content chunks', () => {
+describe.skipIf(!has)('content chunks', { timeout: 120_000 }, () => {
   const manifest = has ? JSON.parse(readFileSync(`${DIR}/manifest.json`, 'utf8')) : { chunks: [] }
 
   it('manifest lists chunks with matching hashes and counts', () => {
@@ -51,7 +51,9 @@ describe.skipIf(!has)('content chunks', () => {
         }
         if (it.type === 'card' && it.quiz) {
           // The cloze must not leak the answer.
-          expect(it.quiz.q.toLowerCase().includes(it.title.toLowerCase()), where).toBe(false)
+          // Whole-word match, the same rule the pipeline uses (so "Pi" is not found in "topic").
+          const esc = it.title.replace(/\s*\(.*\)$/, '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+          expect(new RegExp(`(?<![\\p{L}\\p{N}])${esc}(?![\\p{L}\\p{N}])`, 'iu').test(it.quiz.q), where).toBe(false)
           expect(it.quiz.choices[it.quiz.answer], where).toBe(it.title)
         }
       })
