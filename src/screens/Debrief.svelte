@@ -1,7 +1,7 @@
 <script lang="ts">
   import { audio } from '../audio/bus'
   import { streakLength } from '../engine/lock'
-  import { CATEGORY_LABEL, type Category } from '../games/catalog'
+  import { CATEGORY_LABEL, catalogEntry, type Category } from '../games/catalog'
   import { haptic } from '../lib/haptics'
   import { copyShare, shareText } from '../lib/share'
   import { app } from '../state/app.svelte'
@@ -21,6 +21,14 @@
   })
   const avg = $derived(skills.length ? skills.reduce((a, b) => a + b.s, 0) / skills.length : 0)
   const read = $derived(day?.results.find((r) => r.phase === 'explainer'))
+  // Where points were lost, weakest first. The weakest returns tomorrow as a rematch.
+  const lost = $derived(
+    (day?.results ?? [])
+      .filter((r) => r.score < 0.7 && (catalogEntry(r.gameId) || r.gameId === 'aptitude'))
+      .sort((a, b) => a.score - b.score)
+      .map((r) => ({ title: catalogEntry(r.gameId)?.title ?? 'Aptitude Sprint', s: r.score, game: catalogEntry(r.gameId) ? r.gameId : '' })),
+  )
+  const rounds = $derived((day?.results ?? []).filter((r) => r.phase !== 'explainer').length)
   let copied = $state('')
 
   async function share() {
@@ -57,7 +65,16 @@
       </li>
     {/each}
   </ul>
-  {#if read}<p class="muted center">Explainer saved to your logbook.</p>{/if}
+  {#if lost.length}
+    <div class="panel lost">
+      <p class="label">Where you lost points</p>
+      {#each lost as l, i (i)}
+        <p class="row"><span>{l.title}</span><span class="num">{Math.round(l.s * 100)}%</span></p>
+      {/each}
+      {#if lost.find((l) => l.game)}<p class="muted small">{lost.find((l) => l.game)!.title} comes back tomorrow as a rematch with a new level.</p>{/if}
+    </div>
+  {/if}
+  <p class="muted center">{rounds} rounds played{read ? ' · explainer saved to your logbook' : ''}.</p>
   <p class="center streak"><Icon name="flame" size={18} /> {streak} day streak{app.profile.freezes ? ` · ${app.profile.freezes} freeze${app.profile.freezes > 1 ? 's' : ''}` : ''}</p>
   <div class="actions">
     <button class="btn" onclick={share} data-testid="share"><Icon name="share" size={18} /> Share</button>
@@ -115,6 +132,15 @@
     text-align: right;
     font-variant-numeric: tabular-nums;
     color: var(--muted);
+  }
+  .lost .row {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0 0;
+  }
+  .lost .small {
+    font-size: 0.85rem;
+    margin: 10px 0 0;
   }
   .streak {
     display: flex;

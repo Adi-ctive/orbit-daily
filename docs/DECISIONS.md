@@ -78,3 +78,10 @@ The owner found the pixel art busy, the games too easy and slow, and the learnin
 - **Difficulty anchor:** `difficultyToElo` moved from 700 + 1000d to 250 + 1000d, so a 1000-rated new player starts near 0.55.
 - **Game retune:** Thruster Abort 30 trials with 8 aborts and a 0.45-0.75 s window. Catch the Comet 10 faster trials with longer occlusion and 0.10-0.22 s tolerance. Orbit Tracker 8-13 moons, 3-6 targets, 6-11 s tracking. Constellation 12 stars, spans from 4-7, faster flashes. Dead Reckoning 4-8 legs, faster. Signal Drift 30 pulses, 3-back above 0.5. Fuel Mix 4 sets with fewer solution paths. Fermi 5 items. Doomsday 10 dates across the full range. Aliens 3-5. Vanishing Walls 7-12 cells with 4-8 s to memorise. Void Beast 7×7 with 10-20 move escapes. Pulsar Path 6-8 grids. Star-Sticks two-digit sums. Riddles difficulty 2-3 only.
 - **Removed:** the pixel mascot, particle bursts and screen shake. They clashed with the minimal look.
+
+## v2.1 (4 Nov 2026, owner feedback)
+
+- **Fully random levels.** Every attempt at a round gets a fresh random level (a crypto nonce added to the seed at round start), and each player has a random salt, so players get their own mix of games. Dev seeds (`?seed=`) stay fixed so tests and screenshots are repeatable. The shared same-puzzle-for-everyone idea from the research was dropped at the owner's request. The day's planet and explainer are still shared.
+- **Rematch.** The game with the lowest score under 70% yesterday takes the first core slot today, with a new level and a note saying so. The debrief lists where points were lost.
+- **Play to the time limit.** Finishing the planned rounds no longer locks the day. It marks `planDone` (and counts the streak). The player then picks Another round (weighted toward weak skills, never the same game twice in a row) or Finish mission. The 20-minute active-time cap ends the mission after the current round.
+- **Updates reach phones.** The service worker now uses `skipWaiting`, so a new version takes over on the next reload, and a game file removed by an update triggers a reload instead of a crash. Missions saved by v1 are migrated on load.

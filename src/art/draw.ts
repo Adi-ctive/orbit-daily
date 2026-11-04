@@ -1,6 +1,9 @@
 // Vector drawing primitives for the game canvases.
 type Ctx = CanvasRenderingContext2D
 
+/** Radii can briefly be zero or negative while a canvas is still being sized. */
+const ok = (...v: number[]) => v.every((x) => Number.isFinite(x))
+
 export function alpha(color: string, a: number): string {
   if (color.startsWith('#') && color.length === 7) {
     const n = parseInt(color.slice(1), 16)
@@ -10,6 +13,7 @@ export function alpha(color: string, a: number): string {
 }
 
 export function disc(ctx: Ctx, cx: number, cy: number, r: number, color: string): void {
+  if (!ok(cx, cy, r) || r <= 0) return
   ctx.fillStyle = color
   ctx.beginPath()
   ctx.arc(cx, cy, Math.max(0.1, r), 0, Math.PI * 2)
@@ -18,6 +22,7 @@ export function disc(ctx: Ctx, cx: number, cy: number, r: number, color: string)
 
 /** Lit sphere: a radial gradient from a highlight toward the dark limb. */
 export function ball(ctx: Ctx, cx: number, cy: number, r: number, dark: string, mid: string, light: string, shine: string): void {
+  if (!ok(cx, cy, r) || r <= 0) return
   const g = ctx.createRadialGradient(cx - r * 0.38, cy - r * 0.42, r * 0.05, cx, cy, r)
   g.addColorStop(0, shine)
   g.addColorStop(0.25, light)
@@ -30,6 +35,7 @@ export function ball(ctx: Ctx, cx: number, cy: number, r: number, dark: string, 
 }
 
 export function ring(ctx: Ctx, cx: number, cy: number, r: number, color: string, dotted = false, width = 1): void {
+  if (!ok(cx, cy, r) || r <= 0) return
   ctx.strokeStyle = color
   ctx.lineWidth = width
   ctx.setLineDash(dotted ? [1.5, 3] : [])
@@ -41,6 +47,9 @@ export function ring(ctx: Ctx, cx: number, cy: number, r: number, color: string,
 
 /** Soft glow from radius r0 fading out over `width`. */
 export function halo(ctx: Ctx, cx: number, cy: number, r0: number, width: number, color: string): void {
+  if (!ok(cx, cy, r0, width)) return
+  r0 = Math.max(0, r0)
+  width = Math.max(0.1, width)
   const g = ctx.createRadialGradient(cx, cy, Math.max(0, r0 * 0.6), cx, cy, r0 + width)
   g.addColorStop(0, alpha(color, 0.55))
   g.addColorStop(1, alpha(color, 0))

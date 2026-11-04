@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
   import { audio } from '../audio/bus'
-  import { SESSION_TARGET_MIN } from '../config'
+  import { timeLeftMs } from '../engine/lock'
+  import { dev } from '../lib/dev'
   import { CATEGORY_LABEL, catalogEntry } from '../games/catalog'
   import { loadGame } from '../games/registry'
   import { generateVerified, type GameFx, type GameInstance, type RoundResult } from '../games/types'
@@ -23,7 +24,7 @@
 
   const round = $derived(app.currentRound)
   const day = $derived(app.day)
-  const phaseLabel: Record<string, string> = { warmup: 'Warm-up', core: 'Core', aptitude: 'Aptitude', explainer: 'Explainer', boss: 'Boss' }
+  const phaseLabel: Record<string, string> = { warmup: 'Warm-up', core: 'Core', aptitude: 'Aptitude', explainer: 'Explainer', boss: 'Boss', bonus: 'Bonus' }
 
   $effect(() => {
     const r = round
@@ -65,7 +66,8 @@
     try {
       audio.unlock()
       const m = await loadGame(r.gameId)
-      const rng = new RNG(r.seed)
+      // A fresh random level on every attempt (dev seeds stay fixed for tests).
+      const rng = new RNG(dev.seedOverride ? r.seed : r.seed + '|' + nonce())
       const level = generateVerified(m, rng, r.difficulty)
       await app.beginRound()
       // Game modules own this element and render into it directly.
@@ -147,6 +149,25 @@
   })
 
   const pct = (s: number) => Math.round(s * 100)
+
+  function nonce(): string {
+    const a = new Uint32Array(1)
+    crypto.getRandomValues(a)
+    return a[0].toString(36)
+  }
+
+  async function more() {
+    haptic('tap')
+    result = null
+    await app.moreRound()
+    stage = 'intro'
+  }
+
+  async function finish() {
+    haptic('tap')
+    result = null
+    await app.endMission()
+  }
 </script>
 
 <section class="screen session">
@@ -158,15 +179,28 @@
       <ProgressBar total={day.plan.length} index={day.index} />
       <span class="timer" aria-label="Active mission time">
         {#if combo >= 3}<span class="combo">×{combo}</span>{/if}
-        {formatCountdown(day.activeMs).slice(3)}<span class="muted"> / {SESSION_TARGET_MIN}:00</span>
+        {formatCountdown(timeLeftMs(day)).slice(3)}<span class="muted"> left</span>
       </span>
     {/if}
   </header>
+
+  {#if !round && day && day.planDone && !day.completed && stage !== 'feedback'}
+    <div class="intro">
+      <p class="label">Bonus time</p>
+      <h1>{formatCountdown(timeLeftMs(day)).slice(3)} left</h1>
+      <p class="how">Your planned rounds are done and today's streak is saved. Keep playing extra rounds until the time runs out, or finish now.</p>
+      <div class="two">
+        <button class="btn" data-testid="mission-finish" onclick={finish}>Finish mission</button>
+        <button class="btn primary" data-testid="round-more" onclick={more}>Another round</button>
+      </div>
+    </div>
+  {/if}
 
   {#if round && (stage === 'intro' || stage === 'loading')}
     <div class="intro">
       <p class="label">{phaseLabel[round.phase]}{catalogEntry(round.gameId) ? ' · ' + CATEGORY_LABEL[catalogEntry(round.gameId)!.category] : ''}</p>
       <h1>{title}</h1>
+      {#if round.note}<p class="note">{round.note}</p>{/if}
       <p class="how">{howTo}</p>
       <button class="btn primary go" data-testid="round-start" disabled={stage === 'loading'} onclick={start}>
         {stage === 'loading' ? 'Loading…' : round.phase === 'explainer' ? 'Read' : 'Start'}
@@ -188,7 +222,15 @@
         <p class="a">{result.answer}</p>
         {#if result.explanation}<p class="muted">{result.explanation}</p>{/if}
       </div>
-      <button class="btn primary go" data-testid="round-next" onclick={next}>{day?.completed ? 'See debrief' : 'Next round'}</button>
+      {#if day && day.planDone && !day.completed}
+        <p class="muted">Planned rounds done. {formatCountdown(timeLeftMs(day)).slice(3)} left to keep playing.</p>
+        <div class="two">
+          <button class="btn" data-testid="mission-finish" onclick={finish}>Finish mission</button>
+          <button class="btn primary" data-testid="round-more" onclick={more}>Another round</button>
+        </div>
+      {:else}
+        <button class="btn primary go" data-testid="round-next" onclick={next}>{day?.completed ? 'See debrief' : 'Next round'}</button>
+      {/if}
     </div>
   {/if}
 </section>
@@ -218,6 +260,20 @@
   }
   .intro h1 {
     margin: 0;
+  }
+  .note {
+    color: var(--warm);
+    font-weight: 600;
+    margin: 0;
+  }
+  .two {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+  }
+  .two .btn {
+    flex: 1;
   }
   .how {
     max-width: 30em;

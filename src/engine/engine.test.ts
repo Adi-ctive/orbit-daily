@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { SESSION_HARD_CAP_MS } from '../config'
 import { CATALOG, catalogEntry } from '../games/catalog'
 import { addDays } from '../lib/clock'
-import { compose, coreIdsOf, recentCore } from './composer'
-import { addActive, applyFreezes, effectiveNow, finishRound, isLocked, markCompleted, streakLength } from './lock'
+import { bonusRound, compose, coreIdsOf, recentCore, weakestRound } from './composer'
+import { RNG } from '../lib/rng'
+import { addActive, applyFreezes, effectiveNow, endMission, finishRound, isLocked, markCompleted, streakLength, timeLeftMs } from './lock'
 import { Staircase, defaultRatings, expected, targetDifficulty, updateRating } from './ratings'
 import { dueItems, newSrs, review } from './srs'
 import { defaultSettings, type DayRecord, type Profile } from './types'
@@ -78,6 +79,33 @@ describe('composer', () => {
     expect(compose({ ...base, date: '2026-11-02', explainerId: null }).some((r) => r.phase === 'explainer')).toBe(false)
   })
 
+  it('different players get different mixes on the same day', () => {
+    const a = compose({ ...base, date: '2026-11-02', salt: 'p1' }).map((r) => r.gameId)
+    const sets = new Set([a.join(), ...['p2', 'p3', 'p4', 'p5'].map((s) => compose({ ...base, date: '2026-11-02', salt: s }).map((r) => r.gameId).join())])
+    expect(sets.size).toBeGreaterThan(1)
+  })
+
+  it('brings back the weakest game from yesterday as a rematch', () => {
+    const res = [
+      { gameId: 'aliens', phase: 'core', score: 0.4 },
+      { gameId: 'fuel-mix', phase: 'core', score: 0.9 },
+      { gameId: 'void-beast', phase: 'boss', score: 0.6 },
+    ]
+    const w = weakestRound(res)!
+    expect(w.gameId).toBe('aliens')
+    const plan = compose({ ...base, date: '2026-11-03', rematch: w, coreHistory: { '2026-11-02': ['aliens'] } })
+    const core = plan.filter((r) => r.phase === 'core')
+    expect(core[0].gameId).toBe('aliens')
+    expect(core[0].note).toMatch(/Rematch/)
+    expect(new Set(core.map((r) => r.category)).size).toBe(core.length)
+    expect(weakestRound([{ gameId: 'aliens', phase: 'core', score: 0.9 }])).toBeNull()
+  })
+
+  it('bonus rounds never repeat the last game', () => {
+    const r = new RNG('bonus')
+    for (let i = 0; i < 200; i++) expect(bonusRound(defaultRatings(), 'aliens', r).gameId).not.toBe('aliens')
+  })
+
   it('a new player starts at a real challenge', () => {
     const plan = compose({ ...base, date: '2026-11-02' })
     const core = plan.filter((r) => r.phase === 'core')
@@ -118,13 +146,25 @@ describe('lock', () => {
     expect(d.activeMs).toBe(6000)
   })
 
-  it('locks after the last round', () => {
+  it('finishing the planned rounds allows extra play; the player or the cap ends it', () => {
     const d = day('2026-11-02', 2)
     finishRound(d, rec, '2026-11-02')
-    expect(isLocked(d, '2026-11-02')).toBe(false)
     finishRound(d, rec, '2026-11-02')
+    expect(d.planDone).toBe(true)
+    expect(isLocked(d, '2026-11-02')).toBe(false)
+    endMission(d)
     expect(isLocked(d, '2026-11-02')).toBe(true)
     expect(isLocked(d, '2026-11-03')).toBe(false)
+  })
+
+  it('the time cap ends a mission during bonus rounds', () => {
+    const d = day('2026-11-02', 1)
+    finishRound(d, rec, '2026-11-02')
+    d.plan.push({ ...d.plan[0] })
+    d.activeMs = SESSION_HARD_CAP_MS + 1
+    finishRound(d, rec, '2026-11-02')
+    expect(d.completed && d.capped).toBe(true)
+    expect(timeLeftMs(d)).toBe(0)
   })
 
   it('cap mid-round finishes that round then ends', () => {

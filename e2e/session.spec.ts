@@ -15,18 +15,31 @@ function watchConsole(page: Page): string[] {
 async function playSession(page: Page): Promise<number> {
   await page.getByTestId('launch').click()
   let rounds = 0
-  for (let k = 0; k < 14; k++) {
+  let bonus = false
+  for (let k = 0; k < 16; k++) {
     await page.getByTestId('round-start').click()
-    // Let the game actually run for a moment before skipping.
-    await page.waitForTimeout(700)
+    // Wait until the game is mounted, let it run a moment, then skip.
+    await expect(page.getByTestId('round-start')).toHaveCount(0)
+    await page.waitForTimeout(500)
     await page.evaluate(() => dispatchEvent(new CustomEvent('orbit:dev-skip')))
-    const next = page.getByTestId('round-next')
-    await expect(next).toBeVisible()
+    await expect(page.getByTestId('feedback')).toBeVisible()
     rounds++
+    // After the planned set: play one bonus round, then finish.
+    if (await page.getByTestId('mission-finish').count()) {
+      if (!bonus) {
+        bonus = true
+        await page.getByTestId('round-more').click()
+        continue
+      }
+      await page.getByTestId('mission-finish').click()
+      break
+    }
+    const next = page.getByTestId('round-next')
     const label = await next.innerText()
     await next.click()
     if (/debrief/i.test(label)) break
   }
+  expect(bonus).toBe(true)
   return rounds
 }
 

@@ -35,16 +35,16 @@ export function addActive(day: DayRecord, ms: number): void {
 }
 
 /**
- * Record a finished round and advance. Ends the session when the plan is done,
- * when the cap was hit during the round, or when the day changed under a stale tab.
+ * Record a finished round and advance. The time cap or a date change ends the
+ * mission. Finishing the planned rounds only marks planDone: the player may then
+ * keep taking extra rounds until the cap, or end the mission themselves.
  */
 export function finishRound(day: DayRecord, rec: RoundRecord, today: string): void {
   day.results.push(rec)
   day.index += 1
   day.inRound = false
-  const done = day.index >= day.plan.length
-  if (done) day.completed = true
-  else if (capReached(day)) {
+  if (day.index >= day.plan.length) day.planDone = true
+  if (capReached(day)) {
     day.completed = true
     day.capped = true
   } else if (today !== day.date) {
@@ -86,4 +86,14 @@ export function markCompleted(profile: Profile, date: string): void {
   if (profile.completedDates.includes(date)) return
   profile.completedDates.push(date)
   if (profile.completedDates.length % 7 === 0) profile.freezes = Math.min(2, profile.freezes + 1)
+}
+
+/** The player chose to end the mission. */
+export function endMission(day: DayRecord): void {
+  day.completed = true
+  day.inRound = false
+}
+
+export function timeLeftMs(day: DayRecord): number {
+  return Math.max(0, SESSION_HARD_CAP_MS - day.activeMs)
 }

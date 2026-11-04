@@ -2,7 +2,7 @@
 // every change before the UI shows it.
 import { ACTIVE_TIME_FLUSH_MS } from '../config'
 import { audio } from '../audio/bus'
-import { compose, coreIdsOf, daySeed } from '../engine/composer'
+import { bonusRound, compose, coreIdsOf, daySeed, weakestRound } from '../engine/composer'
 import {
   addActive,
   applyFreezes,
@@ -11,10 +11,13 @@ import {
   finishRound,
   isLocked,
   markCompleted,
+  endMission,
+  timeLeftMs,
   startRound,
 } from '../engine/lock'
 import { migrateDay } from '../engine/migrate'
 import { defaultRatings, updateRating } from '../engine/ratings'
+import { RNG } from '../lib/rng'
 import { defaultSettings, type DayRecord, type Profile, type RoundRecord, type RoundSpec } from '../engine/types'
 import type { Category } from '../games/catalog'
 import { addDays, appClock } from '../lib/clock'
@@ -79,6 +82,8 @@ class App {
   async boot(): Promise<void> {
     const stored = await load<Profile | null>(PROFILE_KEY, null)
     const p = stored ? { ...freshProfile(), ...stored, settings: { ...defaultSettings(), ...stored.settings } } : freshProfile()
+    // One random salt per player, so each player gets their own mix of games.
+    if (!p.salt) p.salt = randomId()
     this.profile = p
     try {
       const mq = matchMedia('(prefers-reduced-motion: reduce)')
@@ -182,11 +187,16 @@ class App {
         const [y, m, dd] = this.today.split('-').map(Number)
         const dayNumber = Math.round(Date.UTC(y, m - 1, dd) / 86_400_000)
         const explainer = pickExplainer(dayNumber, new Set(this.profile.seenCards))
+        // Bring back yesterday's weakest game for another go.
+        const yesterday = await load<DayRecord | null>(dayKey(addDays(this.today, -1)), null)
+        const rematch = yesterday ? weakestRound(yesterday.results) : null
         const plan = compose({
           date: this.today,
           ratings: this.profile.ratings,
           coreHistory: this.profile.coreHistory,
           explainerId: explainer?.id ?? null,
+          salt: dev.seedOverride ? undefined : this.profile.salt,
+          rematch,
           seedOverride: dev.seedOverride,
         })
         this.day = {
@@ -239,13 +249,34 @@ class App {
       p.logbook.push({ ...learnedCard, date: d.date })
     }
     const today = effectiveNow(appClock, p).date
+    const wasDone = !!d.planDone
     finishRound(d, rec, today)
-    if (d.completed) {
+    // The streak counts once the planned rounds are done, even if extra rounds follow.
+    if ((d.planDone || d.completed) && !wasDone) {
       markCompleted(p, d.date)
       p.ratingHistory.push({ date: d.date, ratings: { ...$state.snapshot(p.ratings) } })
       if (p.ratingHistory.length > 400) p.ratingHistory.shift()
     }
     await Promise.all([this.saveDay(), this.saveProfile()])
+  }
+
+  /** Add an extra round after the planned set, while time is left. */
+  async moreRound(): Promise<void> {
+    const d = this.day
+    if (!d || d.completed || !d.planDone || timeLeftMs(d) <= 0) return
+    d.plan.push(bonusRound(this.profile.ratings, d.plan.at(-1)?.gameId, new RNG(randomId())))
+    await this.saveDay()
+  }
+
+  /** The player ends the mission (planned set done). */
+  async endMission(): Promise<void> {
+    const d = this.day
+    if (!d) return
+    if (!this.profile.completedDates.includes(d.date)) markCompleted(this.profile, d.date)
+    endMission(d)
+    await Promise.all([this.saveDay(), this.saveProfile()])
+    this.screen = 'debrief'
+    audio.scene('results')
   }
 
   /** After the feedback panel: warp to the next round, or open the debrief. */
@@ -318,3 +349,10 @@ class App {
 }
 
 export const app = new App()
+
+/** A random id from the browser's crypto source (not Math.random, which is banned for game logic). */
+function randomId(): string {
+  const a = new Uint32Array(2)
+  crypto.getRandomValues(a)
+  return a[0].toString(36) + a[1].toString(36)
+}

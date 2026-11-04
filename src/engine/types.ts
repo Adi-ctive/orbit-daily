@@ -2,7 +2,7 @@ import type { Category } from '../games/catalog'
 import type { Ratings } from './ratings'
 import type { SrsState } from './srs'
 
-export type Phase = 'warmup' | 'core' | 'aptitude' | 'explainer' | 'boss'
+export type Phase = 'warmup' | 'core' | 'aptitude' | 'explainer' | 'boss' | 'bonus'
 
 export interface RoundSpec {
   phase: Phase
@@ -14,6 +14,8 @@ export interface RoundSpec {
   seed: string
   /** Explainer rounds: the explainer id. */
   items?: string[]
+  /** Shown on the round intro, such as a rematch note. */
+  note?: string
 }
 
 export interface RoundRecord {
@@ -41,6 +43,8 @@ export interface DayRecord {
   inRound: boolean
   /** The debrief was shown and closed. */
   debriefed?: boolean
+  /** The planned rounds are done. Extra rounds can follow until the time limit. */
+  planDone?: boolean
 }
 
 export interface Settings {
@@ -77,6 +81,8 @@ export interface Profile {
   coreHistory: Record<string, string[]>
   settings: Settings
   installHintSeen: boolean
+  /** Random per-player salt, so each player gets their own mix of games. */
+  salt?: string
 }
 
 export function defaultSettings(): Settings {
