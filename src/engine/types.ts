@@ -2,7 +2,7 @@ import type { Category } from '../games/catalog'
 import type { Ratings } from './ratings'
 import type { SrsState } from './srs'
 
-export type Phase = 'warmup' | 'core' | 'explainer' | 'boss'
+export type Phase = 'warmup' | 'core' | 'aptitude' | 'explainer' | 'boss'
 
 export interface RoundSpec {
   phase: Phase

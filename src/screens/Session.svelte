@@ -23,7 +23,7 @@
 
   const round = $derived(app.currentRound)
   const day = $derived(app.day)
-  const phaseLabel: Record<string, string> = { warmup: 'Warm-up', core: 'Core', explainer: 'Explainer', boss: 'Boss' }
+  const phaseLabel: Record<string, string> = { warmup: 'Warm-up', core: 'Core', aptitude: 'Aptitude', explainer: 'Explainer', boss: 'Boss' }
 
   $effect(() => {
     const r = round

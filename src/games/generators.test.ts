@@ -15,7 +15,7 @@ const env = (globalThis as { process?: { env: Record<string, string | undefined>
 const SEEDS = Number(env.GEN_SEEDS ?? 1000)
 
 describe('every game generator', () => {
-  for (const g of CATALOG) {
+  for (const g of [...CATALOG, { id: 'aptitude' }]) {
     it(`${g.id}: ${SEEDS} seeds are deterministic, verified and fast`, async () => {
       const m = await loadGame(g.id)
       // Warm the JIT so the timing measures the generator, not first-call compile.

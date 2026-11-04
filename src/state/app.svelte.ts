@@ -13,9 +13,10 @@ import {
   markCompleted,
   startRound,
 } from '../engine/lock'
+import { migrateDay } from '../engine/migrate'
 import { defaultRatings, updateRating } from '../engine/ratings'
 import { defaultSettings, type DayRecord, type Profile, type RoundRecord, type RoundSpec } from '../engine/types'
-import { catalogEntry, type Category } from '../games/catalog'
+import type { Category } from '../games/catalog'
 import { addDays, appClock } from '../lib/clock'
 import { dev } from '../lib/dev'
 import { setHapticsEnabled } from '../lib/haptics'
@@ -111,6 +112,18 @@ class App {
     applyFreezes(this.profile, n.date)
     await this.saveProfile()
     this.day = await load<DayRecord | null>(dayKey(n.date), null)
+    if (this.day) {
+      // A mission saved by an older version may name rounds that no longer exist.
+      const { GAME_IDS } = await import('../games/registry')
+      const { pickExplainer } = await import('../content/explainers')
+      const [y, m, dd] = n.date.split('-').map(Number)
+      const ex = pickExplainer(Math.round(Date.UTC(y, m - 1, dd) / 86_400_000), new Set(this.profile.seenCards))
+      const mig = migrateDay(this.day, new Set(GAME_IDS), ex?.id ?? null)
+      if (mig.changed) {
+        this.day = mig.day
+        await this.saveDay()
+      }
+    }
     if (this.day?.inRound) {
       // Reloaded mid-round: that round restarts with the same level.
       this.day.inRound = false
@@ -214,9 +227,9 @@ class App {
     if (!d) return
     this.inRound = false
     const p = this.profile
-    const entry = catalogEntry(rec.gameId)
-    if (entry) {
-      const cat: Category = entry.category
+    // Every scored round (including Aptitude, which counts as math) moves its skill rating.
+    if (rec.category !== 'explainer') {
+      const cat: Category = rec.category
       const played = p.roundsPlayed[cat] ?? 0
       p.ratings[cat] = updateRating(p.ratings[cat], d.plan[d.index]?.difficulty ?? 0.5, rec.score, played)
       p.roundsPlayed[cat] = played + 1

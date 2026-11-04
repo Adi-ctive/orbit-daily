@@ -493,3 +493,44 @@ h3 {
   width: 100%;
   margin-top: 8px;
 }
+.iw-rule {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+  color: var(--warm);
+  font-weight: 600;
+}
+
+/* Aptitude Sprint */
+.apt-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-hi);
+  overflow: hidden;
+}
+.apt-bar span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--accent);
+}
+.apt-q {
+  font-weight: 550;
+  font-size: 1.05rem;
+}
+.apt-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+.apt-choices .g-btn {
+  min-height: 56px;
+}
+/* A compact wide picture panel, so the question and choices sit close to it. */
+.apt .g-canvas {
+  flex: none;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+}

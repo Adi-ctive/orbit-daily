@@ -20,6 +20,7 @@ const loaders: Record<string, Loader> = {
   'star-sticks': () => import('./starSticks') as Promise<{ default: GameModule<Level> }>,
   'riddle-bank': () => import('./riddleBank') as Promise<{ default: GameModule<Level> }>,
   'isobar-wind': () => import('./isobarWind') as Promise<{ default: GameModule<Level> }>,
+  aptitude: () => import('./aptitude') as Promise<{ default: GameModule<Level> }>,
   explainer: () => import('./explainer') as Promise<{ default: GameModule<Level> }>,
 }
 

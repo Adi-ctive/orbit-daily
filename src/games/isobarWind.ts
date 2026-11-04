@@ -23,18 +23,14 @@ interface Trial {
   py: number
   north: boolean
   dir: number
-  strength: number
 }
 interface L {
   trials: Trial[]
 }
 
 export const COMPASS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
-const STRENGTH = ['Light', 'Moderate', 'Strong']
+const NAMES = ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west']
 const FRICTION = (25 * Math.PI) / 180
-/** hPa per map width; thresholds for strength classes. */
-const LIGHT_MAX = 28
-const MOD_MAX = 60
 
 export function pressure(cs: Centre[], x: number, y: number): number {
   let p = 1012
@@ -79,32 +75,46 @@ export function sector(angle: number): { s: number; off: number } {
   return { s, off }
 }
 
+/** One clear high and one clear low, with the point somewhere between them. */
 function makeTrial(rng: RNG): Trial | null {
-  const k = rng.int(2, 4)
-  const centres: Centre[] = []
-  for (let i = 0; i < k; i++) {
-    centres.push({ x: rng.range(0.1, 0.9), y: rng.range(0.1, 0.9), amp: (rng.bool() ? 1 : -1) * rng.range(10, 26), sigma: rng.range(0.14, 0.26) })
-  }
-  const north = rng.bool(0.6)
+  const hx = rng.range(0.15, 0.85)
+  const hy = rng.range(0.15, 0.85)
+  let lx = 0
+  let ly = 0
   for (let g = 0; g < 30; g++) {
-    const px = rng.range(0.2, 0.8)
-    const py = rng.range(0.2, 0.8)
-    if (centres.some((c) => Math.hypot(c.x - px, c.y - py) < 0.1)) continue
+    lx = rng.range(0.15, 0.85)
+    ly = rng.range(0.15, 0.85)
+    if (Math.hypot(lx - hx, ly - hy) > 0.5) break
+  }
+  if (Math.hypot(lx - hx, ly - hy) <= 0.5) return null
+  const centres: Centre[] = [
+    { x: hx, y: hy, amp: rng.range(14, 24), sigma: rng.range(0.2, 0.28) },
+    { x: lx, y: ly, amp: -rng.range(14, 24), sigma: rng.range(0.2, 0.28) },
+  ]
+  const north = rng.bool(0.55)
+  for (let g = 0; g < 30; g++) {
+    // Between the two centres, nudged sideways a little.
+    const k = rng.range(0.35, 0.65)
+    const side = rng.range(-0.14, 0.14)
+    const dx = lx - hx
+    const dy = ly - hy
+    const len = Math.hypot(dx, dy)
+    const px = hx + dx * k - (dy / len) * side
+    const py = hy + dy * k + (dx / len) * side
+    if (px < 0.12 || px > 0.88 || py < 0.12 || py > 0.88) continue
+    if (centres.some((c) => Math.hypot(c.x - px, c.y - py) < 0.15)) continue
     const [gx, gy] = gradient(centres, px, py)
-    const mag = Math.hypot(gx, gy)
-    if (mag < 8) continue
+    if (Math.hypot(gx, gy) < 8) continue
     const { s, off } = sector(windAngle(centres, px, py, north))
     if (off > (15 * Math.PI) / 180) continue
-    const nearEdge = [LIGHT_MAX, MOD_MAX].some((t) => Math.abs(mag - t) / t < 0.15)
-    if (nearEdge || mag > 140) continue
-    return { centres, px, py, north, dir: s, strength: mag < LIGHT_MAX ? 0 : mag < MOD_MAX ? 1 : 2 }
+    return { centres, px, py, north, dir: s }
   }
   return null
 }
 
 function generate(rng: RNG, _d: number): L {
   const trials: Trial[] = []
-  for (let g = 0; g < 80 && trials.length < 3; g++) {
+  for (let g = 0; g < 120 && trials.length < 4; g++) {
     const t = makeTrial(rng)
     if (t) trials.push(t)
   }
@@ -113,12 +123,10 @@ function generate(rng: RNG, _d: number): L {
 
 function verify(l: L): boolean {
   return (
-    l.trials.length === 3 &&
+    l.trials.length === 4 &&
     l.trials.every((t) => {
       const { s, off } = sector(windAngle(t.centres, t.px, t.py, t.north))
-      const [gx, gy] = gradient(t.centres, t.px, t.py)
-      const mag = Math.hypot(gx, gy)
-      return s === t.dir && off <= (15 * Math.PI) / 180 && (mag < LIGHT_MAX ? 0 : mag < MOD_MAX ? 1 : 2) === t.strength
+      return t.centres.length === 2 && t.centres[0].amp > 0 && t.centres[1].amp < 0 && s === t.dir && off <= (15 * Math.PI) / 180
     })
   )
 }
@@ -165,7 +173,7 @@ const mod: GameModule<L> = {
   id: 'isobar-wind',
   category: 'stem',
   title: 'Isobar Wind Reader',
-  howTo: 'Lines join places of equal air pressure (every 4 hPa). At the marked point, which way does the surface wind blow, and how strong is it? Check the hemisphere.',
+  howTo: 'Wind circles highs and lows instead of blowing straight between them. In the north, stand with the wind at your back and the low is on your left. In the south, it is on your right. Near the ground the wind also bends a little toward the low. Pick where it blows at the marker.',
   generate,
   verify,
   mount(ctx) {
@@ -174,8 +182,6 @@ const mod: GameModule<L> = {
     const L = ctx.level
     let i = 0
     let score = 0
-    let dirOk = 0
-    let strOk = 0
     const notes: string[] = []
     let map: HTMLCanvasElement | null = null
     let reveal = false
@@ -213,59 +219,46 @@ const mod: GameModule<L> = {
       reveal = false
       map = null
       draw()
-      st.hud.textContent = `Map ${i + 1} / ${L.trials.length} · wind blowing toward…`
-      let pickedDir = -1
+      st.hud.textContent = `Map ${i + 1} / ${L.trials.length} · ${t.north ? 'northern' : 'southern'} hemisphere · wind blows toward…`
+      const rule = el('p', { class: 'iw-rule', text: t.north ? 'North: wind at your back, low on your LEFT.' : 'South: wind at your back, low on your RIGHT.' })
       const dirGrid = el('div', { class: 'iw-grid' })
-      const order = [7, 0, 1, 6, -1, 2, 5, 4, 3]
-      for (const k of order) {
+      for (const k of [7, 0, 1, 6, -1, 2, 5, 4, 3]) {
         if (k < 0) {
           dirGrid.append(el('span', { class: 'iw-mid', text: '✛' }))
           continue
         }
         const b = button(COMPASS[k], () => {
-          pickedDir = k
-          ctx.fx.sfx('tap')
-          st.hud.textContent = 'How strong?'
+          const ok = k === t.dir
+          if (ok) score++
+          ctx.fx.sfx(ok ? 'correct' : 'wrong')
+          ctx.fx.haptic(ok ? 'correct' : 'wrong')
+          reveal = true
+          draw()
+          const low = t.centres[1]
+          const lowDir = sector(Math.atan2(low.y - t.py, low.x - t.px)).s
+          const note = `The low is to the ${NAMES[lowDir]}. In the ${t.north ? 'north' : 'south'} the wind keeps it on its ${t.north ? 'left' : 'right'}, bending slightly toward it, so it blows toward the ${NAMES[t.dir]}.`
+          notes.push(note)
+          st.hud.textContent = ok ? '✓ Correct' : `✗ It blows toward ${COMPASS[t.dir]}`
           st.controls.replaceChildren(
-            ...STRENGTH.map((s, j) =>
-              button(s, () => {
-                const dOk = pickedDir === t.dir
-                const sOk = j === t.strength
-                dirOk += dOk ? 1 : 0
-                strOk += sOk ? 1 : 0
-                score += (dOk ? 0.7 : 0) + (sOk ? 0.3 : 0)
-                ctx.fx.sfx(dOk ? 'correct' : 'wrong')
-                ctx.fx.haptic(dOk ? 'correct' : 'wrong')
-                reveal = true
-                draw()
-                const side = t.north ? 'left' : 'right'
-                const from = COMPASS[(t.dir + 4) % 8]
-                const note = `Toward ${COMPASS[t.dir]} (a ${from === 'N' ? 'northerly' : from === 'S' ? 'southerly' : from === 'E' ? 'easterly' : from === 'W' ? 'westerly' : from + ' wind'}), ${STRENGTH[t.strength].toLowerCase()}. With your back to the wind in the ${t.north ? 'north' : 'south'}, low pressure is on your ${side}.`
-                notes.push(note)
-                st.hud.textContent = `${dOk ? '✓' : '✗'} direction · ${sOk ? '✓' : '✗'} strength`
-                st.controls.replaceChildren(
-                  el('p', { class: 'g-text', text: note }),
-                  button(i + 1 < L.trials.length ? 'Next map' : 'Finish', () => {
-                    i++
-                    if (i < L.trials.length) ask()
-                    else
-                      ctx.finish({
-                        score: score / L.trials.length,
-                        correct: dirOk,
-                        total: L.trials.length,
-                        answer: `${dirOk}/${L.trials.length} directions and ${strOk}/${L.trials.length} strengths right.`,
-                        explanation: `Air flows along isobars because Earth's spin (the Coriolis effect) deflects it, right in the north and left in the south. Ground friction turns it about 25° toward the low. Closer isobars mean a steeper pressure slope and stronger wind. ${notes.join(' ')}`,
-                      })
-                  }, 'big'),
-                )
-              }),
-            ),
+            el('p', { class: 'g-text', text: note }),
+            button(i + 1 < L.trials.length ? 'Next map' : 'Finish', () => {
+              i++
+              if (i < L.trials.length) ask()
+              else
+                ctx.finish({
+                  score: score / L.trials.length,
+                  correct: score,
+                  total: L.trials.length,
+                  answer: `${score} of ${L.trials.length} wind directions right.`,
+                  explanation: 'Earth\'s spin deflects moving air (the Coriolis effect), to the right in the north and to the left in the south. So instead of rushing straight from high to low, wind runs along the isobars around them. Friction near the ground turns it about 25° toward the low. Closer lines mean stronger wind.',
+                })
+            }, 'big'),
           )
         })
         b.setAttribute('aria-label', 'Toward ' + COMPASS[k])
         dirGrid.append(b)
       }
-      st.controls.replaceChildren(dirGrid)
+      st.controls.replaceChildren(rule, dirGrid)
     }
     ask()
     const ro = new ResizeObserver(() => draw())

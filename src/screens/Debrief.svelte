@@ -1,7 +1,7 @@
 <script lang="ts">
   import { audio } from '../audio/bus'
   import { streakLength } from '../engine/lock'
-  import { CATEGORY_LABEL, catalogEntry, type Category } from '../games/catalog'
+  import { CATEGORY_LABEL, type Category } from '../games/catalog'
   import { haptic } from '../lib/haptics'
   import { copyShare, shareText } from '../lib/share'
   import { app } from '../state/app.svelte'
@@ -13,9 +13,8 @@
   const skills = $derived.by(() => {
     const m: Record<string, number[]> = {}
     for (const r of day?.results ?? []) {
-      const e = catalogEntry(r.gameId)
-      if (!e) continue
-      const key = CATEGORY_LABEL[e.category as Category]
+      if (r.category === 'explainer') continue
+      const key = CATEGORY_LABEL[r.category as Category]
       m[key] = [...(m[key] ?? []), r.score]
     }
     return Object.entries(m).map(([k, v]) => ({ k, s: v.reduce((a, b) => a + b, 0) / v.length }))

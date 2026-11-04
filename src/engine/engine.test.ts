@@ -231,3 +231,28 @@ describe('srs', () => {
     expect(dueItems(all, '2026-11-02', 5)).toEqual(['a', 'b'])
   })
 })
+
+describe('migration of old saved missions', () => {
+  it('turns star-chart into the explainer, drops review, keeps the position', async () => {
+    const { migrateDay } = await import('./migrate')
+    const old = {
+      ...day('2026-11-03', 0),
+      index: 3,
+      plan: [
+        { phase: 'warmup', gameId: 'catch-comet', category: 'reflex', difficulty: 0.3, seed: 's' },
+        { phase: 'review', gameId: 'review', category: 'review', difficulty: 0.5, seed: 's' },
+        { phase: 'core', gameId: 'aliens', category: 'logic', difficulty: 0.5, seed: 's' },
+        { phase: 'card', gameId: 'star-chart', category: 'card', difficulty: 0.5, seed: 's' },
+        { phase: 'boss', gameId: 'void-beast', category: 'maze', difficulty: 0.7, seed: 's' },
+      ],
+    } as unknown as DayRecord
+    const known = new Set(['catch-comet', 'aliens', 'void-beast', 'explainer'])
+    const { day: d, changed } = migrateDay(old, known, 'duverger')
+    expect(changed).toBe(true)
+    expect(d.plan.map((r) => r.gameId)).toEqual(['catch-comet', 'aliens', 'explainer', 'void-beast'])
+    // Two rounds were done before index 3 (warm-up and aliens; review was dropped).
+    expect(d.index).toBe(2)
+    expect(d.plan[d.index].gameId).toBe('explainer')
+    expect(migrateDay(d, known, 'duverger').changed).toBe(false)
+  })
+})

@@ -68,6 +68,9 @@ export function compose(input: ComposeInput): RoundSpec[] {
     plan.push({ phase: 'core', gameId: g.id, category: g.category, difficulty: diff(g.category), seed: levelSeed(seed, g.id, 'core') })
   }
 
+  // Aptitude every day: six timed quantitative questions, scored as math.
+  plan.push({ phase: 'aptitude', gameId: 'aptitude', category: 'math', difficulty: diff('math'), seed: levelSeed(seed, 'aptitude', 'aptitude') })
+
   if (input.explainerId) {
     plan.push({ phase: 'explainer', gameId: 'explainer', category: 'explainer', difficulty: 0.5, seed: levelSeed(seed, 'explainer', 'explainer'), items: [input.explainerId] })
   }
