@@ -33,8 +33,10 @@ export default defineConfig(({ mode }) => ({
         // Only the Latin font files go into the offline cache.
         globIgnores: ['**/*cyrillic*', '**/*greek*', '**/*vietnamese*', '**/*latin-ext*'],
         navigateFallback: '/index.html',
-        // The first install controls the open page at once, so it works offline without a reload.
+        // A new version takes over as soon as it downloads, so a broken old version can never
+        // trap a phone. The open page keeps running its own code until the next reload.
         clientsClaim: true,
+        skipWaiting: true,
         cleanupOutdatedCaches: true,
       },
       devOptions: { enabled: false },

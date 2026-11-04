@@ -27,7 +27,17 @@ const loaders: Record<string, Loader> = {
 export async function loadGame(id: string): Promise<GameModule<Level>> {
   const l = loaders[id]
   if (!l) throw new Error('Unknown game ' + id)
-  return (await l()).default
+  try {
+    return (await l()).default
+  } catch (e) {
+    // An update replaced this game's file while the page was open. Progress is saved,
+    // so reload into the new version instead of crashing.
+    if (typeof location !== 'undefined' && /dynamically imported|Importing a module|Failed to fetch/i.test(String(e))) {
+      location.reload()
+      return new Promise<never>(() => {})
+    }
+    throw e
+  }
 }
 
 export const GAME_IDS = Object.keys(loaders)
