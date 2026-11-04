@@ -1,72 +1,71 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { planetAsync } from '../art/artClient'
-  import { drawPlanetFrame, planetSheetSize, planetSpecFromSeed, renderMoon, type PlanetSprite } from '../art/planet'
-  import { PixelCanvas } from '../art/pixelCanvas'
-  import { Loop } from '../games/kit'
-  import { RNG } from '../lib/rng'
+  import { createPlanet, drawFallbackPlanet, lookFromSeed } from '../art/planetGL'
   import { app } from '../state/app.svelte'
 
   interface Props {
     seed: string
-    radius?: number
+    size?: number
     sleeping?: boolean
     label?: string
   }
-  let { seed, radius = 34, sleeping = false, label = "Today's planet" }: Props = $props()
+  let { seed, size = 240, sleeping = false, label = "Today's planet" }: Props = $props()
 
-  let host: HTMLDivElement
+  let canvas: HTMLCanvasElement
 
   onMount(() => {
-    const spec = planetSpecFromSeed(seed, radius)
-    let sprite: PlanetSprite | null = null
-    void planetAsync(spec, 48).then((s) => (sprite = s))
-    const size = planetSheetSize(spec) + 40
-    const pc = new PixelCanvas(host, { minW: size, minH: size, fixed: true })
-    const moons = Array.from({ length: spec.moons }, (_, i) => {
-      const r = new RNG(seed + '/moon' + i)
-      return {
-        img: renderMoon(seed + i, r.int(3, 5)),
-        dist: radius + 10 + i * 9,
-        speed: r.range(0.25, 0.5) * (i % 2 ? -1 : 1),
-        phase: r.range(0, 6.28),
-        tilt: r.range(0.25, 0.45),
+    const look = lookFromSeed(seed)
+    let p: Awaited<ReturnType<typeof createPlanet>> = null
+    let gone = false
+    let raf = 0
+    let last = 0
+    let ro: ResizeObserver | null = null
+    const t0 = performance.now()
+    // The planet turns slowly, so about 20 redraws a second is plenty and saves battery.
+    const frame = (now: number) => {
+      if (p && now - last > 48 && document.visibilityState === 'visible') {
+        last = now
+        p.draw((now - t0) / 1000 + 4)
       }
-    })
-    const c = size / 2
-    const loop = new Loop((_dt, t) => {
-      if (document.visibilityState !== 'visible') return
-      const ctx = pc.ctx
-      ctx.clearRect(0, 0, size, size)
-      const tt = app.reducedMotion ? 0 : t
-      const frame = (tt * (sleeping ? 2 : 5)) | 0
-      // Moons behind the planet first.
-      for (const m of moons) {
-        const a = m.phase + tt * m.speed
-        if (Math.sin(a) < 0) ctx.drawImage(m.img, Math.round(c + Math.cos(a) * m.dist - m.img.width / 2), Math.round(c + Math.sin(a) * m.dist * m.tilt - m.img.height / 2))
+      raf = requestAnimationFrame(frame)
+    }
+    // Build the shader after first paint, so it never delays the page appearing.
+    const startT = window.setTimeout(async () => {
+      p = await createPlanet(canvas, look, sleeping ? 1 : 0)
+      if (gone) {
+        p?.destroy()
+        return
       }
-      ctx.globalAlpha = sleeping ? 0.7 : 1
-      if (sprite) drawPlanetFrame(ctx, sprite, frame, c, c)
-      ctx.globalAlpha = 1
-      for (const m of moons) {
-        const a = m.phase + tt * m.speed
-        if (Math.sin(a) >= 0) ctx.drawImage(m.img, Math.round(c + Math.cos(a) * m.dist - m.img.width / 2), Math.round(c + Math.sin(a) * m.dist * m.tilt - m.img.height / 2))
+      if (!p) {
+        drawFallbackPlanet(canvas, look)
+        return
       }
-    })
+      p.draw(4)
+      ro = new ResizeObserver(() => {
+        p?.resize()
+        p?.draw(4)
+      })
+      ro.observe(canvas)
+      if (!app.reducedMotion) raf = requestAnimationFrame(frame)
+    }, 600)
     return () => {
-      loop.stop()
-      pc.destroy()
+      gone = true
+      clearTimeout(startT)
+      cancelAnimationFrame(raf)
+      ro?.disconnect()
+      p?.destroy()
     }
   })
 </script>
 
-<div class="planet" bind:this={host} role="img" aria-label={label}></div>
+<div class="planet" role="img" aria-label={label}>
+  <canvas bind:this={canvas} style:width="min({size}px, 64vw)" style:height="min({size}px, 64vw)" aria-hidden="true"></canvas>
+</div>
 
 <style>
   .planet {
-    width: 100%;
-    height: clamp(180px, 34dvh, 320px);
     display: grid;
     place-items: center;
+    padding: 8px 0;
   }
 </style>

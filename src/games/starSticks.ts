@@ -87,7 +87,7 @@ interface L {
 const digits = (n: number) => String(n).split('').map((ch) => DIGIT[Number(ch)])
 
 function generate(rng: RNG, d: number): L {
-  const max = d > 0.5 ? 19 : 9
+  const max = d > 0.3 ? 49 : 19
   for (let g = 0; g < 200; g++) {
     const plus = rng.bool()
     const a = rng.int(0, max)
@@ -270,7 +270,11 @@ const mod: GameModule<L> = {
           // A star tip at one end.
           rect(g, s.x, s.y, Math.min(2, s.w), Math.min(2, s.h), RAMPS.star[4])
         } else if (held) {
-          for (let y = 0; y < s.h; y++) for (let x = 0; x < s.w; x++) if ((x + y) % 3 === 0) rect(g, s.x + x, s.y + y, 1, 1, RAMPS.indigo[2])
+          g.strokeStyle = RAMPS.indigo[3]
+          g.lineWidth = 0.6
+          g.setLineDash([1.5, 1.5])
+          g.strokeRect(s.x + 0.3, s.y + 0.3, s.w - 0.6, s.h - 0.6)
+          g.setLineDash([])
         }
       }
       // Fixed '=' sign.

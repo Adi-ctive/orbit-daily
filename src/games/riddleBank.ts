@@ -21,8 +21,9 @@ interface L {
 }
 
 function generate(rng: RNG, d: number): L {
-  const want = Math.max(1, Math.min(3, Math.round(1 + d * 2)))
-  const near = RIDDLES.filter((r) => Math.abs(r.difficulty - want) <= 1)
+  // Only the harder riddles: this is for adults, not a school quiz.
+  const want = d > 0.6 ? 3 : 2
+  const near = RIDDLES.filter((r) => r.difficulty >= want)
   const picked = rng.shuffle(near.length >= 3 ? near : RIDDLES).slice(0, 3)
   return { picks: picked.map((r) => ({ id: r.id, order: rng.shuffle([r.answer, ...r.choices]) })) }
 }

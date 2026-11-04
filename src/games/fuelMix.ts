@@ -118,11 +118,12 @@ export function solve24(nums: number[], target = 24): { count: number; expr: str
 
 function generate(rng: RNG, d: number): L {
   const sets: number[][] = []
-  const max = d > 0.6 ? 13 : 9
+  const max = d > 0.4 ? 13 : 10
   // Fewer solution paths = harder.
-  const band = d < 0.3 ? [20, 999] : d < 0.65 ? [6, 40] : [1, 12]
+  // Fewer solution paths = harder. Even the easy band avoids trivial sets.
+  const band = d < 0.3 ? [6, 60] : d < 0.65 ? [2, 16] : [1, 6]
   let guard = 0
-  while (sets.length < 3 && guard++ < 400) {
+  while (sets.length < 4 && guard++ < 600) {
     const s = [rng.int(1, max), rng.int(1, max), rng.int(1, max), rng.int(1, max)].sort((a, b) => a - b)
     if (sets.some((o) => o.join() === s.join())) continue
     const count = count24(s)
@@ -132,7 +133,7 @@ function generate(rng: RNG, d: number): L {
 }
 
 function verify(l: L): boolean {
-  return l.sets.length === 3 && l.sets.every((s) => s.length === 4 && count24(s, l.target) > 0)
+  return l.sets.length === 4 && l.sets.every((s) => s.length === 4 && count24(s, l.target) > 0)
 }
 
 const fmt = ([n, d]: Frac) => (d === 1 ? String(n) : `${n}/${d}`)

@@ -42,9 +42,9 @@ export function weekdayByDate(y: number, m: number, d: number): number {
 }
 
 function generate(rng: RNG, d: number): L {
-  const span = Math.round(15 + d * 185)
+  const span = Math.round(60 + d * 140)
   const dates: D[] = []
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 10; i++) {
     const y = Math.max(1800, Math.min(2199, 2026 + rng.int(-span, span)))
     const m = rng.int(1, 12)
     dates.push({ y, m, d: rng.int(1, daysIn(y, m)) })
@@ -54,7 +54,7 @@ function generate(rng: RNG, d: number): L {
 
 function verify(l: L): boolean {
   return (
-    l.dates.length === 8 &&
+    l.dates.length === 10 &&
     l.dates.every((x) => x.y >= 1800 && x.y <= 2199 && x.d >= 1 && x.d <= daysIn(x.y, x.m) && weekdayByRule(x.y, x.m, x.d) === weekdayByDate(x.y, x.m, x.d))
   )
 }

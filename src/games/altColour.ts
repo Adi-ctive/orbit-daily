@@ -2,7 +2,7 @@
 // (diamond pattern) or blue (dot pattern). Each link you take must be a
 // different colour from the last. BFS over (cell, last colour) checks it, and
 // levels a greedy walker can solve are rejected.
-import { ball, halo, rect } from '../art/draw'
+import { ball, disc, halo, line, polygon, rect } from '../art/draw'
 import { C, RAMPS } from '../art/palette'
 import { drawText } from '../art/pixelFont'
 import type { RNG } from '../lib/rng'
@@ -70,8 +70,8 @@ export function greedySolves(l: Pick<L, 'n' | 'hl' | 'vl'>): boolean {
 }
 
 function generate(rng: RNG, d: number): L {
-  const n = dInt(d, 5, 7)
-  const lo = dInt(d, n * 2, n * 3 + 2)
+  const n = dInt(d, 6, 8)
+  const lo = dInt(d, n * 2 + 2, n * 3 + 4)
   let best: L = { n, hl: [], vl: [], minLen: -1 }
   for (let tries = 0; tries < 60; tries++) {
     const hl = Array.from({ length: n * (n - 1) }, () => (rng.bool(0.2) ? -1 : rng.int(0, 1)))
@@ -195,29 +195,11 @@ const mod: GameModule<L> = {
         const [x1, y1] = center(b)
         const red = col === 0
         const base = red ? RAMPS.lava[2] : RAMPS.indigo[3]
-        const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0))
-        for (let k = 0; k <= n; k++) {
-          const x = Math.round(x0 + ((x1 - x0) * k) / n)
-          const y = Math.round(y0 + ((y1 - y0) * k) / n)
-          g.fillStyle = base
-          g.fillRect(x, y, 1, 1)
-          if (x0 === x1) g.fillRect(x - 1, y, 3, 1)
-          else g.fillRect(x, y - 1, 1, 3)
-        }
-        const mx = Math.round((x0 + x1) / 2)
-        const my = Math.round((y0 + y1) / 2)
-        if (red) {
-          g.fillStyle = RAMPS.lava[3]
-          g.fillRect(mx - 1, my, 3, 1)
-          g.fillRect(mx, my - 1, 1, 3)
-          g.fillRect(mx - 2, my, 1, 1)
-          g.fillRect(mx + 2, my, 1, 1)
-          g.fillRect(mx, my - 2, 1, 1)
-          g.fillRect(mx, my + 2, 1, 1)
-        } else {
-          g.fillStyle = RAMPS.cyan[1]
-          g.fillRect(mx - 1, my - 1, 3, 3)
-        }
+        line(g, x0, y0, x1, y1, base, 0, 2.2)
+        const mx = (x0 + x1) / 2
+        const my = (y0 + y1) / 2
+        if (red) polygon(g, [[mx, my - 3], [mx + 3, my], [mx, my + 3], [mx - 3, my]], RAMPS.lava[3])
+        else disc(g, mx, my, 2.4, RAMPS.cyan[1])
       }
       for (let y = 0; y < L.n; y++)
         for (let x = 0; x < L.n - 1; x++) {

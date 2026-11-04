@@ -78,7 +78,7 @@
       </div>
     {/if}
   </div>
-  <p class="muted small center">ORBIT is a daily challenge for curiosity and fun. It makes no claims about improving memory, IQ or health.</p>
+  <p class="muted small center">ORBIT is a daily challenge for focus and curiosity. It makes no claims about improving memory, IQ or health.</p>
 </section>
 
 <style>
@@ -99,13 +99,16 @@
   select,
   input[type='range'] {
     min-height: 40px;
-    background: var(--panel-hi);
-    border: 2px solid var(--edge-hi);
+    background: var(--surface-hi);
+    border: 1px solid var(--border-hi);
+    border-radius: 10px;
+    padding: 0 8px;
     accent-color: var(--accent);
     max-width: 55%;
   }
   .danger {
-    background: #7a1a1a;
+    background: rgb(255 122 107 / 0.25);
+    border-color: var(--bad);
   }
   .small {
     font-size: 0.85rem;

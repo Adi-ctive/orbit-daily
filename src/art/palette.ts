@@ -1,4 +1,4 @@
-// Master palette (48 colours). Every procedural and hand-made asset uses these.
+// Shared colour palette for the game canvases: calm, realistic space tones.
 
 export type RGB = readonly [number, number, number]
 
@@ -9,17 +9,17 @@ function hex(h: string): RGB {
 
 /** Named ramps, darkest first. Ramps are what the shaders index into. */
 export const RAMPS = {
-  void: ['#05030f', '#0b0820', '#140f33', '#1d1647', '#2a1f5e'],
-  indigo: ['#2c2470', '#3b3591', '#4f4cb0', '#6b6fd0', '#8d97e6'],
-  violet: ['#3a1a5c', '#55247a', '#73319a', '#9446b5', '#b86ad0'],
-  teal: ['#0c2b3a', '#114552', '#18636b', '#22867f', '#36a893'],
-  cyan: ['#3cc6d6', '#7fe3ea', '#c2f5f4'],
-  magenta: ['#5c1550', '#86206b', '#b0307f', '#d84d93', '#f07fb0'],
-  amber: ['#6b2e12', '#9a4a17', '#c86f1f', '#f0a03a', '#ffcf6b', '#fff0b8'],
-  star: ['#7a6f9e', '#a99fc4', '#d8cfe0', '#f4ecdc', '#fff9ec'],
-  green: ['#1d3d2a', '#2e6b3a', '#4f9a46', '#8ccf5e'],
-  lava: ['#3d0d14', '#7a1a1a', '#c23a22', '#ff6a2a'],
-  earth: ['#4a3326', '#7a5a3c'],
+  void: ['#03050b', '#070b17', '#0c1224', '#141c33', '#1d2742'],
+  indigo: ['#25315c', '#33427a', '#46599c', '#6680c4', '#8fa8e6'],
+  violet: ['#2c2245', '#3e3062', '#56448a', '#7563b3', '#9a8ad6'],
+  teal: ['#0c2a33', '#12404a', '#1b5d66', '#2b8088', '#45a6a8'],
+  cyan: ['#6cc7e0', '#9fdcf0', '#d6f2fb'],
+  magenta: ['#4a1d3a', '#6c2a54', '#93406f', '#c06192', '#e08db5'],
+  amber: ['#5a2f12', '#8a4c1c', '#c07a2c', '#efa94a', '#ffc978', '#ffe6b8'],
+  star: ['#5c6478', '#8d96ab', '#bfc6d6', '#e9edf5', '#ffffff'],
+  green: ['#173a2a', '#24613f', '#3f9a62', '#6fdc9b'],
+  lava: ['#3a0f10', '#6e1f1b', '#c2412e', '#ff7a6b'],
+  earth: ['#3d2c22', '#6a4d36'],
 } as const
 
 export type RampName = keyof typeof RAMPS

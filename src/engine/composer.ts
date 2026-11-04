@@ -1,5 +1,5 @@
 // Builds the day's session from the date seed. Pure and deterministic.
-import { CORE_ROUNDS, NO_REPEAT_DAYS, REVIEW_ITEMS_MAX, SEED_PREFIX } from '../config'
+import { CORE_ROUNDS, NO_REPEAT_DAYS, SEED_PREFIX } from '../config'
 import { CATALOG, type CatalogEntry, type Category } from '../games/catalog'
 import { addDays } from '../lib/clock'
 import { RNG } from '../lib/rng'
@@ -11,11 +11,8 @@ export interface ComposeInput {
   ratings: Ratings
   /** Core game ids for previous dates. */
   coreHistory: Record<string, string[]>
-  /** Due review item ids (card quizzes), already capped. */
-  dueReviews: string[]
-  /** Filler quiz ids when fewer than 3 reviews are due. */
-  fillerReviews: string[]
-  cardId: string | null
+  /** Today's explainer id, or null if none is left. */
+  explainerId: string | null
   seedOverride?: string | null
 }
 
@@ -67,19 +64,12 @@ export function compose(input: ComposeInput): RoundSpec[] {
     seed: levelSeed(seed, warm.id, 'warmup'),
   })
 
-  const reviews = input.dueReviews.slice(0, REVIEW_ITEMS_MAX)
-  const need = Math.max(0, 3 - reviews.length)
-  const items = [...reviews, ...input.fillerReviews.slice(0, need)]
-  if (items.length) {
-    plan.push({ phase: 'review', gameId: 'review', category: 'review', difficulty: 0.5, seed: levelSeed(seed, 'review', 'review'), items })
-  }
-
   for (const g of core) {
     plan.push({ phase: 'core', gameId: g.id, category: g.category, difficulty: diff(g.category), seed: levelSeed(seed, g.id, 'core') })
   }
 
-  if (input.cardId) {
-    plan.push({ phase: 'card', gameId: 'star-chart', category: 'card', difficulty: 0.5, seed: levelSeed(seed, 'card', 'card'), items: [input.cardId] })
+  if (input.explainerId) {
+    plan.push({ phase: 'explainer', gameId: 'explainer', category: 'explainer', difficulty: 0.5, seed: levelSeed(seed, 'explainer', 'explainer'), items: [input.explainerId] })
   }
 
   plan.push({

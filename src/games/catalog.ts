@@ -42,8 +42,6 @@ export const CATALOG: readonly CatalogEntry[] = [
   { id: 'isobar-wind', category: 'stem', title: 'Isobar Wind Reader' },
 ]
 
-export const SYSTEM_ROUNDS = { review: 'review', card: 'star-chart' } as const
-
 export function catalogEntry(id: string): CatalogEntry | undefined {
   return CATALOG.find((g) => g.id === id)
 }

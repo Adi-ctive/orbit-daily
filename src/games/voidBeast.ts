@@ -82,9 +82,9 @@ function toggleWall(cells: number[], w: number, c: number, dir: number): void {
 }
 
 function generate(rng: RNG, d: number): L {
-  const w = d > 0.75 ? 7 : 6
+  const w = 7
   const h = w
-  const target = dInt(d, 7, 16)
+  const target = dInt(d, 10, 20)
   const cells = new Array(w * h).fill(0)
   for (let c = 0; c < w * h; c++) {
     const x = c % w
@@ -108,7 +108,7 @@ function generate(rng: RNG, d: number): L {
   lvl.m = rng.pick(cands)
   lvl.minLen = solve(lvl)
   // Hill-climb: toggle interior walls, keep changes that keep it solvable and make it longer.
-  for (let it = 0; it < 160 && lvl.minLen < target; it++) {
+  for (let it = 0; it < 220 && lvl.minLen < target; it++) {
     const c = rng.int(0, w * h - 1)
     const dir = rng.bool() ? 1 : 2
     if ((dir === 1 && c % w === w - 1) || (dir === 2 && Math.floor(c / w) === h - 1)) continue
@@ -121,7 +121,7 @@ function generate(rng: RNG, d: number): L {
 }
 
 function verify(l: L): boolean {
-  return wallsConsistent(l.cells, l.w, l.h) && l.minLen >= 7 && solve(l) === l.minLen && l.p !== l.m
+  return wallsConsistent(l.cells, l.w, l.h) && l.minLen >= 8 && solve(l) === l.minLen && l.p !== l.m
 }
 
 const mod: GameModule<L> = {

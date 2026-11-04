@@ -1,6 +1,6 @@
 // Dead Reckoning: path integration. Watch the ship's turns and thrusts with no
 // trail, then tap where it ended up.
-import { frame, line, ring } from '../art/draw'
+import { frame, halo, line, polygon, ring } from '../art/draw'
 import { C, RAMPS } from '../art/palette'
 import { drawText } from '../art/pixelFont'
 import type { RNG } from '../lib/rng'
@@ -41,12 +41,12 @@ function generate(rng: RNG, d: number): L {
   for (let k = 0; k < 3; k++) {
     let best: Trial | null = null
     for (let tries = 0; tries < 40; tries++) {
-      const n = dInt(d, 3, 7)
+      const n = dInt(d, 4, 8)
       const t: Trial = {
         x: rng.range(0.3, 0.7),
         y: rng.range(0.3, 0.7),
         heading: (rng.int(0, 7) * Math.PI) / 4,
-        legs: Array.from({ length: n }, (_, i) => ({ turn: i === 0 ? 0 : rng.pick(TURNS), len: rng.range(0.14, 0.3) })),
+        legs: Array.from({ length: n }, (_, i) => ({ turn: i === 0 ? 0 : rng.pick(TURNS), len: rng.range(0.12, 0.26) })),
       }
       const pts = pathPoints(t)
       const end = pts[pts.length - 1]
@@ -65,7 +65,7 @@ function verify(l: L): boolean {
     l.trials.length === 3 &&
     l.trials.every((t) => {
       const pts = pathPoints(t)
-      return t.legs.length >= 3 && pts.every((p) => p.x > 0.08 && p.x < 0.92 && p.y > 0.08 && p.y < 0.92)
+      return t.legs.length >= 4 && pts.every((p) => p.x > 0.08 && p.x < 0.92 && p.y > 0.08 && p.y < 0.92)
     })
   )
 }
@@ -73,20 +73,9 @@ function verify(l: L): boolean {
 function shipAt(g: CanvasRenderingContext2D, x: number, y: number, h: number, thrust: boolean): void {
   const c = Math.cos(h)
   const s = Math.sin(h)
-  const P = (u: number, v: number) => [Math.round(x + 2 * (u * c - v * s)), Math.round(y + 2 * (u * s + v * c))]
-  const [ax, ay] = P(6, 0)
-  const [bx, by] = P(-4, -4)
-  const [cx, cy] = P(-4, 4)
-  line(g, ax, ay, bx, by, RAMPS.cyan[1])
-  line(g, ax, ay, cx, cy, RAMPS.cyan[1])
-  line(g, bx, by, cx, cy, RAMPS.cyan[0])
-  g.fillStyle = RAMPS.star[4]
-  g.fillRect(ax, ay, 1, 1)
-  if (thrust) {
-    const [fx, fy] = P(-7, 0)
-    g.fillStyle = RAMPS.amber[4]
-    g.fillRect(fx - 1, fy - 1, 2, 2)
-  }
+  const P = (u: number, v: number): [number, number] => [x + u * c - v * s, y + u * s + v * c]
+  if (thrust) halo(g, ...P(-8, 0), 1, 6, RAMPS.amber[4])
+  polygon(g, [P(9, 0), P(-6, -5.5), P(-3.5, 0), P(-6, 5.5)], RAMPS.cyan[1])
 }
 
 const mod: GameModule<L> = {
@@ -105,8 +94,8 @@ const mod: GameModule<L> = {
     let tt = 0
     let guess: { x: number; y: number } | null = null
     const scores: number[] = []
-    const SPEED = 0.32
-    const TURN_T = 0.35
+    const SPEED = 0.48
+    const TURN_T = 0.22
 
     const timeline = (t: Trial) => {
       // Precompute segment timings: turn, then move.

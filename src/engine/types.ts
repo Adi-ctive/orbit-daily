@@ -2,17 +2,17 @@ import type { Category } from '../games/catalog'
 import type { Ratings } from './ratings'
 import type { SrsState } from './srs'
 
-export type Phase = 'warmup' | 'review' | 'core' | 'card' | 'boss'
+export type Phase = 'warmup' | 'core' | 'explainer' | 'boss'
 
 export interface RoundSpec {
   phase: Phase
   /** Game id, or 'review' / 'star-chart' for system rounds. */
   gameId: string
-  category: Category | 'review' | 'card'
+  category: Category | 'explainer'
   difficulty: number
   /** Level seed. Shared by everyone on the same date for the same game. */
   seed: string
-  /** Review rounds: item ids. Card rounds: the card id. */
+  /** Explainer rounds: the explainer id. */
   items?: string[]
 }
 

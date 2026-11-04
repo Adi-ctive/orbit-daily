@@ -67,3 +67,14 @@ Choices made where the build prompt left room, grouped by phase.
 
 - The daily lock is client-side only. A determined user can bypass it by moving the device clock forward or clearing site data. Clearing data also wipes their streak, which is deterrent enough. Moving the clock *backwards* is caught by the high-water mark. `src/lib/clock.ts` hides time behind a `Clock` interface, so a free Cloudflare Worker time check can be added later.
 - Haptics do nothing on iOS Safari (no Vibration API). It fails silently.
+
+## v2 redesign (4 Nov 2026, owner feedback)
+
+The owner found the pixel art busy, the games too easy and slow, and the learning part too much like school quizzes. The audience is adults and older teens.
+
+- **Visuals:** realistic space replaces pixel art. The planet is a WebGL fragment shader. `PixelCanvas` keeps its small logical coordinate space but renders at full device resolution with smoothing, so game code kept its layout while every shape became a vector path (`src/art/draw.ts`). The palette was softened.
+- **Planet cost:** on a software renderer (no GPU) the shader takes seconds to compile, which wrecked Lighthouse (Performance 47). Now a throwaway canvas checks the renderer first and falls back to a 2D planet. On real GPUs the shader compiles in the background (`KHR_parallel_shader_compile`), starts after first paint, and redraws about 20 times a second. Lighthouse mobile is back to 100.
+- **Content:** removed the Wikipedia/Wikidata/GSM8K pipeline and its 32 MB of chunks, the review round and SM-2 scheduling. The owner asked for teaching, not pop quizzes, and for ideas beyond school basics. 64 original explainers replace them (`src/content/explainers`). Everyone reads the same one on a given day (a fixed shuffled order), skipping ones already read.
+- **Difficulty anchor:** `difficultyToElo` moved from 700 + 1000d to 250 + 1000d, so a 1000-rated new player starts near 0.55.
+- **Game retune:** Thruster Abort 30 trials with 8 aborts and a 0.45-0.75 s window. Catch the Comet 10 faster trials with longer occlusion and 0.10-0.22 s tolerance. Orbit Tracker 8-13 moons, 3-6 targets, 6-11 s tracking. Constellation 12 stars, spans from 4-7, faster flashes. Dead Reckoning 4-8 legs, faster. Signal Drift 30 pulses, 3-back above 0.5. Fuel Mix 4 sets with fewer solution paths. Fermi 5 items. Doomsday 10 dates across the full range. Aliens 3-5. Vanishing Walls 7-12 cells with 4-8 s to memorise. Void Beast 7×7 with 10-20 move escapes. Pulsar Path 6-8 grids. Star-Sticks two-digit sums. Riddles difficulty 2-3 only.
+- **Removed:** the pixel mascot, particle bursts and screen shake. They clashed with the minimal look.

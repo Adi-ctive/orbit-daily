@@ -9,7 +9,7 @@ export function tile(score: number): string {
   return '⬛'
 }
 
-const PHASE_ICON: Record<string, string> = { warmup: '⚡', review: '🔁', core: '🧩', card: '📘', boss: '👾' }
+const PHASE_ICON: Record<string, string> = { warmup: '⚡', core: '🧩', explainer: '📘', boss: '👾' }
 
 export function shareText(day: DayRecord, streak: number): string {
   const row = day.results.map((r) => tile(r.score)).join('')

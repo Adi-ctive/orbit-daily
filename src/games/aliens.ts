@@ -78,7 +78,7 @@ function randomStmt(rng: RNG, s: number, n: number): Stmt {
 }
 
 function generate(rng: RNG, d: number): L {
-  const n = dInt(d, 2, 4)
+  const n = dInt(d, 3, 5)
   const names = rng.shuffle(NAMES).slice(0, n)
   const solution = Array.from({ length: n }, () => rng.bool())
   const stmts: Stmt[] = []
@@ -110,10 +110,11 @@ function verify(l: L): boolean {
 
 function portrait(i: number): HTMLCanvasElement {
   const c = document.createElement('canvas')
-  c.width = 24
-  c.height = 24
+  c.width = 96
+  c.height = 96
   c.className = 'pixel-canvas ka-face'
   const g = c.getContext('2d')!
+  g.scale(4, 4)
   const ramps = [RAMPS.green, RAMPS.magenta, RAMPS.cyan, RAMPS.amber, RAMPS.violet]
   const r = ramps[i % ramps.length]
   ball(g, 12, 13, 9, r[0], r[1], r[2], r[r.length - 1])

@@ -16,8 +16,8 @@ export default defineConfig(({ mode }) => ({
         name: 'ORBIT: Daily Cosmic Brain Trainer',
         short_name: 'ORBIT',
         description: 'Fifteen minutes. One mission. Every day.',
-        theme_color: '#0b0820',
-        background_color: '#0b0820',
+        theme_color: '#04060c',
+        background_color: '#04060c',
         display: 'standalone',
         orientation: 'portrait',
         start_url: '/',
@@ -29,19 +29,13 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}', 'data/manifest.json', 'data/*-0.json'],
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // Only the Latin font files go into the offline cache.
+        globIgnores: ['**/*cyrillic*', '**/*greek*', '**/*vietnamese*', '**/*latin-ext*'],
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/data\//],
         // The first install controls the open page at once, so it works offline without a reload.
         clientsClaim: true,
         cleanupOutdatedCaches: true,
-        runtimeCaching: [
-          {
-            urlPattern: ({ url }) => url.pathname.startsWith('/data/'),
-            handler: 'StaleWhileRevalidate',
-            options: { cacheName: 'orbit-data' },
-          },
-        ],
       },
       devOptions: { enabled: false },
     }),

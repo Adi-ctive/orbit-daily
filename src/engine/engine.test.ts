@@ -8,7 +8,7 @@ import { Staircase, defaultRatings, expected, targetDifficulty, updateRating } f
 import { dueItems, newSrs, review } from './srs'
 import { defaultSettings, type DayRecord, type Profile } from './types'
 
-const base = { ratings: defaultRatings(), coreHistory: {}, dueReviews: [], fillerReviews: ['q1', 'q2', 'q3'], cardId: 'card:1' }
+const base = { ratings: defaultRatings(), coreHistory: {}, explainerId: 'duverger' }
 
 function profile(): Profile {
   return {
@@ -71,9 +71,18 @@ describe('composer', () => {
     }
   })
 
-  it('uses reviews first and fills to 3', () => {
-    const plan = compose({ ...base, date: '2026-11-02', dueReviews: ['c1'] })
-    expect(plan.find((r) => r.phase === 'review')!.items).toEqual(['c1', 'q1', 'q2'])
+  it('puts the explainer before the boss, and drops it when none is left', () => {
+    const plan = compose({ ...base, date: '2026-11-02' })
+    expect(plan.at(-2)!.phase).toBe('explainer')
+    expect(plan.at(-2)!.items).toEqual(['duverger'])
+    expect(compose({ ...base, date: '2026-11-02', explainerId: null }).some((r) => r.phase === 'explainer')).toBe(false)
+  })
+
+  it('a new player starts at a real challenge', () => {
+    const plan = compose({ ...base, date: '2026-11-02' })
+    const core = plan.filter((r) => r.phase === 'core')
+    for (const r of core) expect(r.difficulty).toBeGreaterThan(0.45)
+    expect(plan.at(-1)!.difficulty).toBeGreaterThan(0.7)
   })
 
   it('every catalog game can appear', () => {
@@ -176,7 +185,7 @@ describe('ratings', () => {
 
   it('target difficulty predicts the target success rate', () => {
     const d = targetDifficulty(1200)
-    expect(expected(1200, 700 + d * 1000)).toBeCloseTo(0.775, 2)
+    expect(expected(1200, 250 + d * 1000)).toBeCloseTo(0.775, 2)
   })
 
   it('ratings move toward performance', () => {

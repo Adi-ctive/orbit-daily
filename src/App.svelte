@@ -12,7 +12,7 @@
   import Settings from './screens/Settings.svelte'
   import Stats from './screens/Stats.svelte'
   import DevPanel from './ui/DevPanel.svelte'
-  import SkyBackdrop from './ui/SkyBackdrop.svelte'
+  import StarField from './ui/StarField.svelte'
 
   onMount(() => {
     const onErr = (e: ErrorEvent | PromiseRejectionEvent) => {
@@ -34,7 +34,7 @@
 
 {#if app.today}
   {#key app.today}
-    <SkyBackdrop seed={daySeed(app.today, dev.seedOverride)} />
+    <StarField seed={daySeed(app.today, dev.seedOverride)} />
   {/key}
 {/if}
 
@@ -47,7 +47,7 @@
   {#if app.crashed}
     <Crash message={app.crashed} />
   {:else if app.screen === 'boot'}
-    <section class="screen" aria-busy="true"><p class="label center" style="margin:auto">Booting mission control…</p></section>
+    <section class="screen" aria-busy="true"><p class="muted center" style="margin:auto">Loading…</p></section>
   {:else if app.screen === 'home'}
     <Home />
   {:else if app.screen === 'session'}
@@ -84,6 +84,6 @@
     transform: translateX(-50%);
     bottom: calc(16px + env(safe-area-inset-bottom));
     z-index: 50;
-    font-family: var(--label-font);
+    font-size: 0.9rem;
   }
 </style>

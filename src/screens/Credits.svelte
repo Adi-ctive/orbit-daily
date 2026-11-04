@@ -1,38 +1,48 @@
 <script lang="ts">
-  import { CREDITS } from '../content/credits'
   import { app } from '../state/app.svelte'
   import Icon from '../ui/Icon.svelte'
+
+  const CREDITS = [
+    { what: 'Font: Inter', who: 'Rasmus Andersson, via Fontsource', license: 'SIL Open Font License 1.1', url: 'https://rsms.me/inter/' },
+    { what: 'Explainers, riddles, Fermi questions, puzzles', who: 'Written for ORBIT', license: 'Original', url: '' },
+    { what: 'Planets, stars, sound and music', who: 'Generated in code for ORBIT', license: 'Original', url: '' },
+    { what: 'Further-reading links', who: 'Wikipedia contributors and the other linked sites', license: 'Linked only, not copied', url: 'https://en.wikipedia.org/' },
+  ]
 </script>
 
 <section class="screen credits">
   <header class="topbar">
     <button class="btn ghost icon-btn" aria-label="Back" onclick={() => app.open('settings')}><Icon name="back" /></button>
-    <h1>Credits</h1>
-    <span></span>
+    <h2>Credits</h2>
+    <span style="width:44px"></span>
   </header>
-  <ul class="panel list">
+  <ul class="list">
     {#each CREDITS as c (c.what)}
-      <li>
-        <strong>{c.what}</strong><br />
-        <span class="muted">{c.source} · {c.license}</span>
-        {#if c.url}<br /><a href={c.url} target="_blank" rel="noopener">{c.url}</a>{/if}
+      <li class="panel">
+        <strong>{c.what}</strong>
+        <span class="muted">{c.who} · {c.license}</span>
+        {#if c.url}<a href={c.url} target="_blank" rel="noopener">{c.url}</a>{/if}
       </li>
     {/each}
   </ul>
-  <p class="muted small">Each Star Chart card links to its source article. Wikipedia text is shown under CC BY-SA 4.0 and may be shortened.</p>
 </section>
 
 <style>
   .list {
     list-style: none;
+    margin: 0;
+    padding: 0;
     display: grid;
-    gap: 12px;
+    gap: 8px;
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
   a {
-    color: var(--cyan-hi);
+    color: var(--accent);
     word-break: break-all;
-  }
-  .small {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 </style>

@@ -11,9 +11,7 @@ export interface RoundResult {
   /** The correct answer and a short explanation, shown after the round. */
   answer: string
   explanation: string
-  /** Review rounds: per-item outcomes for spaced repetition. */
-  reviews?: { id: string; correct: boolean; ms: number }[]
-  /** Star Chart rounds: the card that was learned. */
+  /** Explainer rounds: what was read. */
   learned?: { id: string; title: string; category: string }
 }
 
@@ -55,8 +53,8 @@ export interface GameContext<L extends Level = Level> {
   fx: GameFx
   reducedMotion: boolean
   boss: boolean
-  /** Content items for system rounds (review, Star Chart). */
-  items?: import('../content/types').ContentItem[]
+  /** Item ids for system rounds (the explainer id). */
+  items?: string[]
   finish(result: RoundResult): void
 }
 

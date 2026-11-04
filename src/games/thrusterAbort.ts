@@ -1,7 +1,7 @@
 // Thruster Abort: stop-signal task. Fire on GO; hold when the abort beacon flashes.
 // The stop delay adapts by staircase within the round.
 import { C, RAMPS } from '../art/palette'
-import { halo, line, rect } from '../art/draw'
+import { disc, halo, line, polygon, roundRect } from '../art/draw'
 import { drawText } from '../art/pixelFont'
 import type { RNG } from '../lib/rng'
 import { button, GameTimer, Loop, makeStage } from './kit'
@@ -17,16 +17,16 @@ interface L {
   deadline: number
 }
 
-const N = 20
-const STOPS = 5
+const N = 30
+const STOPS = 8
 
 function generate(rng: RNG, d: number): L {
   const rest = rng.shuffle([...Array(STOPS).fill(true), ...Array(N - 2 - STOPS).fill(false)] as boolean[])
   const flags = [false, false, ...rest]
   return {
-    trials: flags.map((stop) => ({ stop, wait: Math.round(rng.range(0.7, 1.6) * 100) / 100 })),
-    ssd0: 0.2,
-    deadline: Math.round((1 - d * 0.4) * 100) / 100,
+    trials: flags.map((stop) => ({ stop, wait: Math.round(rng.range(0.45, 1.3) * 100) / 100 })),
+    ssd0: 0.25,
+    deadline: Math.round((0.75 - d * 0.3) * 100) / 100,
   }
 }
 
@@ -36,45 +36,42 @@ function verify(l: L): boolean {
     l.trials.filter((t) => t.stop).length === STOPS &&
     !l.trials[0].stop &&
     !l.trials[1].stop &&
-    l.deadline >= 0.55 &&
-    l.trials.every((t) => t.wait >= 0.5 && t.wait <= 2)
+    l.deadline >= 0.44 &&
+    l.trials.every((t) => t.wait >= 0.4 && t.wait <= 1.5)
   )
 }
 
 function ship(ctx: CanvasRenderingContext2D, cx: number, cy: number, flame: number): void {
-  const hull = [RAMPS.star[1], RAMPS.star[2], RAMPS.star[3], RAMPS.star[4]]
-  for (let y = 0; y < 26; y++) {
-    const w = Math.round(2 + y * 0.42)
-    for (let x = -w; x <= w; x++) {
-      const t = (x + w) / (2 * w + 1)
-      rect(ctx, cx + x, cy - 14 + y, 1, 1, x === -w || x === w ? RAMPS.violet[0] : hull[Math.min(3, Math.floor((1 - t) * 3.2 + (y < 6 ? 1 : 0)))])
-    }
-  }
-  rect(ctx, cx - 2, cy - 6, 5, 5, RAMPS.cyan[0])
-  rect(ctx, cx - 1, cy - 6, 2, 2, RAMPS.cyan[2])
-  rect(ctx, cx - 14, cy + 6, 4, 8, RAMPS.magenta[2])
-  rect(ctx, cx + 11, cy + 6, 4, 8, RAMPS.magenta[2])
   if (flame > 0) {
-    const fl = [RAMPS.amber[5], RAMPS.amber[4], RAMPS.amber[3], RAMPS.lava[3]]
-    for (let i = 0; i < 4; i++) rect(ctx, cx - 4 + i, cy + 12, 9 - i * 2, Math.round(flame * (10 - i * 2)), fl[i])
+    const g = ctx.createLinearGradient(cx, cy + 10, cx, cy + 10 + 26 * flame)
+    g.addColorStop(0, RAMPS.amber[5])
+    g.addColorStop(0.4, RAMPS.amber[3])
+    g.addColorStop(1, 'rgba(239,169,74,0)')
+    polygon(ctx, [[cx - 6, cy + 10], [cx + 6, cy + 10], [cx, cy + 10 + 28 * flame]], g)
   }
+  const body = ctx.createLinearGradient(cx - 12, 0, cx + 12, 0)
+  body.addColorStop(0, RAMPS.star[1])
+  body.addColorStop(0.45, RAMPS.star[4])
+  body.addColorStop(1, RAMPS.star[0])
+  polygon(ctx, [[cx, cy - 18], [cx + 9, cy + 6], [cx + 6, cy + 12], [cx - 6, cy + 12], [cx - 9, cy + 6]], body)
+  polygon(ctx, [[cx - 9, cy + 4], [cx - 16, cy + 14], [cx - 7, cy + 12]], RAMPS.indigo[3])
+  polygon(ctx, [[cx + 9, cy + 4], [cx + 16, cy + 14], [cx + 7, cy + 12]], RAMPS.indigo[3])
+  disc(ctx, cx, cy - 3, 3.2, RAMPS.cyan[0])
 }
 
 function goBeacon(ctx: CanvasRenderingContext2D, cx: number, cy: number): void {
-  halo(ctx, cx, cy, 9, 4, RAMPS.teal[2])
+  halo(ctx, cx, cy, 8, 14, RAMPS.green[3])
   // Up-pointing triangle = GO.
-  for (let y = 0; y < 14; y++) rect(ctx, cx - Math.floor(y / 2), cy - 7 + y, Math.floor(y / 2) * 2 + 1, 1, y < 3 ? RAMPS.cyan[2] : RAMPS.green[3])
+  polygon(ctx, [[cx, cy - 9], [cx + 9, cy + 7], [cx - 9, cy + 7]], RAMPS.green[3])
 }
 
 function abortBeacon(ctx: CanvasRenderingContext2D, cx: number, cy: number, blink: boolean): void {
-  halo(ctx, cx, cy, 10, 5, RAMPS.lava[2])
+  halo(ctx, cx, cy, 9, 16, RAMPS.lava[3])
   // Octagon with an X = ABORT.
-  for (let y = -9; y <= 9; y++) {
-    const w = Math.abs(y) > 5 ? 9 - (Math.abs(y) - 5) : 9
-    rect(ctx, cx - w, cy + y, w * 2 + 1, 1, blink ? RAMPS.lava[3] : RAMPS.lava[2])
-  }
-  line(ctx, cx - 5, cy - 5, cx + 5, cy + 5, RAMPS.star[4])
-  line(ctx, cx - 5, cy + 5, cx + 5, cy - 5, RAMPS.star[4])
+  const pts: [number, number][] = Array.from({ length: 8 }, (_, i) => [cx + Math.cos((i + 0.5) * (Math.PI / 4)) * 10, cy + Math.sin((i + 0.5) * (Math.PI / 4)) * 10])
+  polygon(ctx, pts, blink ? RAMPS.lava[3] : RAMPS.lava[2])
+  line(ctx, cx - 4.5, cy - 4.5, cx + 4.5, cy + 4.5, RAMPS.star[4], 0, 2)
+  line(ctx, cx - 4.5, cy + 4.5, cx + 4.5, cy - 4.5, RAMPS.star[4], 0, 2)
 }
 
 const mod: GameModule<L> = {
@@ -202,10 +199,10 @@ const mod: GameModule<L> = {
       ship(g, cx, cy, flame)
       const by = Math.round(pc.h * 0.22)
       // Beacon pad.
-      rect(g, cx - 14, by - 12, 29, 25, RAMPS.void[2])
+      roundRect(g, cx - 16, by - 14, 32, 28, 6, RAMPS.void[3])
       if (phase === 'go' && !shownAbort) goBeacon(g, cx, by)
       if (phase === 'go' && shownAbort) abortBeacon(g, cx, by, Math.floor(t * 12) % 2 === 0)
-      if (phase === 'wait') rect(g, cx - 1, by - 1, 3, 3, RAMPS.star[0])
+      if (phase === 'wait') disc(g, cx, by, 1.5, RAMPS.star[0])
       if (phase === 'fb' || (phase === 'wait' && fbText === 'WAIT')) drawText(g, fbText, cx, by + 18, fbGood ? C.good : C.bad, 1, 'center')
     })
     next()

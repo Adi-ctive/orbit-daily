@@ -4,7 +4,7 @@
   import { loadGame } from '../games/registry'
   import { generateVerified, type RoundResult } from '../games/types'
   import { RNG } from '../lib/rng'
-  import SkyBackdrop from '../ui/SkyBackdrop.svelte'
+  import StarField from '../ui/StarField.svelte'
 
   const p = new URLSearchParams(location.search)
   const id = p.get('id') ?? 'fuel-mix'
@@ -28,7 +28,7 @@
   })
 </script>
 
-<SkyBackdrop seed={'orbit-v1|' + seed} />
+<StarField seed={'orbit-v1|' + seed} />
 <section class="screen session">
   <h2 class="center">{title}</h2>
   <div class="game" bind:this={host}></div>

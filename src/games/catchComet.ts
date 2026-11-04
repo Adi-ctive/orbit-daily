@@ -1,6 +1,6 @@
 // Catch the Comet: coincidence-anticipation timing. The comet passes behind a
 // planet; tap the moment it reaches the gate marker.
-import { ball, halo, line, rect } from '../art/draw'
+import { ball, disc, halo, line, polygon } from '../art/draw'
 import { C, RAMPS } from '../art/palette'
 import { drawText } from '../art/pixelFont'
 import type { RNG } from '../lib/rng'
@@ -22,23 +22,23 @@ interface L {
 
 function generate(rng: RNG, d: number): L {
   const trials: Trial[] = []
-  for (let i = 0; i < 8; i++) {
-    const width = 0.18 + d * 0.22 + rng.range(-0.04, 0.04)
-    const o0 = rng.range(0.3, 0.45)
+  for (let i = 0; i < 10; i++) {
+    const width = 0.24 + d * 0.24 + rng.range(-0.04, 0.04)
+    const o0 = rng.range(0.2, 0.32)
     trials.push({
-      speed: Math.round((0.28 + d * 0.3 + rng.range(-0.06, 0.08)) * 1000) / 1000,
+      speed: Math.round((0.42 + d * 0.45 + rng.range(-0.06, 0.1)) * 1000) / 1000,
       occ: [o0, o0 + width],
       gate: Math.min(0.92, o0 + width + rng.range(0.02, 0.1)),
       delay: rng.range(0.4, 1.0),
       y: rng.range(0.38, 0.62),
     })
   }
-  return { trials, tol: 0.3 - d * 0.14 }
+  return { trials, tol: 0.22 - d * 0.12 }
 }
 
 function verify(l: L): boolean {
   return (
-    l.trials.length === 8 &&
+    l.trials.length === 10 &&
     l.trials.every((t) => t.speed > 0.1 && t.occ[0] > 0.1 && t.occ[1] < t.gate && t.gate <= 0.95 && t.occ[1] - t.occ[0] > 0.1)
   )
 }
@@ -121,7 +121,7 @@ const mod: GameModule<L> = {
     addEventListener('keydown', onKey)
     st.hud.textContent = `1 / ${L.trials.length}`
 
-    const loop = new Loop((dt, time) => {
+    const loop = new Loop((dt) => {
       const g = pc.ctx
       g.clearRect(0, 0, pc.w, pc.h)
       fbT = Math.max(0, fbT - dt)
@@ -138,7 +138,7 @@ const mod: GameModule<L> = {
       // Gate.
       const gx = Math.round(tr.gate * W)
       line(g, gx, y - 22, gx, y + 22, RAMPS.amber[3], 2)
-      for (let k = 0; k < 4; k++) rect(g, gx - 3 + k, y - 28 + k, 7 - k * 2, 1, RAMPS.amber[4])
+      polygon(g, [[gx - 4, y - 30], [gx + 4, y - 30], [gx, y - 24]], RAMPS.amber[4])
       // Occluding planet.
       const ox = ((tr.occ[0] + tr.occ[1]) / 2) * W
       const r = Math.round(((tr.occ[1] - tr.occ[0]) * W) / 2)
@@ -149,9 +149,12 @@ const mod: GameModule<L> = {
         const x = ((t - tr.delay) * tr.speed - 0.05) * W
         const hidden = x / W > tr.occ[0] && x / W < tr.occ[1]
         if (!hidden && x < W + 10) {
-          for (let k = 1; k < 12; k++) if (k < 6 || k % 2) rect(g, x - k, y + (k > 6 ? (Math.floor(time * 20) + k) % 2 : 0), 1, 1, k < 4 ? RAMPS.cyan[1] : RAMPS.teal[3])
-          rect(g, x - 1, y - 1, 3, 3, RAMPS.cyan[2])
-          rect(g, x, y, 1, 1, RAMPS.star[4])
+          const tail = g.createLinearGradient(x - 22, y, x, y)
+          tail.addColorStop(0, 'rgba(159,220,240,0)')
+          tail.addColorStop(1, 'rgba(214,242,251,0.9)')
+          polygon(g, [[x - 22, y], [x, y - 2.2], [x, y + 2.2]], tail)
+          halo(g, x, y, 1.5, 6, RAMPS.cyan[1])
+          disc(g, x, y, 2.2, RAMPS.star[4])
         }
         if (!tapped && t > arrival(tr) + 0.6) endTrial(null)
       }

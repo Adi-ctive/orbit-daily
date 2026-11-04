@@ -1,7 +1,7 @@
 // Vanishing Walls: memorise the maze, then the walls fade and you fly it from memory.
 // Bumping a wall flashes it and leaves it faintly visible.
-import { ball, halo, rect } from '../art/draw'
-import { C, RAMPS, bayer } from '../art/palette'
+import { ball, halo, line, roundRect } from '../art/draw'
+import { C, RAMPS } from '../art/palette'
 import { drawText } from '../art/pixelFont'
 import type { RNG } from '../lib/rng'
 import { button, Loop, makeStage, dInt } from './kit'
@@ -17,10 +17,10 @@ interface L {
 }
 
 function generate(rng: RNG, d: number): L {
-  const w = dInt(d, 5, 9)
-  const h = dInt(d, 5, 9)
+  const w = dInt(d, 7, 12)
+  const h = dInt(d, 7, 12)
   const cells = backtracker(rng, w, h)
-  return { w, h, cells, show: Math.round(10 - d * 5), shortest: bfs(cells, w, h, 0, w * h - 1) }
+  return { w, h, cells, show: Math.round(8 - d * 4), shortest: bfs(cells, w, h, 0, w * h - 1) }
 }
 
 function verify(l: L): boolean {
@@ -110,7 +110,7 @@ const mod: GameModule<L> = {
       const cs = Math.floor(Math.min((pc.w - 8) / L.w, (pc.h - 8) / L.h))
       const ox = Math.floor((pc.w - cs * L.w) / 2)
       const oy = Math.floor((pc.h - cs * L.h) / 2)
-      rect(g, ox, oy, cs * L.w, cs * L.h, RAMPS.void[2])
+      roundRect(g, ox, oy, cs * L.w, cs * L.h, 2, RAMPS.void[2])
       const fadeK = phase === 'memo' ? 1 : phase === 'fade' ? 1 - t / 0.8 : 0
       for (let c = 0; c < L.cells.length; c++) {
         const x = ox + (c % L.w) * cs
@@ -127,18 +127,12 @@ const mod: GameModule<L> = {
           else if (rev) col = RAMPS.lava[1]
           else if (fadeK > 0) col = RAMPS.cyan[0]
           if (!col) continue
-          const seg = (sx: number, sy: number, w: number, h: number) => {
-            for (let yy = 0; yy < h; yy++)
-              for (let xx = 0; xx < w; xx++) {
-                if (!isFlash && !rev && !border && fadeK < 1 && bayer(sx + xx, sy + yy) > fadeK) continue
-                g.fillStyle = col!
-                g.fillRect(sx + xx, sy + yy, 1, 1)
-              }
-          }
-          if (d.bit === 1) seg(x, y, cs + 1, 1)
-          if (d.bit === 4) seg(x, y + cs, cs + 1, 1)
-          if (d.bit === 8) seg(x, y, 1, cs + 1)
-          if (d.bit === 2) seg(x + cs, y, 1, cs + 1)
+          g.globalAlpha = isFlash || rev || border ? 1 : Math.max(0, fadeK)
+          if (d.bit === 1) line(g, x, y, x + cs, y, col, 0, 1.4)
+          if (d.bit === 4) line(g, x, y + cs, x + cs, y + cs, col, 0, 1.4)
+          if (d.bit === 8) line(g, x, y, x, y + cs, col, 0, 1.4)
+          if (d.bit === 2) line(g, x + cs, y, x + cs, y + cs, col, 0, 1.4)
+          g.globalAlpha = 1
         }
       }
       // Portal and probe.

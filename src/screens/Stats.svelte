@@ -1,144 +1,138 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
-  import { RAMPS } from '../art/palette'
-  import { ensureItem } from '../content/loader'
-  import type { ContentItem } from '../content/types'
+  import type { Explainer } from '../content/explainers'
   import { streakLength } from '../engine/lock'
   import { CATEGORIES, CATEGORY_LABEL } from '../games/catalog'
-  import { RNG } from '../lib/rng'
   import { app } from '../state/app.svelte'
   import Icon from '../ui/Icon.svelte'
-  import PixelChart from '../ui/PixelChart.svelte'
+  import Sparkline from '../ui/Sparkline.svelte'
 
-  const COLORS = [RAMPS.cyan[0], RAMPS.amber[3], RAMPS.magenta[3], RAMPS.green[3], RAMPS.violet[4], RAMPS.teal[4], RAMPS.lava[3]]
   const history = $derived(app.profile.ratingHistory)
   const streak = $derived(streakLength(app.profile, app.today))
-  let open = $state<ContentItem | null>(null)
-  let mapCanvas: HTMLCanvasElement
-  const MW = 160
-  const MH = 90
-
-  const catList = $derived([...new Set(app.profile.logbook.map((l) => l.category))].sort())
-
-  function starPos(id: string, cat: string): [number, number] {
-    const i = Math.max(0, catList.indexOf(cat))
-    const n = Math.max(1, catList.length)
-    const cx = ((i + 0.5) / n) * MW
-    const r = new RNG(id)
-    return [Math.round(cx + r.range(-MW / n / 2.5, MW / n / 2.5)), Math.round(r.range(10, MH - 10))]
-  }
-
-  function drawMap() {
-    if (!mapCanvas) return
-    const ctx = mapCanvas.getContext('2d')!
-    ctx.fillStyle = RAMPS.void[1]
-    ctx.fillRect(0, 0, MW, MH)
-    const bg = new RNG('logbook-sky')
-    ctx.fillStyle = RAMPS.void[3]
-    for (let i = 0; i < 120; i++) ctx.fillRect(bg.int(0, MW), bg.int(0, MH), 1, 1)
-    for (const l of app.profile.logbook) {
-      const [x, y] = starPos(l.id, l.category)
-      ctx.fillStyle = COLORS[catList.indexOf(l.category) % COLORS.length]
-      ctx.fillRect(x - 1, y, 3, 1)
-      ctx.fillRect(x, y - 1, 1, 3)
-      ctx.fillStyle = RAMPS.star[4]
-      ctx.fillRect(x, y, 1, 1)
-    }
-  }
-
-  onMount(drawMap)
+  let open = $state<Explainer | null>(null)
 
   async function show(id: string) {
-    open = (await ensureItem(id)) ?? null
+    const { getExplainer } = await import('../content/explainers')
+    open = getExplainer(id) ?? null
   }
 </script>
 
 <section class="screen stats">
   <header class="topbar">
     <button class="btn ghost icon-btn" aria-label="Back" onclick={() => app.close()}><Icon name="back" /></button>
-    <h1>Logbook</h1>
-    <span></span>
+    <h2>Logbook</h2>
+    <span style="width:44px"></span>
   </header>
 
-  <div class="panel summary">
-    <span class="label">Missions: {app.profile.completedDates.length}</span>
-    <span class="label">Streak: {streak}</span>
-    <span class="label">Cards: {app.profile.logbook.length}</span>
+  <div class="summary">
+    <div class="panel"><span class="label">Missions</span><b>{app.profile.completedDates.length}</b></div>
+    <div class="panel"><span class="label">Streak</span><b>{streak}</b></div>
+    <div class="panel"><span class="label">Read</span><b>{app.profile.logbook.length}</b></div>
   </div>
 
-  <h2>Skill ratings</h2>
+  <h3>Skill ratings</h3>
   <div class="charts">
-    {#each CATEGORIES as c, i (c)}
-      <PixelChart label={CATEGORY_LABEL[c]} values={[...history.map((h) => h.ratings[c]), ...(history.length ? [] : [app.profile.ratings[c]])]} color={COLORS[i]} />
+    {#each CATEGORIES as c (c)}
+      <Sparkline label={CATEGORY_LABEL[c]} values={history.length ? history.map((h) => h.ratings[c]) : [app.profile.ratings[c]]} />
     {/each}
   </div>
 
-  <h2>Star map</h2>
-  <div role="img" aria-label="Star map of {app.profile.logbook.length} learned cards"><canvas bind:this={mapCanvas} class="pixel-canvas map" width={MW} height={MH} aria-hidden="true"></canvas></div>
+  <h3>Explainers you've read</h3>
   {#if app.profile.logbook.length === 0}
-    <p class="muted">Cards you learn in Star Chart rounds appear here as stars.</p>
+    <p class="muted">Each mission ends with one explainer. They collect here so you can reread them.</p>
   {/if}
-  <ul class="cards">
+  <ul class="list">
     {#each [...app.profile.logbook].reverse() as l (l.id)}
-      <li><button class="btn ghost card-btn" onclick={() => show(l.id)}><span class="label">{l.date}</span> {l.title}</button></li>
+      <li>
+        <button class="row" onclick={() => show(l.id)}>
+          <span class="label">{l.category}</span>
+          <span class="t">{l.title}</span>
+        </button>
+      </li>
     {/each}
   </ul>
 
   {#if open}
-    <div class="panel reader" role="dialog" aria-label={open.title}>
-      <h3>{open.title}</h3>
-      <p>{open.body}</p>
-      <p class="muted small">
-        Source: <a href={open.source.url} target="_blank" rel="noopener">{open.source.name}: {open.title}</a> ({open.license})
-      </p>
-      <button class="btn" onclick={() => (open = null)}>Close</button>
+    <div class="reader" role="dialog" aria-label={open.title}>
+      <div class="panel inner">
+        <p class="label">{open.category}</p>
+        <h2>{open.title}</h2>
+        {#each open.paras as p, i (i)}<p>{p}</p>{/each}
+        <p class="take">{open.takeaway}</p>
+        <button class="btn" onclick={() => (open = null)}>Close</button>
+      </div>
     </div>
   {/if}
 </section>
 
 <style>
   .stats {
-    gap: 8px;
+    gap: 12px;
   }
   .summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .summary .panel {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px;
+  }
+  .summary b {
+    font-size: 1.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+  h3 {
+    margin: 10px 0 0;
   }
   .charts {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 8px;
   }
-  .map {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 160 / 90;
-  }
-  .cards {
+  .list {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
   }
-  .card-btn {
-    text-align: left;
+  .row {
     width: 100%;
-    color: var(--ink);
-    font-family: var(--body-font);
+    text-align: left;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .t {
+    font-weight: 500;
   }
   .reader {
     position: fixed;
-    inset: auto 8px calc(8px + env(safe-area-inset-bottom)) 8px;
-    max-height: 70dvh;
-    overflow: auto;
+    inset: 0;
     z-index: 20;
+    background: rgb(4 6 12 / 0.7);
+    display: grid;
+    place-items: end center;
+    padding: 12px;
+  }
+  .inner {
+    max-width: 600px;
+    width: 100%;
+    max-height: 85dvh;
+    overflow: auto;
+    background: #0b1020;
     user-select: text;
+    line-height: 1.65;
   }
-  .small {
-    font-size: 0.85rem;
-  }
-  a {
-    color: var(--cyan-hi);
+  .take {
+    border-left: 2px solid var(--accent);
+    padding-left: 12px;
+    font-weight: 500;
   }
 </style>

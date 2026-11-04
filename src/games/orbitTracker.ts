@@ -1,6 +1,6 @@
 // Orbit Tracker: multiple object tracking. Marked moons flash, then every moon
 // looks the same and drifts. Pick the marked ones.
-import { ball, frame, ring } from '../art/draw'
+import { ball, frame, polygon, ring } from '../art/draw'
 import { C, RAMPS } from '../art/palette'
 import { drawText } from '../art/pixelFont'
 import type { RNG } from '../lib/rng'
@@ -25,19 +25,19 @@ interface L {
 function generate(rng: RNG, d: number): L {
   const trials: Trial[] = []
   for (let k = 0; k < 3; k++) {
-    const n = dInt(d, 6, 10)
-    const nt = dInt(d, 3, 5)
+    const n = dInt(d, 8, 13)
+    const nt = dInt(d, 3, 6)
     const moons: Moon[] = []
     let guard = 0
     while (moons.length < n && guard++ < 500) {
       const x = rng.range(0.1, 0.9)
       const y = rng.range(0.1, 0.9)
-      if (moons.some((m) => Math.hypot(m.x - x, m.y - y) < 0.16)) continue
+      if (moons.some((m) => Math.hypot(m.x - x, m.y - y) < 0.14)) continue
       const a = rng.range(0, Math.PI * 2)
-      const s = 0.12 + d * 0.18
+      const s = 0.2 + d * 0.26
       moons.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s })
     }
-    trials.push({ moons, targets: rng.shuffle(moons.map((_, i) => i)).slice(0, nt).sort((a, b) => a - b), duration: 4 + d * 4 })
+    trials.push({ moons, targets: rng.shuffle(moons.map((_, i) => i)).slice(0, nt).sort((a, b) => a - b), duration: 6 + d * 5 })
   }
   return { trials }
 }
@@ -45,11 +45,11 @@ function generate(rng: RNG, d: number): L {
 function verify(l: L): boolean {
   return l.trials.every(
     (t) =>
-      t.moons.length >= 6 &&
+      t.moons.length >= 8 &&
       t.targets.length >= 3 &&
       t.targets.length < t.moons.length &&
       new Set(t.targets).size === t.targets.length &&
-      t.moons.every((m, i) => t.moons.every((o, j) => i === j || Math.hypot(m.x - o.x, m.y - o.y) >= 0.16)),
+      t.moons.every((m, i) => t.moons.every((o, j) => i === j || Math.hypot(m.x - o.x, m.y - o.y) >= 0.14)),
   )
 }
 
@@ -57,7 +57,7 @@ const mod: GameModule<L> = {
   id: 'orbit-tracker',
   category: 'reflex',
   title: 'Orbit Tracker',
-  howTo: 'Watch the moons marked with ◆. When they all look alike and drift, keep your eyes on them. Then tap the marked ones.',
+  howTo: 'Lock on to the moons marked with ◆. Then they all look the same and drift for several seconds. Track them, then tap every marked one.',
   generate,
   verify,
   mount(ctx) {
@@ -174,12 +174,8 @@ const mod: GameModule<L> = {
           ball(g, x, y, 5, RAMPS.amber[1], RAMPS.amber[3], RAMPS.amber[4], RAMPS.amber[5])
           // Diamond marker.
           const blink = phase === 'show' && Math.floor(t * 6) % 2
-          if (!blink)
-            for (let k = 0; k < 3; k++) {
-              g.fillRect(x - k, y - 10 + k, k * 2 + 1, 1)
-              g.fillRect(x - k, y - 6 - k, k * 2 + 1, 1)
-            }
-        } else ball(g, x, y, 5, RAMPS.indigo[1], RAMPS.indigo[3], RAMPS.indigo[4], RAMPS.star[3])
+          if (!blink) polygon(g, [[x, y - 13], [x + 3, y - 9.5], [x, y - 6], [x - 3, y - 9.5]], RAMPS.amber[4])
+        } else ball(g, x, y, 5, RAMPS.void[4], RAMPS.indigo[2], RAMPS.indigo[4], RAMPS.star[3])
         if (picks.includes(i)) ring(g, x, y, 8, phase === 'reveal' ? (isT ? C.good : C.bad) : C.cyanHi)
       })
       if (phase === 'show') drawText(g, 'WATCH', pc.w / 2, 2, C.amberHi, 1, 'center')

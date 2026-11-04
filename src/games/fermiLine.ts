@@ -9,14 +9,14 @@ interface L {
 }
 
 function generate(rng: RNG, _d: number): L {
-  const bank = rng.shuffle(FERMI).slice(0, 3)
+  const bank = rng.shuffle(FERMI).slice(0, 4)
   const t = templated(rng.int(2, 40), rng.int(0, 3))
   return { items: rng.shuffle([...bank, t]) }
 }
 
 function verify(l: L): boolean {
   return (
-    l.items.length === 4 &&
+    l.items.length === 5 &&
     l.items.every((it) => it.a > 0 && Math.log10(it.a) > it.lo && Math.log10(it.a) < it.hi && it.hi - it.lo >= 3)
   )
 }

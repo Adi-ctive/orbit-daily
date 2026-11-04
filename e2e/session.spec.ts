@@ -4,6 +4,8 @@ import { expect, test, type Page } from '@playwright/test'
 function watchConsole(page: Page): string[] {
   const bad: string[] = []
   page.on('console', (m) => {
+    // Headless Chrome's software GL driver reports its own frame read-backs. That is not app code.
+    if (/GL Driver Message/.test(m.text())) return
     if (m.type() === 'error' || m.type() === 'warning') bad.push(`${m.type()}: ${m.text()}`)
   })
   page.on('pageerror', (e) => bad.push('pageerror: ' + e.message))
@@ -23,7 +25,7 @@ async function playSession(page: Page): Promise<number> {
     rounds++
     const label = await next.innerText()
     await next.click()
-    if (label.includes('Debrief')) break
+    if (/debrief/i.test(label)) break
   }
   return rounds
 }
@@ -33,7 +35,7 @@ test('full session from launch to lock', async ({ page }) => {
   await page.goto('/?dev=1&date=2026-11-10')
   const rounds = await playSession(page)
   expect(rounds).toBeGreaterThanOrEqual(6)
-  await expect(page.getByText('Mission debrief')).toBeVisible()
+  await expect(page.getByTestId('debrief-done')).toBeVisible()
   await page.getByTestId('debrief-done').click()
   await expect(page.getByTestId('lock-screen')).toBeVisible()
   await expect(page.getByTestId('countdown')).toHaveText(/\d\d:\d\d:\d\d/)
@@ -93,7 +95,7 @@ test('works offline after first load', async ({ page, context }) => {
   await expect(page.getByTestId('launch')).toBeVisible()
   const rounds = await playSession(page)
   expect(rounds).toBeGreaterThanOrEqual(6)
-  await expect(page.getByText('Mission debrief')).toBeVisible()
+  await expect(page.getByTestId('debrief-done')).toBeVisible()
   await context.setOffline(false)
   expect(bad.filter((b) => !/Failed to load resource|net::ERR_INTERNET_DISCONNECTED/.test(b))).toEqual([])
 })

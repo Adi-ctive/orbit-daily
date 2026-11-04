@@ -6,7 +6,6 @@
   import { copyShare, shareText } from '../lib/share'
   import { app } from '../state/app.svelte'
   import Icon from '../ui/Icon.svelte'
-  import Mascot from '../ui/Mascot.svelte'
 
   const day = $derived(app.day)
   const streak = $derived(streakLength(app.profile, app.today))
@@ -15,20 +14,21 @@
     const m: Record<string, number[]> = {}
     for (const r of day?.results ?? []) {
       const e = catalogEntry(r.gameId)
-      const key = e ? CATEGORY_LABEL[e.category as Category] : r.phase === 'review' ? 'Review' : 'Star Chart'
+      if (!e) continue
+      const key = CATEGORY_LABEL[e.category as Category]
       m[key] = [...(m[key] ?? []), r.score]
     }
     return Object.entries(m).map(([k, v]) => ({ k, s: v.reduce((a, b) => a + b, 0) / v.length }))
   })
   const avg = $derived(skills.length ? skills.reduce((a, b) => a + b.s, 0) / skills.length : 0)
-  const stars = (s: number) => (s >= 0.9 ? 3 : s >= 0.6 ? 2 : s >= 0.3 ? 1 : 0)
+  const read = $derived(day?.results.find((r) => r.phase === 'explainer'))
   let copied = $state('')
 
   async function share() {
     if (!day) return
     haptic('tap')
     const r = await copyShare(shareText(day, streak))
-    copied = r === 'copied' ? 'Copied to clipboard.' : r === 'shared' ? 'Shared.' : 'Could not copy. Long-press to select.'
+    copied = r === 'copied' ? 'Copied to clipboard.' : r === 'shared' ? 'Shared.' : 'Could not copy.'
   }
 
   async function done() {
@@ -44,61 +44,100 @@
 </script>
 
 <section class="screen debrief">
-  <h1 class="center">Mission debrief</h1>
-  <div class="center">
-    <Mascot mood={avg >= 0.6 ? 'cheer' : 'idle'} size={96} />
+  <header class="topbar"><span class="label">Debrief</span></header>
+  <div class="head">
+    <p class="big">{Math.round(avg * 100)}<span>%</span></p>
+    <p class="muted">{day?.capped ? 'Time cap reached, so the mission ended after that round.' : 'Mission complete.'}</p>
   </div>
-  {#if day?.capped}
-    <p class="center muted">Time cap reached, so the mission ended after that round.</p>
-  {/if}
   <ul class="panel skills" aria-label="Results by skill">
     {#each skills as s (s.k)}
       <li>
-        <span class="label">{s.k}</span>
-        <span class="stars" aria-label="{stars(s.s)} of 3 stars">{'★'.repeat(stars(s.s))}<span class="off">{'★'.repeat(3 - stars(s.s))}</span></span>
+        <span>{s.k}</span>
+        <span class="bar"><span style:width="{Math.round(s.s * 100)}%" class:good={s.s >= 0.6}></span></span>
+        <span class="num">{Math.round(s.s * 100)}%</span>
       </li>
     {/each}
   </ul>
-  <p class="center label streak">Streak: {streak} day{streak === 1 ? '' : 's'}{app.profile.freezes ? ` · ${app.profile.freezes} freeze${app.profile.freezes > 1 ? 's' : ''}` : ''}</p>
-  <div class="center actions">
-    <button class="btn" onclick={share} data-testid="share"><Icon name="share" /> Share result</button>
-    <button class="btn primary" onclick={done} data-testid="debrief-done">Finish mission</button>
+  {#if read}<p class="muted center">Explainer saved to your logbook.</p>{/if}
+  <p class="center streak"><Icon name="flame" size={18} /> {streak} day streak{app.profile.freezes ? ` · ${app.profile.freezes} freeze${app.profile.freezes > 1 ? 's' : ''}` : ''}</p>
+  <div class="actions">
+    <button class="btn" onclick={share} data-testid="share"><Icon name="share" size={18} /> Share</button>
+    <button class="btn primary" onclick={done} data-testid="debrief-done">Finish</button>
   </div>
   <p class="center muted" aria-live="polite">{copied}</p>
 </section>
 
 <style>
   .debrief {
-    gap: 10px;
+    gap: 16px;
+  }
+  .head {
+    text-align: center;
+  }
+  .big {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 8px 0 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .big span {
+    font-size: 1.6rem;
   }
   .skills {
     list-style: none;
-    margin: 4px;
+    margin: 0;
     display: grid;
-    gap: 6px;
+    gap: 12px;
   }
   .skills li {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 6.5em 1fr 3em;
+    align-items: center;
+    gap: 12px;
   }
-  .stars {
-    color: var(--accent-hi);
-    letter-spacing: 2px;
+  .bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--surface-hi);
+    overflow: hidden;
   }
-  .off {
-    color: var(--edge);
+  .bar span {
+    display: block;
+    height: 100%;
+    background: var(--bad);
+    border-radius: 3px;
+  }
+  .bar span.good {
+    background: var(--accent);
+  }
+  .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
   }
   .streak {
-    color: var(--accent-hi);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    color: var(--warm);
+    font-weight: 600;
+    margin: 0;
   }
   .actions {
     display: flex;
-    flex-wrap: wrap;
+    gap: 10px;
     justify-content: center;
+    margin-top: auto;
   }
   .actions .btn {
+    flex: 1;
+    max-width: 200px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
   }
 </style>

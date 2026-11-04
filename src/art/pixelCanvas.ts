@@ -1,15 +1,12 @@
-// A canvas drawn at low native resolution and scaled up by a whole number of
-// device pixels, so art pixels stay perfectly square and sharp.
+// A game canvas with a small logical coordinate space (at least minW × minH units)
+// drawn at full device resolution with smoothing, so shapes and text stay sharp.
 
 export interface PixelCanvasOptions {
-  /** Smallest native size we want. The scale is the largest integer that keeps at least this. */
+  /** Smallest logical size. One logical unit is scaled to fill the box. */
   minW: number
   minH: number
-  /** Keep the native size exactly minW × minH and letterbox the rest. */
+  /** Keep the logical size exactly minW × minH. */
   fixed?: boolean
-  /** Largest native size allowed; raises the scale on big screens so pixels stay chunky. */
-  maxW?: number
-  maxH?: number
   onResize?: (w: number, h: number) => void
 }
 
@@ -18,7 +15,10 @@ export class PixelCanvas {
   readonly ctx: CanvasRenderingContext2D
   w = 1
   h = 1
+  /** CSS pixels per logical unit. */
   scale = 1
+  /** Device pixels per logical unit (for offscreen renders). */
+  res = 1
   private ro: ResizeObserver | null = null
 
   constructor(
@@ -39,28 +39,30 @@ export class PixelCanvas {
   }
 
   resize(): void {
-    const dpr = window.devicePixelRatio || 1
+    const dpr = Math.min(3, window.devicePixelRatio || 1)
     const rect = this.host.getBoundingClientRect()
-    const devW = Math.max(1, Math.floor(rect.width * dpr))
-    const devH = Math.max(1, Math.floor(rect.height * dpr))
-    let scale = Math.max(1, Math.floor(Math.min(devW / this.opts.minW, devH / this.opts.minH)))
-    if (this.opts.maxW) scale = Math.max(scale, Math.ceil(devW / this.opts.maxW))
-    if (this.opts.maxH) scale = Math.max(scale, Math.ceil(devH / this.opts.maxH))
-    const w = this.opts.fixed ? this.opts.minW : Math.floor(devW / scale)
-    const h = this.opts.fixed ? this.opts.minH : Math.floor(devH / scale)
-    if (w === this.w && h === this.h && scale === this.scale) return
+    const cssW = Math.max(1, rect.width)
+    const cssH = Math.max(1, rect.height)
+    const scale = Math.max(0.5, Math.min(cssW / this.opts.minW, cssH / this.opts.minH))
+    const w = this.opts.fixed ? this.opts.minW : Math.floor(cssW / scale)
+    const h = this.opts.fixed ? this.opts.minH : Math.floor(cssH / scale)
+    if (w === this.w && h === this.h && Math.abs(scale - this.scale) < 1e-3) return
     this.w = w
     this.h = h
     this.scale = scale
-    this.canvas.width = w
-    this.canvas.height = h
-    this.canvas.style.width = `${(w * scale) / dpr}px`
-    this.canvas.style.height = `${(h * scale) / dpr}px`
-    this.ctx.imageSmoothingEnabled = false
+    this.res = scale * dpr
+    this.canvas.width = Math.round(w * this.res)
+    this.canvas.height = Math.round(h * this.res)
+    this.canvas.style.width = `${w * scale}px`
+    this.canvas.style.height = `${h * scale}px`
+    this.ctx.setTransform(this.res, 0, 0, this.res, 0, 0)
+    this.ctx.imageSmoothingEnabled = true
+    this.ctx.lineCap = 'round'
+    this.ctx.lineJoin = 'round'
     this.opts.onResize?.(w, h)
   }
 
-  /** Client (CSS px) coords to native pixel coords. */
+  /** Client (CSS px) coords to logical coords. */
   toNative(clientX: number, clientY: number): { x: number; y: number } {
     const r = this.canvas.getBoundingClientRect()
     return {
@@ -80,9 +82,7 @@ export function makeOffscreen(w: number, h: number): { canvas: HTMLCanvasElement
   canvas.width = w
   canvas.height = h
   const ctx = canvas.getContext('2d')!
-  ctx.imageSmoothingEnabled = false
   return { canvas, ctx }
 }
 
-/** Snap a float to a whole pixel at draw time. */
-export const px = (v: number): number => Math.round(v)
+export const px = (v: number): number => v

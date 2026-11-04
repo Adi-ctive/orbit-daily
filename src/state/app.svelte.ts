@@ -1,8 +1,7 @@
 // App controller. Owns the profile and today's session record, and persists
 // every change before the UI shows it.
-import { ACTIVE_TIME_FLUSH_MS, REVIEW_ITEMS_MAX } from '../config'
+import { ACTIVE_TIME_FLUSH_MS } from '../config'
 import { audio } from '../audio/bus'
-import { ensureItem, loadManifest, pickCard, pickFillers, prefetchAhead } from '../content/loader'
 import { compose, coreIdsOf, daySeed } from '../engine/composer'
 import {
   addActive,
@@ -15,7 +14,6 @@ import {
   startRound,
 } from '../engine/lock'
 import { defaultRatings, updateRating } from '../engine/ratings'
-import { dueItems, gradeFor, newSrs, review } from '../engine/srs'
 import { defaultSettings, type DayRecord, type Profile, type RoundRecord, type RoundSpec } from '../engine/types'
 import { catalogEntry, type Category } from '../games/catalog'
 import { addDays, appClock } from '../lib/clock'
@@ -24,12 +22,6 @@ import { setHapticsEnabled } from '../lib/haptics'
 import { load, save, remove, wipeAll } from '../lib/storage'
 
 export type Screen = 'boot' | 'home' | 'session' | 'debrief' | 'lock' | 'stats' | 'settings' | 'credits'
-
-export interface ReviewOutcome {
-  id: string
-  correct: boolean
-  ms: number
-}
 
 export function freshProfile(): Profile {
   return {
@@ -107,17 +99,6 @@ class App {
       if (document.visibilityState === 'hidden') void this.flush()
       else void this.checkDay()
     })
-    void prefetchAhead()
-    void this.checkContentVersion()
-  }
-
-  /** Non-blocking note when a redeploy shipped new content. */
-  private async checkContentVersion(): Promise<void> {
-    const m = await loadManifest()
-    if (!m) return
-    const prev = await load<string | null>('contentVersion', null)
-    if (prev && prev !== m.version && this.screen !== 'session') this.showToast('New star charts arrived')
-    if (prev !== m.version) await save('contentVersion', m.version)
   }
 
   /** Load today's record and route to the right screen. */
@@ -184,18 +165,15 @@ class App {
     try {
       if (!this.day || this.day.date !== this.today) {
         const seed = daySeed(this.today, dev.seedOverride)
-        const due = dueItems(this.profile.srs, this.today, REVIEW_ITEMS_MAX)
-        const dueOk: string[] = []
-        for (const id of due) if ((await ensureItem(id))?.quiz) dueOk.push(id)
-        const fillers = await pickFillers(seed, 3)
-        const card = await pickCard(seed, new Set(this.profile.seenCards))
+        const { pickExplainer } = await import('../content/explainers')
+        const [y, m, dd] = this.today.split('-').map(Number)
+        const dayNumber = Math.round(Date.UTC(y, m - 1, dd) / 86_400_000)
+        const explainer = pickExplainer(dayNumber, new Set(this.profile.seenCards))
         const plan = compose({
           date: this.today,
           ratings: this.profile.ratings,
           coreHistory: this.profile.coreHistory,
-          dueReviews: dueOk,
-          fillerReviews: fillers,
-          cardId: card?.id ?? null,
+          explainerId: explainer?.id ?? null,
           seedOverride: dev.seedOverride,
         })
         this.day = {
@@ -231,7 +209,7 @@ class App {
   }
 
   /** Record a finished round. Persists before advancing the UI. */
-  async completeRound(rec: RoundRecord, reviews: ReviewOutcome[] = [], learnedCard?: { id: string; title: string; category: string }): Promise<void> {
+  async completeRound(rec: RoundRecord, learnedCard?: { id: string; title: string; category: string }): Promise<void> {
     const d = this.day
     if (!d) return
     this.inRound = false
@@ -243,13 +221,8 @@ class App {
       p.ratings[cat] = updateRating(p.ratings[cat], d.plan[d.index]?.difficulty ?? 0.5, rec.score, played)
       p.roundsPlayed[cat] = played + 1
     }
-    for (const r of reviews) {
-      const s = p.srs[r.id]
-      if (s) p.srs[r.id] = review(s, gradeFor(r.correct, r.ms), d.date)
-    }
     if (learnedCard && !p.seenCards.includes(learnedCard.id)) {
       p.seenCards.push(learnedCard.id)
-      p.srs[learnedCard.id] = newSrs(d.date)
       p.logbook.push({ ...learnedCard, date: d.date })
     }
     const today = effectiveNow(appClock, p).date

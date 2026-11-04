@@ -1,6 +1,6 @@
 // Signal Drift: 2-back. Tap MATCH when the current pulse is the same as the
 // one two pulses ago. Every symbol has its own shape and colour.
-import { disc, halo, line, rect, ring } from '../art/draw'
+import { disc, halo, line, polygon, ring, roundRect } from '../art/draw'
 import { C, RAMPS } from '../art/palette'
 import { drawText } from '../art/pixelFont'
 import type { RNG } from '../lib/rng'
@@ -14,12 +14,12 @@ interface L {
   interval: number
 }
 
-const LEN = 22
+const LEN = 30
 const SHAPES = ['circle', 'triangle', 'square', 'diamond', 'plus', 'ring'] as const
 const COLORS = [RAMPS.cyan[1], RAMPS.amber[4], RAMPS.magenta[3], RAMPS.green[3], RAMPS.violet[4], RAMPS.star[4]]
 
 function generate(rng: RNG, d: number): L {
-  const n = 2
+  const n = d > 0.5 ? 3 : 2
   const seq: number[] = []
   const match: boolean[] = []
   const eligible = Array.from({ length: LEN - n }, (_, i) => i + n)
@@ -41,7 +41,7 @@ function generate(rng: RNG, d: number): L {
     seq.push(s)
     match.push(false)
   }
-  return { seq, n, match, interval: 2.0 - d * 0.6 }
+  return { seq, n, match, interval: 1.7 - d * 0.6 }
 }
 
 function verify(l: L): boolean {
@@ -58,26 +58,26 @@ function verify(l: L): boolean {
 
 function shape(g: CanvasRenderingContext2D, id: number, x: number, y: number): void {
   const col = COLORS[id]
-  halo(g, x, y, 13, 5, RAMPS.indigo[2])
+  halo(g, x, y, 10, 16, col)
   switch (SHAPES[id]) {
     case 'circle':
       disc(g, x, y, 10, col)
       break
     case 'triangle':
-      for (let k = 0; k < 20; k++) rect(g, x - Math.floor(k / 2), y - 10 + k, Math.floor(k / 2) * 2 + 1, 1, col)
+      polygon(g, [[x, y - 11], [x + 11, y + 9], [x - 11, y + 9]], col)
       break
     case 'square':
-      rect(g, x - 9, y - 9, 19, 19, col)
+      roundRect(g, x - 9, y - 9, 18, 18, 2.5, col)
       break
     case 'diamond':
-      for (let k = -10; k <= 10; k++) rect(g, x - (10 - Math.abs(k)), y + k, (10 - Math.abs(k)) * 2 + 1, 1, col)
+      polygon(g, [[x, y - 12], [x + 10, y], [x, y + 12], [x - 10, y]], col)
       break
     case 'plus':
-      rect(g, x - 10, y - 3, 21, 7, col)
-      rect(g, x - 3, y - 10, 7, 21, col)
+      roundRect(g, x - 11, y - 3.5, 22, 7, 2, col)
+      roundRect(g, x - 3.5, y - 11, 7, 22, 2, col)
       break
     case 'ring':
-      for (let r = 7; r <= 10; r++) ring(g, x, y, r, col)
+      ring(g, x, y, 8.5, col, false, 3.5)
       break
   }
 }
@@ -86,7 +86,7 @@ const mod: GameModule<L> = {
   id: 'signal-drift',
   category: 'memory',
   title: 'Signal Drift',
-  howTo: 'Radio pulses arrive one at a time. Tap MATCH when a pulse is the same as the one 2 pulses before it.',
+  howTo: 'Pulses arrive fast. Tap MATCH when a pulse is the same as the one N pulses before it (N is shown above). Hold the last few in mind and keep updating.',
   generate,
   verify,
   mount(ctx) {
@@ -146,12 +146,12 @@ const mod: GameModule<L> = {
             correct: hits + cr,
             total,
             answer: `${hits} matches caught, ${miss} missed, ${fa} false alarms.`,
-            explanation: '2-back makes you hold two items and update them every pulse. The lures (repeats one or three back) are designed to feel familiar but are not matches.',
+            explanation: `${L.n}-back makes you hold the last ${L.n} items and update them every pulse. Lures that repeat one step off are built to feel familiar but are not matches.`,
           })
           return
         }
         ctx.fx.sfx('hover')
-        st.hud.textContent = `Pulse ${i + 1} / ${L.seq.length}`
+        st.hud.textContent = `${L.n}-back · pulse ${i + 1} / ${L.seq.length}`
       }
       const g = pc.ctx
       g.clearRect(0, 0, pc.w, pc.h)

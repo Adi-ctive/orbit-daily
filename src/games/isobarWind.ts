@@ -4,7 +4,7 @@
 // in the northern hemisphere (Buys Ballot's law) and on the right in the
 // southern; near the ground, friction turns it about 25° toward the low.
 import { line, rect } from '../art/draw'
-import { C, RAMPS, bayer } from '../art/palette'
+import { C, RAMPS } from '../art/palette'
 import { drawText } from '../art/pixelFont'
 import { makeOffscreen } from '../art/pixelCanvas'
 import type { RNG } from '../lib/rng'
@@ -123,31 +123,41 @@ function verify(l: L): boolean {
   )
 }
 
-function renderMap(t: Trial, w: number, h: number): HTMLCanvasElement {
-  const { canvas, ctx } = makeOffscreen(w, h)
-  const img = ctx.createImageData(w, h)
+/** Pressure map at full device resolution: soft tints for highs and lows, thin isobars every 4 hPa. */
+function renderMap(t: Trial, w: number, h: number, res: number): HTMLCanvasElement {
+  const W = Math.max(1, Math.round(w * res))
+  const H = Math.max(1, Math.round(h * res))
+  const { canvas, ctx } = makeOffscreen(W, H)
+  const img = ctx.createImageData(W, H)
   const band = (p: number) => Math.floor(p / 4)
-  const P = (x: number, y: number) => pressure(t.centres, x / w, 1 - y / h)
-  const lowT = [RAMPS.violet[1], RAMPS.violet[0]]
-  const highT = [RAMPS.amber[0], RAMPS.void[3]]
-  for (let y = 0; y < h; y++)
-    for (let x = 0; x < w; x++) {
+  const P = (x: number, y: number) => pressure(t.centres, x / W, 1 - y / H)
+  const base = [12, 18, 36]
+  const low = [70, 60, 140]
+  const high = [150, 96, 44]
+  for (let y = 0; y < H; y++)
+    for (let x = 0; x < W; x++) {
       const p = P(x, y)
-      const iso = band(p) !== band(P(x + 1, y)) || band(p) !== band(P(x, y + 1))
-      let col: string = RAMPS.void[2]
       const dev = p - 1012
-      if (dev < -4 && bayer(x, y) < Math.min(0.6, -dev / 30)) col = lowT[0]
-      if (dev > 4 && bayer(x, y) < Math.min(0.5, dev / 40)) col = highT[0]
-      if (iso) col = band(p) % 2 ? RAMPS.star[2] : RAMPS.star[1]
-      const o = (y * w + x) * 4
-      const n = parseInt(col.slice(1), 16)
-      img.data[o] = (n >> 16) & 255
-      img.data[o + 1] = (n >> 8) & 255
-      img.data[o + 2] = n & 255
+      const k = Math.min(1, Math.abs(dev) / 28) * 0.55
+      const tint = dev < 0 ? low : high
+      let r = base[0] + (tint[0] - base[0]) * k
+      let gg = base[1] + (tint[1] - base[1]) * k
+      let bb = base[2] + (tint[2] - base[2]) * k
+      if (band(p) !== band(P(x + 1, y)) || band(p) !== band(P(x, y + 1))) {
+        const v = band(p) % 2 ? 0.85 : 0.6
+        r = 233 * v
+        gg = 237 * v
+        bb = 245 * v
+      }
+      const o = (y * W + x) * 4
+      img.data[o] = r
+      img.data[o + 1] = gg
+      img.data[o + 2] = bb
       img.data[o + 3] = 255
     }
   ctx.putImageData(img, 0, 0)
-  for (const c of t.centres) drawText(ctx, c.amp > 0 ? 'H' : 'L', c.x * w, (1 - c.y) * h - 2, c.amp > 0 ? RAMPS.amber[4] : RAMPS.cyan[1], 1, 'center')
+  ctx.scale(res, res)
+  for (const c of t.centres) drawText(ctx, c.amp > 0 ? 'H' : 'L', c.x * w, (1 - c.y) * h - 5, c.amp > 0 ? RAMPS.amber[4] : RAMPS.cyan[1], 1.6, 'center')
   return canvas
 }
 
@@ -174,8 +184,9 @@ const mod: GameModule<L> = {
       const t = L.trials[i]
       const g = pc.ctx
       g.clearRect(0, 0, pc.w, pc.h)
-      if (!map || map.width !== pc.w || map.height !== pc.h) map = renderMap(t, pc.w, pc.h)
-      g.drawImage(map, 0, 0)
+      const res = Math.min(pc.res, 2)
+      if (!map || map.width !== Math.round(pc.w * res) || map.height !== Math.round(pc.h * res)) map = renderMap(t, pc.w, pc.h, res)
+      g.drawImage(map, 0, 0, pc.w, pc.h)
       const x = Math.round(t.px * pc.w)
       const y = Math.round((1 - t.py) * pc.h)
       rect(g, x - 5, y, 4, 1, C.amberHi)

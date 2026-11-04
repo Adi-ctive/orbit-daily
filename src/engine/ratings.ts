@@ -8,9 +8,9 @@ export function defaultRatings(): Ratings {
   return Object.fromEntries(CATEGORIES.map((c) => [c, DEFAULT_RATING])) as Ratings
 }
 
-/** Difficulty 0..1 maps onto an Elo item rating from 700 to 1700. */
-export const difficultyToElo = (d: number): number => 700 + d * 1000
-export const eloToDifficulty = (e: number): number => clamp01((e - 700) / 1000)
+/** Difficulty 0..1 maps onto Elo 250-1250, so a new player (1000) starts near 0.55. */
+export const difficultyToElo = (d: number): number => 250 + d * 1000
+export const eloToDifficulty = (e: number): number => clamp01((e - 250) / 1000)
 
 export function expected(rating: number, itemElo: number): number {
   return 1 / (1 + Math.pow(10, (itemElo - rating) / 400))

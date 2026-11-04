@@ -1,38 +1,35 @@
 # Status
 
-As of 3 Nov 2026. All 10 phases of `docs/BUILD_PROMPT.md` are built.
+As of 4 Nov 2026, after the v2 redesign based on owner feedback.
 
-## Done
+## What changed in v2
 
-- **App:** installable PWA (Vite + Svelte 5 + TypeScript strict) that works fully offline after the first load. No backend, accounts, ads or analytics.
-- **Daily mission:** warm-up, review, 4 core games from 4 different skills, Star Chart card, boss, debrief, then the lock until local midnight. Seeded by date. Active-time cap of 20 minutes. Resume within the day. Clock-rewind guard. Streaks with earned freezes.
-- **16 games**, each with a generator, a verifier and a 1,000-seed property test (deterministic, solvable, under 50 ms).
-- **Content:** 12,898 Star Chart cards (Wikipedia), 22,387 quiz items (Wikidata), 7,534 aptitude problems (GSM8K, every step re-computed), 167 original riddles, 65 Fermi items plus generated ones. 113 chunks, 32 MB raw.
-- **Art and audio:** all generated in code. The nebula and planets render in a Web Worker.
-- **Adaptivity:** Elo per skill aimed at 77.5% success, in-round staircases, SM-2 reviews.
+- **Look:** realistic space with a minimal adult UI. A WebGL planet shader (terrain, oceans with glint, clouds, ice caps, soft terminator, atmosphere), a calm static starfield, the Inter font, clean cards. All pixel art, the mascot and the pixel fonts are gone. Games draw smooth vector shapes at full screen resolution.
+- **Learning:** the Wikipedia cards and the pop-quiz review round are gone. Each mission now ends with one original explainer on an idea most people never met in school: politics, economics, the mind, philosophy, maths, physics, space, engineering, Earth and life sciences. No quiz after it.
+- **Difficulty:** a new player now starts around difficulty 0.55 instead of 0.09, warm-up about 0.35 and boss about 0.8. Every game was also retuned to be faster and denser (details in `docs/DECISIONS.md`).
+
+## Mission
+
+Warm-up reflex game, 4 core games from 4 different skills, today's explainer, boss puzzle, debrief, then the lock until local midnight.
 
 ## Quality gate results
 
 | Check | Result |
 |---|---|
 | ESLint, svelte-check, tsc | 0 errors, 0 warnings |
-| Unit and property tests (Vitest) | 67 passed |
-| E2E (Playwright, Pixel 7 + desktop) | 8 passed: full session to lock, resume after reload, install manifest, offline session |
-| Lighthouse mobile | Performance 97, Accessibility 100, Best Practices 96, SEO 100 |
-| Initial JS | about 46 KB gzipped; each game is its own lazy chunk |
-| Screenshots | `docs/screens/`: every screen at 360×640, 412×915 and 1280×800, plus every game |
+| Unit and property tests | 64 passed (1,000 seeds per game, each under 50 ms) |
+| E2E (Pixel 7 + desktop) | 8 passed: full session to lock, resume, manifest, offline |
+| Lighthouse mobile | Performance 100, Accessibility 100, Best Practices 100, SEO 100 |
 
 ## Known limits
 
-- The lock is client-side. Moving the clock forward or clearing site data bypasses it (see `docs/DECISIONS.md`).
-- No haptics on iOS Safari (no Vibration API there).
-- Review questions for cards are "which topic is this?" cloze questions, not hand-written questions.
-- Card text is the raw Wikipedia summary. The local-LLM enrichment script exists (`npm run content:enrich`) but was not run at scale. Enriched cards would need a human spot check.
-- Long word problems and long cards scroll on small phones.
-- Map-pin questions were not built (they need map geometry).
+- 64 explainers, so the cycle repeats after about two months of daily play. New ones need writing and checking by hand.
+- Devices without a usable GPU get a simpler 2D planet, because the shader would take seconds to compile on the CPU.
+- The lock is client-side (moving the clock forward or clearing data bypasses it).
+- No haptics on iOS Safari.
 
-## Next to add
+## Next
 
-- **Games:** Climograph Detective, Scale Sort, Periodic Hunt, river-crossing riddles, situation puzzles, Higher/Lower physical quantities, Nonogram.
-- **Content:** MathQA aptitude items (its formula programs can be re-computed), and enrichment of the top few hundred cards with a human review pass.
-- **Platform:** an optional free Cloudflare Worker time check behind `src/lib/clock.ts`, and a friends leaderboard on the shared daily seed (needs an age gate first because of India's DPDP rules).
+- More explainers (aim for 365), possibly in short themed runs of 3 to 5 days.
+- Harder tiers that unlock at high ratings: dual n-back, two-stick matchstick moves, larger Void Beast boards.
+- An optional friends leaderboard on the shared daily seed (needs an age gate first).

@@ -13,8 +13,6 @@ export const DAY_ROLLOVER = 'local-midnight' as const
 /** How often active time is flushed to IndexedDB while a round runs. */
 export const ACTIVE_TIME_FLUSH_MS = 3_000
 
-export const REVIEW_ITEMS_MIN = 3
-export const REVIEW_ITEMS_MAX = 5
 export const CORE_ROUNDS = 4
 export const NO_REPEAT_DAYS = 2
 
