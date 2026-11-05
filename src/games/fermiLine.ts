@@ -2,14 +2,18 @@
 import type { RNG } from '../lib/rng'
 import { FERMI, templated, type FermiItem } from './fermiData'
 import { button, el, makeStage } from './kit'
-import { defaultScore, type GameModule } from './types'
+import { defaultScore, type GameModule, type GenOpts } from './types'
 
 interface L {
   items: FermiItem[]
 }
 
-function generate(rng: RNG, _d: number): L {
-  const bank = rng.shuffle(FERMI).slice(0, 4)
+function generate(rng: RNG, _d: number, opts?: GenOpts): L {
+  // Never repeat a bank question until every one has been seen.
+  const seen = opts?.seen ?? new Set<string>()
+  const all = FERMI.map((f, i) => ({ ...f, id: 'fermi:' + i }))
+  const fresh = all.filter((f) => !seen.has(f.id))
+  const bank = rng.shuffle(fresh.length >= 4 ? fresh : all).slice(0, 4)
   const t = templated(rng.int(2, 40), rng.int(0, 3))
   return { items: rng.shuffle([...bank, t]) }
 }
@@ -91,6 +95,7 @@ const mod: GameModule<L> = {
               else {
                 const total = scores.reduce((a, b) => a + b, 0)
                 ctx.finish({
+                  seenIds: L.items.map((it) => it.id).filter((x): x is string => !!x),
                   score: total / scores.length,
                   correct: scores.filter((s) => s > 0.6).length,
                   total: scores.length,

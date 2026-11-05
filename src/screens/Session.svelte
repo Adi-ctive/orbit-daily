@@ -68,7 +68,7 @@
       const m = await loadGame(r.gameId)
       // A fresh random level on every attempt (dev seeds stay fixed for tests).
       const rng = new RNG(dev.seedOverride ? r.seed : r.seed + '|' + nonce())
-      const level = generateVerified(m, rng, r.difficulty)
+      const level = generateVerified(m, rng, r.difficulty, 200, { seen: new Set(app.profile.seenItems ?? []) })
       await app.beginRound()
       // Game modules own this element and render into it directly.
       // eslint-disable-next-line svelte/no-dom-manipulating
@@ -113,6 +113,7 @@
       await app.completeRound(
         { gameId: r.gameId, phase: r.phase, category: r.category, score: res.score, correct: res.correct, total: res.total, ms: 0 },
         res.learned,
+        res.seenIds,
       )
       stage = 'feedback'
     } finally {
@@ -188,10 +189,10 @@
     <div class="intro">
       <p class="label">Bonus time</p>
       <h1>{formatCountdown(timeLeftMs(day)).slice(3)} left</h1>
-      <p class="how">Your planned rounds are done and today's streak is saved. Keep playing extra rounds until the time runs out, or finish now.</p>
+      <p class="how">Your planned rounds are done and today's streak is saved. {app.canMore ? 'Keep playing games you have not played today until the time runs out, or finish now.' : 'You have played every game today. Finish the mission to see your debrief.'}</p>
       <div class="two">
         <button class="btn" data-testid="mission-finish" onclick={finish}>Finish mission</button>
-        <button class="btn primary" data-testid="round-more" onclick={more}>Another round</button>
+        {#if app.canMore}<button class="btn primary" data-testid="round-more" onclick={more}>Another round</button>{/if}
       </div>
     </div>
   {/if}
@@ -226,7 +227,7 @@
         <p class="muted">Planned rounds done. {formatCountdown(timeLeftMs(day)).slice(3)} left to keep playing.</p>
         <div class="two">
           <button class="btn" data-testid="mission-finish" onclick={finish}>Finish mission</button>
-          <button class="btn primary" data-testid="round-more" onclick={more}>Another round</button>
+          {#if app.canMore}<button class="btn primary" data-testid="round-more" onclick={more}>Another round</button>{/if}
         </div>
       {:else}
         <button class="btn primary go" data-testid="round-next" onclick={next}>{day?.completed ? 'See debrief' : 'Next round'}</button>

@@ -81,6 +81,8 @@ export interface Profile {
   coreHistory: Record<string, string[]>
   settings: Settings
   installHintSeen: boolean
+  /** Riddle and Fermi ids already shown, so they never repeat. */
+  seenItems?: string[]
   /** Random per-player salt, so each player gets their own mix of games. */
   salt?: string
 }

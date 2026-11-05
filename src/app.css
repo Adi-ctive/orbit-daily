@@ -43,10 +43,15 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overscroll-behavior: none;
   background: var(--bg);
   min-height: 100dvh;
+}
+
+/* Only the root may hide sideways overflow and stop pull-to-refresh. On <body> these
+   made body its own scroll container that swallowed wheel and swipe scrolling. */
+html {
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -444,7 +449,6 @@ h3 {
 
 /* Explainer reading view. */
 .ex {
-  overflow-y: auto;
   max-width: 38em;
   margin: 0 auto;
   padding: 4px 2px 24px;

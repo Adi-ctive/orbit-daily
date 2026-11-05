@@ -19,7 +19,7 @@ import { migrateDay } from '../engine/migrate'
 import { defaultRatings, updateRating } from '../engine/ratings'
 import { RNG } from '../lib/rng'
 import { defaultSettings, type DayRecord, type Profile, type RoundRecord, type RoundSpec } from '../engine/types'
-import type { Category } from '../games/catalog'
+import { CATALOG, type Category } from '../games/catalog'
 import { addDays, appClock } from '../lib/clock'
 import { dev } from '../lib/dev'
 import { setHapticsEnabled } from '../lib/haptics'
@@ -232,7 +232,7 @@ class App {
   }
 
   /** Record a finished round. Persists before advancing the UI. */
-  async completeRound(rec: RoundRecord, learnedCard?: { id: string; title: string; category: string }): Promise<void> {
+  async completeRound(rec: RoundRecord, learnedCard?: { id: string; title: string; category: string }, seenIds: string[] = []): Promise<void> {
     const d = this.day
     if (!d) return
     this.inRound = false
@@ -243,6 +243,10 @@ class App {
       const played = p.roundsPlayed[cat] ?? 0
       p.ratings[cat] = updateRating(p.ratings[cat], d.plan[d.index]?.difficulty ?? 0.5, rec.score, played)
       p.roundsPlayed[cat] = played + 1
+    }
+    if (seenIds.length) {
+      const cur = p.seenItems ?? []
+      p.seenItems = [...cur, ...seenIds.filter((id) => !cur.includes(id))]
     }
     if (learnedCard && !p.seenCards.includes(learnedCard.id)) {
       p.seenCards.push(learnedCard.id)
@@ -264,8 +268,18 @@ class App {
   async moreRound(): Promise<void> {
     const d = this.day
     if (!d || d.completed || !d.planDone || timeLeftMs(d) <= 0) return
-    d.plan.push(bonusRound(this.profile.ratings, d.plan.at(-1)?.gameId, new RNG(randomId())))
+    const r = bonusRound(this.profile.ratings, new Set(d.plan.map((x) => x.gameId)), new RNG(randomId()))
+    if (!r) return
+    d.plan.push(r)
     await this.saveDay()
+  }
+
+  /** True while some game has not been played yet today. */
+  get canMore(): boolean {
+    const d = this.day
+    if (!d) return false
+    const played = new Set(d.plan.map((x) => x.gameId))
+    return CATALOG.some((g) => !played.has(g.id))
   }
 
   /** The player ends the mission (planned set done). */

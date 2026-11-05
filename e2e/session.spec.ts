@@ -112,3 +112,23 @@ test('works offline after first load', async ({ page, context }) => {
   await context.setOffline(false)
   expect(bad.filter((b) => !/Failed to load resource|net::ERR_INTERNET_DISCONNECTED/.test(b))).toEqual([])
 })
+
+test('the explainer scrolls with the mouse wheel', async ({ page }) => {
+  await page.goto('/?dev=1&date=2026-11-14')
+  await page.getByTestId('launch').click()
+  for (let k = 0; k < 10; k++) {
+    await page.getByTestId('round-start').waitFor()
+    if (/explainer/i.test(await page.locator('.intro h1').innerText())) break
+    await page.getByTestId('round-start').click()
+    await expect(page.getByTestId('round-start')).toHaveCount(0)
+    await page.evaluate(() => dispatchEvent(new CustomEvent('orbit:dev-skip')))
+    await page.getByTestId('round-next').click()
+  }
+  await page.getByTestId('round-start').click()
+  await page.locator('.ex-p').first().hover()
+  await page.mouse.wheel(0, 600)
+  // Scrolls all the way down when the article is shorter than the wheel step.
+  const max = await page.evaluate(() => document.scrollingElement!.scrollHeight - innerHeight)
+  expect(max).toBeGreaterThan(0)
+  await expect.poll(() => page.evaluate(() => document.scrollingElement!.scrollTop)).toBeGreaterThanOrEqual(Math.min(100, max - 1))
+})

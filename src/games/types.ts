@@ -11,8 +11,16 @@ export interface RoundResult {
   /** The correct answer and a short explanation, shown after the round. */
   answer: string
   explanation: string
+  /** Bank items shown this round (riddles, Fermi questions), so they never repeat. */
+  seenIds?: string[]
   /** Explainer rounds: what was read. */
   learned?: { id: string; title: string; category: string }
+}
+
+/** Extra input for generators that draw from a finite bank. */
+export interface GenOpts {
+  /** Item ids this player has already seen. */
+  seen?: ReadonlySet<string>
 }
 
 export interface SkillUpdate {
@@ -70,16 +78,16 @@ export interface GameModule<L extends Level = Level> {
   title: string
   /** One or two short lines shown before the round starts. */
   howTo: string
-  generate(rng: RNG, difficulty: number): L
+  generate(rng: RNG, difficulty: number, opts?: GenOpts): L
   verify(level: L): boolean
   mount(ctx: GameContext<L>): GameInstance
   score(result: RoundResult): SkillUpdate
 }
 
 /** Shared generate → verify loop. Throws if no valid level appears, which tests catch. */
-export function generateVerified<L extends Level>(m: GameModule<L>, rng: RNG, difficulty: number, tries = 200): L {
+export function generateVerified<L extends Level>(m: GameModule<L>, rng: RNG, difficulty: number, tries = 200, opts?: GenOpts): L {
   for (let i = 0; i < tries; i++) {
-    const lvl = m.generate(rng.fork('try' + i), difficulty)
+    const lvl = m.generate(rng.fork('try' + i), difficulty, opts)
     if (m.verify(lvl)) return lvl
   }
   throw new Error(`${m.id}: no valid level after ${tries} tries`)

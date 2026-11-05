@@ -101,9 +101,11 @@ describe('composer', () => {
     expect(weakestRound([{ gameId: 'aliens', phase: 'core', score: 0.9 }])).toBeNull()
   })
 
-  it('bonus rounds never repeat the last game', () => {
+  it('bonus rounds never repeat a game played today', () => {
     const r = new RNG('bonus')
-    for (let i = 0; i < 200; i++) expect(bonusRound(defaultRatings(), 'aliens', r).gameId).not.toBe('aliens')
+    const played = new Set(['aliens', 'fuel-mix'])
+    for (let i = 0; i < 200; i++) expect(played.has(bonusRound(defaultRatings(), played, r)!.gameId)).toBe(false)
+    expect(bonusRound(defaultRatings(), new Set(CATALOG.map((g) => g.id)), r)).toBeNull()
   })
 
   it('a new player starts at a real challenge', () => {

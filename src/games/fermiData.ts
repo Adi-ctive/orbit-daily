@@ -1,6 +1,7 @@
 // Fermi estimation bank. Values are standard reference figures, rounded.
 // `lo`/`hi` are the slider's powers of ten.
 export interface FermiItem {
+  id?: string
   q: string
   a: number
   unit: string

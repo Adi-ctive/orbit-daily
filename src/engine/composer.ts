@@ -86,10 +86,11 @@ export function compose(input: ComposeInput): RoundSpec[] {
   return plan
 }
 
-/** An extra round after the planned set: weighted toward weak skills, never the same game twice in a row. */
-export function bonusRound(ratings: Ratings, lastGameId: string | undefined, rng: RNG): RoundSpec {
+/** An extra round after the planned set: a game not played yet today, weighted toward weak skills. Null once every game has been played. */
+export function bonusRound(ratings: Ratings, played: ReadonlySet<string>, rng: RNG): RoundSpec | null {
   const weak = weaknessWeights(ratings)
-  const games = CATALOG.filter((g) => g.id !== lastGameId)
+  const games = CATALOG.filter((g) => !played.has(g.id))
+  if (!games.length) return null
   const g = games[rng.weighted(games.map((x) => 1 + weak[x.category] * 1.5))]
   return { phase: 'bonus', gameId: g.id, category: g.category, difficulty: targetDifficulty(ratings[g.category]), seed: `bonus|${g.id}|${rng.int(0, 1e9)}` }
 }

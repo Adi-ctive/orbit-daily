@@ -2,7 +2,7 @@
 import riddles from '../../content/riddles/riddles.json'
 import type { RNG } from '../lib/rng'
 import { button, el, makeStage } from './kit'
-import { defaultScore, type GameModule } from './types'
+import { defaultScore, type GameModule, type GenOpts } from './types'
 
 export interface Riddle {
   id: string
@@ -20,11 +20,14 @@ interface L {
   picks: { id: string; order: string[] }[]
 }
 
-function generate(rng: RNG, d: number): L {
+function generate(rng: RNG, d: number, opts?: GenOpts): L {
   // Only the harder riddles: this is for adults, not a school quiz.
   const want = d > 0.6 ? 3 : 2
-  const near = RIDDLES.filter((r) => r.difficulty >= want)
-  const picked = rng.shuffle(near.length >= 3 ? near : RIDDLES).slice(0, 3)
+  const seen = opts?.seen ?? new Set<string>()
+  // Never repeat a riddle until every one has been seen.
+  const pools = [RIDDLES.filter((r) => r.difficulty >= want && !seen.has(r.id)), RIDDLES.filter((r) => !seen.has(r.id)), RIDDLES]
+  const pool = pools.find((p) => p.length >= 3)!
+  const picked = rng.shuffle(pool).slice(0, 3)
   return { picks: picked.map((r) => ({ id: r.id, order: rng.shuffle([r.answer, ...r.choices]) })) }
 }
 
@@ -80,7 +83,7 @@ const mod: GameModule<L> = {
               i++
               st.controls.replaceChildren()
               if (i < L.picks.length) show()
-              else ctx.finish({ score: correct / L.picks.length, correct, total: L.picks.length, answer: `${correct} of ${L.picks.length} riddles solved.`, explanation: notes.join(' ') })
+              else ctx.finish({ score: correct / L.picks.length, correct, total: L.picks.length, answer: `${correct} of ${L.picks.length} riddles solved.`, explanation: notes.join(' '), seenIds: L.picks.map((p) => p.id) })
             }, 'big'),
           )
         })
