@@ -29,13 +29,13 @@ Warm-up reflex game, core games from different skills (yesterday's weakest skill
 
 ## Known limits
 
-- 64 explainers, so the cycle repeats after about two months of daily play. New ones need writing and checking by hand.
+- 365 explainers, a full year of daily reading before any repeats. New ones need writing and fact-checking by hand.
 - Devices without a usable GPU get a simpler 2D planet, because the shader would take seconds to compile on the CPU.
 - The lock is client-side (moving the clock forward or clearing data bypasses it).
 - No haptics on iOS Safari.
 
 ## Next
 
-- More explainers (aim for 365), possibly in short themed runs of 3 to 5 days.
+- Possibly group explainers into short themed runs of 3 to 5 days.
 - Harder tiers that unlock at high ratings: dual n-back, two-stick matchstick moves, larger Void Beast boards.
 - An optional friends leaderboard on the shared daily seed (needs an age gate first).

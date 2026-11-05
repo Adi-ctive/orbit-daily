@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { EXPLAINERS, pickExplainer } from './index'
 
 describe('explainers', () => {
-  it('has at least 60 well-formed entries', () => {
-    expect(EXPLAINERS.length).toBeGreaterThanOrEqual(60)
+  it('has a full year of well-formed entries', () => {
+    expect(EXPLAINERS.length).toBeGreaterThanOrEqual(365)
     expect(new Set(EXPLAINERS.map((e) => e.id)).size).toBe(EXPLAINERS.length)
     for (const e of EXPLAINERS) {
       expect(e.paras.length, e.id).toBeGreaterThanOrEqual(3)
