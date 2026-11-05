@@ -46,7 +46,7 @@ export const CATALOG: readonly CatalogEntry[] = [
   { id: 'code-lock', category: 'logic', title: 'Code Lock', boss: true },
   { id: 'turn-mirror', category: 'logic', title: 'Turn or Mirror' },
   { id: 'ice-drift', category: 'maze', title: 'Ice Drift', boss: true },
-  { id: 'isobar-wind', category: 'stem', title: 'Isobar Wind Reader' },
+  { id: 'isobar-wind', category: 'stem', title: 'Wind Rider' },
 ]
 
 export function catalogEntry(id: string): CatalogEntry | undefined {

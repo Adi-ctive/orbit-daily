@@ -683,3 +683,13 @@ h3 {
   border-radius: 50%;
   border: 2px solid rgb(255 255 255 / 0.15);
 }
+
+/* Wind Rider pads */
+.iw-pads {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.iw-pads .g-btn {
+  min-width: 56px;
+}

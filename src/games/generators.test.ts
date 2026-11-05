@@ -7,7 +7,7 @@ import { solve24 } from './fuelMix'
 import { doomsdayOf, weekdayByDate, weekdayByRule } from './doomsday'
 import { evalStmt, solutions, type Stmt } from './aliens'
 import { DIGIT, eqText, isTrue, oneMoveResults } from './starSticks'
-import { sector, windAngle } from './isobarWind'
+import { drift, missBy, sector, windAngle } from './isobarWind'
 import { RIDDLES } from './riddleBank'
 import { FERMI } from './fermiData'
 
@@ -80,6 +80,16 @@ describe('solvers', () => {
     // Same map in the south: toward south, turned toward the low → S or SW.
     const s = sector(windAngle(low, 0.5, 0.5, false)).s
     expect([4, 5]).toContain(s)
+  })
+
+  it('wind rider balloon curls anticlockwise into a northern low', () => {
+    const low = [{ x: 0.5, y: 0.5, amp: -20, sigma: 0.22 }]
+    // Start east of the low: anticlockwise flow carries it north first.
+    const p = drift(low, true, { x: 0.75, y: 0.5 }, 1, 10)
+    expect(p[p.length - 1].y).toBeGreaterThan(0.53)
+    // Tracing back then forward lands on the start again.
+    const back = drift(low, true, { x: 0.7, y: 0.6 }, -1, 40)
+    expect(missBy(drift(low, true, back[back.length - 1]), { x: 0.7, y: 0.6 })).toBeLessThan(0.035)
   })
 })
 
