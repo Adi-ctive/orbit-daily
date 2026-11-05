@@ -72,7 +72,8 @@ export function compose(input: ComposeInput): RoundSpec[] {
       cats.splice(cats.indexOf(focus.category), 1)
     }
     while (core.length < CORE_ROUNDS && cats.length) {
-      const i = r.weighted(cats.map((c) => 1 + weak[c]))
+      // Weight by how many games a skill has, so a skill with one game does not show up every other day.
+      const i = r.weighted(cats.map((c) => byCat.get(c)!.length * (1 + weak[c])))
       const cat = cats.splice(i, 1)[0]
       core.push(r.pick(byCat.get(cat)!))
     }
