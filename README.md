@@ -20,7 +20,7 @@ On iPhone: open the link in Safari → Share → Add to Home Screen.
 4. **Boss:** a harder logic or maze puzzle.
 5. **Debrief:** scores per skill and a spoiler-free share grid. Then the lock.
 
-16 games: Thruster Abort, Catch the Comet, Orbit Tracker, Constellation Recall, Dead Reckoning, Signal Drift, Fuel Mix (24), Fermi Line, Doomsday Sprint, Truthful & Lying Aliens, Vanishing Walls, Escape the Void Beast, Pulsar Path, Star-Stick Equations, Signal from Deep Space (167 original riddles) and the Isobar Wind Reader.
+23 games: Thruster Abort, Catch the Comet, Orbit Tracker, Rule Flip, Odd One Out, Constellation Recall, Dead Reckoning, Signal Match, Spot the Change, Fuel Mix (24), Fermi Line, Doomsday Sprint, Running Tally, Truth & Lies, Code Lock, Turn or Mirror, Vanishing Walls, Escape the Void Beast, Pulsar Path, Ice Drift, Star-Stick Equations, Signal from Deep Space (167 original riddles) and the Isobar Wind Reader.
 
 ## Develop
 

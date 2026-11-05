@@ -130,11 +130,27 @@ function portrait(i: number): HTMLCanvasElement {
   return c
 }
 
+/** Aliens a statement depends on (besides its speaker). */
+function refs(st: Stmt, n: number): number[] {
+  if (st.k === 'is') return [st.s, st.t]
+  if (st.k === 'same' || st.k === 'diff') return [st.s, st.a, st.b]
+  return Array.from({ length: n }, (_, i) => i)
+}
+
 const mod: GameModule<L> = {
   id: 'aliens',
   category: 'logic',
-  title: 'Truthful & Lying Aliens',
-  howTo: 'Each alien either always tells the truth or always lies. Work out which is which. There is exactly one answer.',
+  title: 'Truth & Lies',
+  rules: {
+    goal: 'Work out which aliens tell the truth and which lie.',
+    steps: [
+      'A truth-teller only ever says true things. A liar only ever says false things.',
+      'Read what each alien says. Mark each one Truth-teller or Liar.',
+      'Check shows which statements clash with your marks (2 uses, each costs a little score).',
+      'Exactly one set of marks fits every statement. Submit when you are sure.',
+    ],
+  },
+  howTo: 'Mark each alien as a truth-teller or a liar so that every statement fits. Exactly one answer works.',
   generate,
   verify,
   mount(ctx) {
@@ -143,44 +159,95 @@ const mod: GameModule<L> = {
     const L = ctx.level
     const n = L.names.length
     const guess: (boolean | null)[] = new Array(n).fill(null)
+    let checks = 0
+    const banner = el(
+      'div',
+      { class: 'ka-banner' },
+      el('span', { class: 'ka-t', text: '○ Truth-teller: always true' }),
+      el('span', { class: 'ka-l', text: '✕ Liar: always false' }),
+    )
     const list = el('div', { class: 'ka-list' })
+    st.root.insertBefore(banner, st.controls)
     st.root.insertBefore(list, st.controls)
-    st.hud.textContent = `${n} aliens · find the liars`
-    const submit = button('Submit', () => check(), 'big')
-    submit.disabled = true
-    st.controls.append(submit)
+    st.hud.textContent = `${n} aliens · exactly one answer fits`
 
+    const marks: HTMLElement[][] = []
     const rows = L.names.map((name, i) => {
-      const toggle = button('?', () => {
-        guess[i] = guess[i] === null ? true : guess[i] ? false : null
-        toggle.textContent = guess[i] === null ? '?' : guess[i] ? '○ Truthful' : '✕ Liar'
-        toggle.classList.toggle('ok', guess[i] === true)
-        toggle.classList.toggle('no', guess[i] === false)
-        toggle.setAttribute('aria-label', `${name}: ${guess[i] === null ? 'undecided' : guess[i] ? 'truth-teller' : 'liar'}`)
-        submit.disabled = guess.some((g) => g === null)
-        ctx.fx.sfx('tap')
+      const says = L.stmts.map((s, k) => ({ s, k })).filter((x) => x.s.s === i)
+      const lines = says.map(({ s }) => {
+        const mark = el('span', { class: 'ka-mark' })
+        const p = el('p', { class: 'ka-say' }, mark, stmtText(s, L.names))
+        return { p, mark }
       })
-      toggle.setAttribute('aria-label', `${name}: undecided`)
-      const says = L.stmts.filter((s) => s.s === i).map((s) => el('p', { class: 'ka-say', text: stmtText(s, L.names) }))
-      const row = el('div', { class: 'ka-row panel' }, portrait(i), el('div', { class: 'ka-text' }, el('p', { class: 'label', text: name }), ...says), toggle)
+      marks[i] = lines.map((x) => x.mark)
+      const tBtn = button('○ Truth-teller', () => set(i, true), 'ka-seg')
+      const lBtn = button('✕ Liar', () => set(i, false), 'ka-seg')
+      const row = el(
+        'div',
+        { class: 'ka-row panel' },
+        el('div', { class: 'ka-head' }, portrait(i), el('p', { class: 'ka-name', text: name })),
+        el('div', { class: 'ka-text' }, ...lines.map((x) => x.p)),
+        el('div', { class: 'ka-pick', role: 'group', 'aria-label': `${name} is` }, tBtn, lBtn),
+      )
       list.append(row)
-      return toggle
+      return { tBtn, lBtn }
     })
 
-    const check = () => {
-      rows.forEach((b) => (b.disabled = true))
+    const check = button('Check (2 left)', () => runCheck())
+    const submit = button('Submit', () => done(), 'big')
+    submit.disabled = true
+    st.controls.append(check, submit)
+
+    const clearMarks = () => marks.flat().forEach((m) => ((m.textContent = ''), (m.className = 'ka-mark')))
+
+    function set(i: number, v: boolean) {
+      guess[i] = v
+      rows[i].tBtn.classList.toggle('sel', v)
+      rows[i].lBtn.classList.toggle('sel', !v)
+      submit.disabled = guess.some((g) => g === null)
+      clearMarks()
+      ctx.fx.sfx('tap')
+    }
+
+    function runCheck() {
+      if (checks >= 2) return
+      checks++
+      check.textContent = `Check (${2 - checks} left)`
+      if (checks >= 2) check.disabled = true
+      let clashes = 0
+      const counts = new Array(n).fill(0)
+      L.stmts.forEach((s) => {
+        const k = counts[s.s]++
+        const m = marks[s.s][k]
+        if (!refs(s, n).every((r) => guess[r] !== null)) {
+          m.textContent = '·'
+          m.className = 'ka-mark open'
+          return
+        }
+        const fits = evalStmt(s, guess as boolean[]) === guess[s.s]
+        if (!fits) clashes++
+        m.textContent = fits ? '✓' : '✗'
+        m.className = 'ka-mark ' + (fits ? 'fit' : 'clash')
+      })
+      st.hud.textContent = clashes ? `${clashes} statement${clashes > 1 ? 's' : ''} clash with your marks` : 'No clashes among the statements you have fully marked'
+      ctx.fx.sfx(clashes ? 'wrong' : 'correct')
+    }
+
+    function done() {
+      rows.forEach((r) => ((r.tBtn.disabled = true), (r.lBtn.disabled = true)))
       submit.disabled = true
+      check.disabled = true
       const right = guess.filter((g, i) => g === L.solution[i]).length
       const reasons = L.stmts.map((s) => {
         const truth = evalStmt(s, L.solution)
-        return `${L.names[s.s]} says ${stmtText(s, L.names)} That is ${truth ? 'true' : 'false'}, so ${L.names[s.s]} is a ${L.solution[s.s] ? 'truth-teller' : 'liar'}.`
+        return `${L.names[s.s]} says ${stmtText(s, L.names)} That is ${truth ? 'true' : 'false'}, which fits a ${L.solution[s.s] ? 'truth-teller' : 'liar'}.`
       })
       ctx.finish({
-        score: right === n ? 1 : right / n / 2,
+        score: right === n ? Math.max(0.5, 1 - checks * 0.15) : right / n / 2,
         correct: right,
         total: n,
         answer: L.names.map((nm, i) => `${nm}: ${L.solution[i] ? 'truth-teller' : 'liar'}`).join(', '),
-        explanation: reasons.join(' ') + ' No other assignment fits every statement.',
+        explanation: reasons.join(' ') + ' No other set of marks fits every statement.',
       })
     }
     return { destroy: () => st.destroy() }

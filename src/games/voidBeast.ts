@@ -128,6 +128,10 @@ const mod: GameModule<L> = {
   id: 'void-beast',
   category: 'maze',
   title: 'Escape the Void Beast',
+  rules: {
+    goal: "Reach the portal before the beast catches you.",
+    steps: ["Move one square, or tap Wait.","After each of your moves, the beast moves TWO squares toward you.","It always tries sideways first, then up or down. Walls block it too.","Lead it behind a wall so it gets stuck, then slip past."],
+  },
   howTo: 'Reach the portal. Each time you move or wait, the beast takes two steps toward you, sideways first if it can. Walls can trap it.',
   generate,
   verify,

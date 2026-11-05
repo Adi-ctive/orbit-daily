@@ -9,6 +9,10 @@ const mod: GameModule<L> = {
   id: 'explainer',
   category: 'stem',
   title: "Today's explainer",
+  rules: {
+    goal: "Learn one idea worth knowing.",
+    steps: ["Read at your own pace.","Tap Done reading at the end. There is no quiz."],
+  },
   howTo: 'One idea worth knowing, in about three minutes. Read at your own pace.',
   generate: () => ({ ok: true }),
   verify: () => true,

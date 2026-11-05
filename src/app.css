@@ -538,3 +538,148 @@ h3 {
   min-height: 0;
   aspect-ratio: 16 / 10;
 }
+
+/* Truth & Lies */
+.ka-banner {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.ka-banner span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.ka-t {
+  color: var(--good);
+}
+.ka-l {
+  color: var(--bad);
+}
+.ka-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 12px;
+  align-items: start;
+}
+.ka-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.ka-name {
+  font-weight: 650;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.ka-pick {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.ka-seg {
+  min-height: 44px;
+  font-size: 0.9rem;
+  margin: 0;
+}
+.ka-mark {
+  display: inline-block;
+  width: 1.3em;
+  font-weight: 700;
+}
+.ka-mark.fit {
+  color: var(--good);
+}
+.ka-mark.clash {
+  color: var(--bad);
+}
+.ka-mark.open {
+  color: var(--dim);
+}
+.sm-prompt {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  color: var(--muted);
+}
+
+/* Code Lock */
+.cl-board {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+}
+.cl-row {
+  display: grid;
+  grid-template-columns: 22px repeat(4, 1fr) 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.cl-row.cur {
+  border-color: var(--accent);
+}
+.cl-n {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.cl-peg {
+  justify-self: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow: inset 0 -3px 6px rgb(0 0 0 / 0.35), 0 0 10px rgb(255 255 255 / 0.08);
+}
+.cl-peg.empty {
+  background: transparent;
+  border: 1.5px dashed var(--border-hi);
+  box-shadow: none;
+}
+.cl-fb {
+  display: grid;
+  grid-template-columns: repeat(2, 12px);
+  gap: 4px;
+  justify-content: end;
+}
+.cl-fb i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+}
+.cl-fb i.x {
+  background: var(--ink-bright);
+  border-color: var(--ink-bright);
+}
+.cl-fb i.n {
+  border-color: var(--ink-bright);
+}
+.cl-pal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+.g-btn.cl-colour {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid rgb(255 255 255 / 0.15);
+}

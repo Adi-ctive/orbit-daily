@@ -443,6 +443,10 @@ const mod: GameModule<L> = {
   id: 'aptitude',
   category: 'math',
   title: 'Aptitude Sprint',
+  rules: {
+    goal: "Answer six quick quantitative questions.",
+    steps: ["Read the picture and the question together.","Each question has a countdown at the top.","Pick one of the four answers.","The working is shown after every answer."],
+  },
   howTo: 'Six quick quantitative questions: charts, series, speed, work, prices and chance. Each has a countdown, so read the picture fast and think before you tap.',
   generate,
   verify,

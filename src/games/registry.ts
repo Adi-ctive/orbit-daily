@@ -20,6 +20,13 @@ const loaders: Record<string, Loader> = {
   'star-sticks': () => import('./starSticks') as Promise<{ default: GameModule<Level> }>,
   'riddle-bank': () => import('./riddleBank') as Promise<{ default: GameModule<Level> }>,
   'isobar-wind': () => import('./isobarWind') as Promise<{ default: GameModule<Level> }>,
+  'rule-flip': () => import('./ruleFlip') as Promise<{ default: GameModule<Level> }>,
+  'odd-one-out': () => import('./oddOneOut') as Promise<{ default: GameModule<Level> }>,
+  'spot-change': () => import('./spotChange') as Promise<{ default: GameModule<Level> }>,
+  'running-tally': () => import('./runningTally') as Promise<{ default: GameModule<Level> }>,
+  'code-lock': () => import('./codeLock') as Promise<{ default: GameModule<Level> }>,
+  'turn-mirror': () => import('./turnMirror') as Promise<{ default: GameModule<Level> }>,
+  'ice-drift': () => import('./iceDrift') as Promise<{ default: GameModule<Level> }>,
   aptitude: () => import('./aptitude') as Promise<{ default: GameModule<Level> }>,
   explainer: () => import('./explainer') as Promise<{ default: GameModule<Level> }>,
 }

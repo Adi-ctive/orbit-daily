@@ -82,6 +82,10 @@ const mod: GameModule<L> = {
   id: 'dead-reckoning',
   category: 'memory',
   title: 'Dead Reckoning',
+  rules: {
+    goal: "Work out where the ship ends up.",
+    steps: ["The ship flies a route of turns and straight runs.","It leaves no trail, so track it in your head.","When it stops, it disappears. Tap where it is.","The closer your tap, the more you score. 3 routes."],
+  },
   howTo: 'The ship flies a route of turns and thrusts, then its scanner goes dark. Tap the spot where it stopped.',
   generate,
   verify,

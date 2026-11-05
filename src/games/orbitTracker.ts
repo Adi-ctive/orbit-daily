@@ -57,6 +57,10 @@ const mod: GameModule<L> = {
   id: 'orbit-tracker',
   category: 'reflex',
   title: 'Orbit Tracker',
+  rules: {
+    goal: "Keep track of the marked moons while they move.",
+    steps: ["Remember every moon with a ◆ above it.","The markers vanish and all moons drift for several seconds.","When they stop, tap every moon that was marked.","3 rounds. Each moon you find scores."],
+  },
   howTo: 'Lock on to the moons marked with ◆. Then they all look the same and drift for several seconds. Track them, then tap every marked one.',
   generate,
   verify,

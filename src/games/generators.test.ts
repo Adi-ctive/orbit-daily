@@ -114,3 +114,35 @@ describe('24 fast counter', () => {
     }
   })
 })
+
+describe('new game solvers', () => {
+  it('code lock feedback counts exact and near once each', async () => {
+    const { score } = await import('./codeLock')
+    expect(score([0, 1, 2, 3], [0, 1, 2, 3])).toEqual({ exact: 4, near: 0 })
+    expect(score([0, 1, 2, 3], [3, 2, 1, 0])).toEqual({ exact: 0, near: 4 })
+    expect(score([0, 0, 1, 1], [0, 1, 0, 2])).toEqual({ exact: 1, near: 2 })
+    expect(score([1, 2, 3, 4], [1, 1, 1, 1])).toEqual({ exact: 1, near: 0 })
+  })
+
+  it('ice drift slides to the wall and BFS finds par', async () => {
+    const { slide, solve } = await import('./iceDrift')
+    const p = { w: 3, h: 3, rocks: [], start: 0, goal: 8, par: 0 }
+    expect(slide(p, 0, 1)).toBe(2)
+    expect(solve(p)).toBe(2)
+    expect(solve({ ...p, goal: 4 })).toBe(-1)
+  })
+
+  it('turn or mirror only uses shapes whose mirror is a different shape', async () => {
+    const { chiral } = await import('./turnMirror')
+    expect(chiral([[0, 0], [1, 0], [2, 0], [2, 1]])).toBe(true) // L tetromino
+    expect(chiral([[0, 0], [1, 0], [2, 0], [1, 1]])).toBe(false) // T tetromino
+  })
+
+  it('rule flip maps each rule to the right button', async () => {
+    const { leftIsRight } = await import('./ruleFlip')
+    expect(leftIsRight({ n: 3, rule: 'parity' })).toBe(true)
+    expect(leftIsRight({ n: 8, rule: 'parity' })).toBe(false)
+    expect(leftIsRight({ n: 3, rule: 'size' })).toBe(true)
+    expect(leftIsRight({ n: 7, rule: 'size' })).toBe(false)
+  })
+})

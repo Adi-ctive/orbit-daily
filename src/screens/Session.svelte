@@ -20,6 +20,7 @@
   let result = $state<RoundResult | null>(null)
   let title = $state('')
   let howTo = $state('')
+  let rules = $state<{ goal: string; steps: string[] } | null>(null)
   let busy = false
 
   const round = $derived(app.currentRound)
@@ -32,6 +33,7 @@
     void loadGame(r.gameId).then((m) => {
       title = m.title
       howTo = m.howTo
+      rules = m.rules ?? null
     })
   })
 
@@ -121,12 +123,14 @@
     }
   }
 
+  /** One tap from the result screen straight into the next round. */
   function next() {
     haptic('tap')
     result = null
     app.advance()
     if (app.screen !== 'session') return
     stage = 'intro'
+    void start()
   }
 
   function onVisibility() {
@@ -180,7 +184,7 @@
       <ProgressBar total={day.plan.length} index={day.index} />
       <span class="timer" aria-label="Active mission time">
         {#if combo >= 3}<span class="combo">×{combo}</span>{/if}
-        {formatCountdown(timeLeftMs(day)).slice(3)}<span class="muted"> left</span>
+        {formatCountdown(timeLeftMs(day)).slice(3)}<span class="muted">&nbsp;left</span>
       </span>
     {/if}
   </header>
@@ -197,17 +201,25 @@
     </div>
   {/if}
 
-  {#if round && (stage === 'intro' || stage === 'loading')}
+  {#if round && stage === 'intro'}
     <div class="intro">
       <p class="label">{phaseLabel[round.phase]}{catalogEntry(round.gameId) ? ' · ' + CATEGORY_LABEL[catalogEntry(round.gameId)!.category] : ''}</p>
       <h1>{title}</h1>
       {#if round.note}<p class="note">{round.note}</p>{/if}
-      <p class="how">{howTo}</p>
-      <button class="btn primary go" data-testid="round-start" disabled={stage === 'loading'} onclick={start}>
-        {stage === 'loading' ? 'Loading…' : round.phase === 'explainer' ? 'Read' : 'Start'}
-      </button>
+      {#if rules}
+        <div class="panel rules">
+          <p class="goal">{rules.goal}</p>
+          <ol>
+            {#each rules.steps as st, i (i)}<li>{st}</li>{/each}
+          </ol>
+        </div>
+      {:else}
+        <p class="how">{howTo}</p>
+      {/if}
+      <button class="btn primary go" data-testid="round-start" onclick={start}>{round.phase === 'explainer' ? 'Read' : 'Start'}</button>
     </div>
   {/if}
+  {#if stage === 'loading'}<p class="muted center loading">Loading…</p>{/if}
 
   <div class="game" class:hidden={stage !== 'play'} bind:this={host}></div>
 
@@ -229,8 +241,16 @@
           <button class="btn" data-testid="mission-finish" onclick={finish}>Finish mission</button>
           {#if app.canMore}<button class="btn primary" data-testid="round-more" onclick={more}>Another round</button>{/if}
         </div>
-      {:else}
-        <button class="btn primary go" data-testid="round-next" onclick={next}>{day?.completed ? 'See debrief' : 'Next round'}</button>
+      {:else if day?.completed}
+        <button class="btn primary go" data-testid="round-next" onclick={next}>See debrief</button>
+      {:else if round}
+        <div class="panel upnext">
+          <p class="label">Up next · {phaseLabel[round.phase]}</p>
+          <p class="t">{title}</p>
+          {#if round.note}<p class="note">{round.note}</p>{/if}
+          {#if rules}<p class="muted">{rules.goal}</p>{/if}
+        </div>
+        <button class="btn primary go" data-testid="round-next" onclick={next}>Start {title || 'next round'}</button>
       {/if}
     </div>
   {/if}
@@ -275,6 +295,39 @@
   }
   .two .btn {
     flex: 1;
+  }
+  .rules {
+    text-align: left;
+    max-width: 30em;
+    width: 100%;
+  }
+  .rules .goal {
+    font-weight: 650;
+    margin: 0 0 6px;
+    color: var(--ink-bright);
+  }
+  .rules ol {
+    margin: 0;
+    padding-left: 1.2em;
+    color: var(--muted);
+  }
+  .rules li {
+    margin: 4px 0;
+  }
+  .upnext {
+    text-align: left;
+    max-width: 34em;
+    width: 100%;
+  }
+  .upnext p {
+    margin: 2px 0;
+  }
+  .upnext .t {
+    font-weight: 650;
+    font-size: 1.05rem;
+  }
+  .loading {
+    margin: auto;
   }
   .how {
     max-width: 30em;

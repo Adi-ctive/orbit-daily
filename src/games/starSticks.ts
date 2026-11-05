@@ -118,6 +118,10 @@ const mod: GameModule<L> = {
   id: 'star-sticks',
   category: 'riddle',
   title: 'Star-Stick Equations',
+  rules: {
+    goal: "Fix the equation by moving one stick.",
+    steps: ["The equation shown is false.","Tap one glowing stick to pick it up.","Tap an empty dashed slot to put it down.","The result must be a true equation. 3 tries."],
+  },
   howTo: 'The equation is wrong. Move exactly one glowing stick to make it true. Tap a stick to lift it, then tap an empty slot.',
   generate,
   verify,

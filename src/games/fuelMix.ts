@@ -142,6 +142,10 @@ const mod: GameModule<L> = {
   id: 'fuel-mix',
   category: 'math',
   title: 'Fuel Mix',
+  rules: {
+    goal: "Make exactly 24 from four numbers.",
+    steps: ["Tap a number, then + − × or ÷, then another number.","Those two merge into their result.","Use all four numbers. The last one left must be 24.","Undo or Reset any time. Skip a set if you are stuck. 4 sets."],
+  },
   howTo: 'Mix all four fuel cells to make exactly 24. Tap a number, an operator, then another number. Every set can be solved.',
   generate,
   verify,

@@ -271,7 +271,9 @@ class App {
     const r = bonusRound(this.profile.ratings, new Set(d.plan.map((x) => x.gameId)), new RNG(randomId()))
     if (!r) return
     d.plan.push(r)
-    await this.saveDay()
+    // Bonus games count toward tomorrow's no-repeat rule too.
+    this.profile.coreHistory[d.date] = coreIdsOf(d.plan)
+    await Promise.all([this.saveDay(), this.saveProfile()])
   }
 
   /** True while some game has not been played yet today. */

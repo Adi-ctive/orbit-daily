@@ -46,6 +46,10 @@ const mod: GameModule<L> = {
   id: 'riddle-bank',
   category: 'riddle',
   title: 'Signal from Deep Space',
+  rules: {
+    goal: "Solve three riddles.",
+    steps: ["Read each riddle closely.","Pick the answer that fits every clue, not just one.","The explanation appears after each answer."],
+  },
   howTo: 'Three riddles have arrived. Read each one carefully and pick the answer that fits every clue.',
   generate,
   verify,

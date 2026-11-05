@@ -78,6 +78,8 @@ export interface GameModule<L extends Level = Level> {
   title: string
   /** One or two short lines shown before the round starts. */
   howTo: string
+  /** Clear rules for the intro: a one-line goal and numbered steps. */
+  rules?: { goal: string; steps: string[] }
   generate(rng: RNG, difficulty: number, opts?: GenOpts): L
   verify(level: L): boolean
   mount(ctx: GameContext<L>): GameInstance

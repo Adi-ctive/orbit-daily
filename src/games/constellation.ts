@@ -41,6 +41,10 @@ const mod: GameModule<L> = {
   id: 'constellation',
   category: 'memory',
   title: 'Constellation Recall',
+  rules: {
+    goal: "Repeat a sequence of stars from memory.",
+    steps: ["Stars light up one at a time. Watch the order.","Tap the same stars in the same order.","Rounds 3 and 4: tap them in REVERSE order.","Get one right and the next sequence is one star longer."],
+  },
   howTo: 'Stars light up one by one. Tap them in the same order. In the second half, tap them in reverse.',
   generate,
   verify,

@@ -85,3 +85,13 @@ The owner found the pixel art busy, the games too easy and slow, and the learnin
 - **Rematch.** The game with the lowest score under 70% yesterday takes the first core slot today, with a new level and a note saying so. The debrief lists where points were lost.
 - **Play to the time limit.** Finishing the planned rounds no longer locks the day. It marks `planDone` (and counts the streak). The player then picks Another round (weighted toward weak skills, never the same game twice in a row) or Finish mission. The 20-minute active-time cap ends the mission after the current round.
 - **Updates reach phones.** The service worker now uses `skipWaiting`, so a new version takes over on the next reload, and a game file removed by an update triggers a reload instead of a crash. Missions saved by v1 are migrated on load.
+
+## v2.2 (5 Nov 2026, owner feedback)
+
+The owner found the games repetitive, some rules vague, and scrolling broken on desktop and Android. Worst games named: Catch the Comet, Signal Drift and the aliens puzzle.
+
+- **Scrolling.** `overflow-x: hidden` and `overscroll-behavior` sat on `body`, which turned it into a scroll container that swallowed the mouse wheel and swipes. Both now sit on `html`. An e2e test scrolls the explainer with the wheel.
+- **No repeats.** A mission never uses a game from the previous two missions (relaxing to one day, then none, only if the pool runs dry). Bonus rounds only use games not played today. Riddles and Fermi questions are tracked per player and never repeat until the bank runs out. The explainer appears once per mission and does not repeat until all 64 have been read.
+- **Clear rules.** Every game has a goal and numbered steps on its intro screen. After a round, one tap starts the next one.
+- **Rebuilt:** Catch the Comet (practice pass, bright gate, a ghost marker that shows how early or late you were). Signal Drift became Signal Match (SAME or DIFFERENT for every symbol, with a history strip during practice). The aliens puzzle became Truth & Lies (rules banner, Truth-teller and Liar buttons, two Checks that mark clashing statements).
+- **7 new games, 23 in all:** Rule Flip (task switching), Odd One Out (visual search), Spot the Change (change detection), Running Tally (two counters at once), Code Lock (Mastermind deduction, boss), Turn or Mirror (mental rotation), Ice Drift (sliding puzzle, boss). Each passes the 1,000-seed generator test.

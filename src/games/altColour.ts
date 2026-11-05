@@ -93,6 +93,10 @@ const mod: GameModule<L> = {
   id: 'alt-colour',
   category: 'maze',
   title: 'Pulsar Path',
+  rules: {
+    goal: "Cross the grid while alternating link colours.",
+    steps: ["Start at the top left. Finish at the bright beacon, bottom right.","Hop to a neighbouring cell along a link.","Each link must be a different colour from the last one: red ◆, then blue ●, then red ◆…","Fewer hops score more. Undo if you get stuck."],
+  },
   howTo: 'Hop from the top-left beacon to the bottom-right one. Links are red ◆ or blue ●, and you must alternate: red, blue, red… Tap a neighbouring cell to hop.',
   generate,
   verify,

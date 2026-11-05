@@ -52,18 +52,23 @@ describe('composer', () => {
     }
   })
 
-  it('holds the 2-day no-repeat rule over 2 years, with skewed ratings', () => {
+  it('never repeats any game from the previous mission, over 2 years', () => {
     const history: Record<string, string[]> = {}
     const ratings = { ...defaultRatings(), logic: 700, stem: 760, riddle: 820 }
+    let twoDayHeld = 0
     for (let i = 0; i < 730; i++) {
       const date = addDays('2026-12-20', i)
       const plan = compose({ ...base, ratings, coreHistory: history, date })
-      const core = coreIdsOf(plan)
-      const recent = recentCore(date, history)
-      for (const id of core) expect(recent.has(id), `${date} ${id}`).toBe(false)
-      expect(core.length).toBe(4)
-      history[date] = core
+      const games = coreIdsOf(plan)
+      const yesterday = recentCore(date, history, 1)
+      for (const id of games) expect(yesterday.has(id), `${date} ${id}`).toBe(false)
+      if (games.every((id) => !recentCore(date, history, 2).has(id))) twoDayHeld++
+      expect(plan.filter((r) => r.phase === 'core').length).toBe(4)
+      expect(new Set(games).size).toBe(games.length)
+      history[date] = games
     }
+    // With 23 games the last two missions never share a game.
+    expect(twoDayHeld).toBe(730)
   })
 
   it('works across month and year boundaries', () => {
@@ -85,18 +90,20 @@ describe('composer', () => {
     expect(sets.size).toBeGreaterThan(1)
   })
 
-  it('brings back the weakest game from yesterday as a rematch', () => {
+  it('leads with the weakest skill from yesterday, using a different game', () => {
     const res = [
-      { gameId: 'aliens', phase: 'core', score: 0.4 },
+      { gameId: 'constellation', phase: 'core', score: 0.4 },
       { gameId: 'fuel-mix', phase: 'core', score: 0.9 },
       { gameId: 'void-beast', phase: 'boss', score: 0.6 },
     ]
     const w = weakestRound(res)!
-    expect(w.gameId).toBe('aliens')
-    const plan = compose({ ...base, date: '2026-11-03', rematch: w, coreHistory: { '2026-11-02': ['aliens'] } })
+    expect(w.gameId).toBe('constellation')
+    const plan = compose({ ...base, date: '2026-11-03', rematch: w, coreHistory: { '2026-11-02': ['constellation'] } })
     const core = plan.filter((r) => r.phase === 'core')
-    expect(core[0].gameId).toBe('aliens')
-    expect(core[0].note).toMatch(/Rematch/)
+    // Same skill (logic), but never the same game twice in a row.
+    expect(plan.some((r) => r.gameId === 'constellation')).toBe(false)
+    expect(core[0].category).toBe('memory')
+    expect(core[0].note).toMatch(/Focus/)
     expect(new Set(core.map((r) => r.category)).size).toBe(core.length)
     expect(weakestRound([{ gameId: 'aliens', phase: 'core', score: 0.9 }])).toBeNull()
   })

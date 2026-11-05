@@ -78,6 +78,10 @@ const mod: GameModule<L> = {
   id: 'thruster-abort',
   category: 'reflex',
   title: 'Thruster Abort',
+  rules: {
+    goal: "Fire fast on GO, but hold when ABORT appears.",
+    steps: ["Wait while the pad is dark.","A green ▲ GO lights up: tap FIRE as fast as you can.","Sometimes a red ✕ ABORT flashes just after GO: do not tap.","Slow fires and fired aborts both count as misses. 30 signals."],
+  },
   howTo: 'Tap FIRE as soon as the green ▲ GO beacon lights. If the red ✕ ABORT beacon flashes, hold fire.',
   generate,
   verify,

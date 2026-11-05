@@ -1,6 +1,12 @@
 # Status
 
-As of 4 Nov 2026, after the v2 redesign based on owner feedback.
+As of 5 Nov 2026, after v2.2 (owner feedback on repetition, vague rules and scrolling).
+
+## What changed in v2.2
+
+- Scrolling works with the mouse wheel and touch swipes everywhere.
+- 23 games (7 new), each with clear numbered rules. Catch the Comet, Signal Match and Truth & Lies were rebuilt.
+- No game from the last two missions comes back, bonus rounds never repeat a game played today, and riddles and Fermi questions never repeat for a player.
 
 ## What changed in v2
 
@@ -10,15 +16,15 @@ As of 4 Nov 2026, after the v2 redesign based on owner feedback.
 
 ## Mission
 
-Warm-up reflex game, 4 core games from 4 different skills, today's explainer, boss puzzle, debrief, then the lock until local midnight.
+Warm-up reflex game, core games from different skills (yesterday's weakest skill first), a data question round, today's explainer, boss puzzle. After that the player can keep taking new games until the 20-minute limit, then the debrief and the lock until local midnight.
 
 ## Quality gate results
 
 | Check | Result |
 |---|---|
 | ESLint, svelte-check, tsc | 0 errors, 0 warnings |
-| Unit and property tests | 64 passed (1,000 seeds per game, each under 50 ms) |
-| E2E (Pixel 7 + desktop) | 8 passed: full session to lock, resume, manifest, offline |
+| Unit and property tests | 81 passed (1,000 seeds per game, each under 50 ms, 2 years of missions with no game shared by consecutive two days) |
+| E2E (Pixel 7 + desktop) | 10 passed: full session to lock with a bonus round, resume, manifest, offline, wheel scroll |
 | Lighthouse mobile | Performance 100, Accessibility 100, Best Practices 100, SEO 100 |
 
 ## Known limits

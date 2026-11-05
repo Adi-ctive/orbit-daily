@@ -31,6 +31,10 @@ const mod: GameModule<L> = {
   id: 'vanishing-walls',
   category: 'maze',
   title: 'Vanishing Walls',
+  rules: {
+    goal: "Fly a maze from memory.",
+    steps: ["Study the maze while the walls are visible.","The walls fade away.","Steer to the pink portal with the arrows, a swipe or the keyboard.","Each bump shows that wall in red and costs points."],
+  },
   howTo: 'Memorise the maze. When the walls vanish, steer your probe to the portal from memory. Bumping a wall reveals it.',
   generate,
   verify,

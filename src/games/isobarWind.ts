@@ -173,6 +173,10 @@ const mod: GameModule<L> = {
   id: 'isobar-wind',
   category: 'stem',
   title: 'Isobar Wind Reader',
+  rules: {
+    goal: "Read which way the wind blows.",
+    steps: ["Lines join places with equal air pressure. H is high, L is low.","Find the marker between them.","North: put the wind at your back and the low is on your left. South: on your right.","Tap the direction the wind blows toward. 4 maps."],
+  },
   howTo: 'Wind circles highs and lows instead of blowing straight between them. In the north, stand with the wind at your back and the low is on your left. In the south, it is on your right. Near the ground the wind also bends a little toward the low. Pick where it blows at the marker.',
   generate,
   verify,

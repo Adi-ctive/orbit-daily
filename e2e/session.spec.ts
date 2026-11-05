@@ -16,10 +16,13 @@ async function playSession(page: Page): Promise<number> {
   await page.getByTestId('launch').click()
   let rounds = 0
   let bonus = false
+  let needStart = true
   for (let k = 0; k < 16; k++) {
-    await page.getByTestId('round-start').click()
-    // Wait until the game is mounted, let it run a moment, then skip.
+    // Only the first round (or a bonus round) has an intro; after that "Start next" goes straight in.
+    if (needStart) await page.getByTestId('round-start').click()
+    needStart = false
     await expect(page.getByTestId('round-start')).toHaveCount(0)
+    await expect(page.locator('.game:not(.hidden)')).toHaveCount(1)
     await page.waitForTimeout(500)
     await page.evaluate(() => dispatchEvent(new CustomEvent('orbit:dev-skip')))
     await expect(page.getByTestId('feedback')).toBeVisible()
@@ -29,6 +32,7 @@ async function playSession(page: Page): Promise<number> {
       if (!bonus) {
         bonus = true
         await page.getByTestId('round-more').click()
+        needStart = true
         continue
       }
       await page.getByTestId('mission-finish').click()
@@ -116,15 +120,14 @@ test('works offline after first load', async ({ page, context }) => {
 test('the explainer scrolls with the mouse wheel', async ({ page }) => {
   await page.goto('/?dev=1&date=2026-11-14')
   await page.getByTestId('launch').click()
+  await page.getByTestId('round-start').click()
   for (let k = 0; k < 10; k++) {
-    await page.getByTestId('round-start').waitFor()
-    if (/explainer/i.test(await page.locator('.intro h1').innerText())) break
-    await page.getByTestId('round-start').click()
-    await expect(page.getByTestId('round-start')).toHaveCount(0)
+    await expect(page.locator('.game:not(.hidden)')).toHaveCount(1)
+    if (await page.locator('.ex-p').count()) break
+    await page.waitForTimeout(300)
     await page.evaluate(() => dispatchEvent(new CustomEvent('orbit:dev-skip')))
     await page.getByTestId('round-next').click()
   }
-  await page.getByTestId('round-start').click()
   await page.locator('.ex-p').first().hover()
   await page.mouse.wheel(0, 600)
   // Scrolls all the way down when the article is shorter than the wheel step.

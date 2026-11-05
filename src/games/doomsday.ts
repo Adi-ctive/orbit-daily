@@ -63,6 +63,10 @@ const mod: GameModule<L> = {
   id: 'doomsday',
   category: 'math',
   title: 'Doomsday Sprint',
+  rules: {
+    goal: "Name the weekday of each date.",
+    steps: ["A date appears, anywhere from 1800 to 2199.","Tap the day of the week it falls on.","Shortcut: 4/4, 6/6, 8/8, 10/10 and 12/12 always share a weekday in any year.","10 dates."],
+  },
   howTo: 'Name the day of the week for each date. Tip: 4/4, 6/6, 8/8, 10/10 and 12/12 always share a weekday in any year.',
   generate,
   verify,

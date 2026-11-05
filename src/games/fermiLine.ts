@@ -50,6 +50,10 @@ const mod: GameModule<L> = {
   id: 'fermi-line',
   category: 'math',
   title: 'Fermi Line',
+  rules: {
+    goal: "Estimate real-world quantities.",
+    steps: ["Read the question.","Drag the slider to your best guess. Each mark is ×10.","Lock it in to see the true value.","Within a factor of 3 scores well. 5 questions."],
+  },
   howTo: 'Estimate each quantity on a log scale. You score by how many powers of ten you are off, so a good guess beats a perfect one.',
   generate,
   verify,
